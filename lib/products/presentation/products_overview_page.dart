@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mpos_app/products/presentation/delete_product.dart';
 import 'package:mpos_app/products/presentation/edit_product_page.dart';
 
 import '../../src/shared/app_colors.dart';
 import '../../src/shared/styles.dart';
 import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
+import '../shared/cubit/delete_product_cubit.dart';
 import '../shared/cubit/fetch_products_cubit.dart';
 import 'add_product_page.dart';
 
@@ -212,38 +214,39 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                                 ],
                               ),
                             ),
-                            Container(
-                              child: Row(children: [
-                                GestureDetector(
-                                  onTap: () => buildBottomSheetForEditProduct(
+                            Row(children: [
+                              GestureDetector(
+                                onTap: () => buildBottomSheetForEditProduct(
+                                  context,
+                                  formKey,
+                                  products[index],
+                                  labelTextFieldController,
+                                  priceTextFieldController,
+                                ),
+                                child: Icon(
+                                  Ionicons.pencil_outline,
+                                  size: 20,
+                                  color: Colors.grey.shade500,
+                                ),
+                              ),
+                              const SizedBox(width: 15),
+                              GestureDetector(
+                                onTap: () {
+                                  buildAlertDialogeForDeleteProduct(
                                     context,
-                                    formKey,
                                     products[index],
-                                    labelTextFieldController,
-                                    priceTextFieldController,
-                                  ),
+                                  );
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 5),
                                   child: Icon(
-                                    Ionicons.pencil_outline,
+                                    Ionicons.trash_outline,
                                     size: 20,
                                     color: Colors.grey.shade500,
                                   ),
                                 ),
-                                const SizedBox(width: 15),
-                                GestureDetector(
-                                  onTap: () {
-                                    print("Supprimer l'article");
-                                  },
-                                  child: Container(
-                                    margin: const EdgeInsets.only(right: 5),
-                                    child: Icon(
-                                      Ionicons.trash_outline,
-                                      size: 20,
-                                      color: Colors.grey.shade500,
-                                    ),
-                                  ),
-                                ),
-                              ]),
-                            )
+                              ),
+                            ])
                           ]),
                         ),
                       ),

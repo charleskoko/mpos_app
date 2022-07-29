@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:mpos_app/core/shared/dio_extension.dart';
 import '../../../core/Environment/environement.dart';
@@ -37,9 +39,9 @@ class ProductRemoteService {
         Environment.getUri(unencodedPath: '/api/v1/products');
     try {
       final response =
-          await _dio.postUri(storeProductUri, data: product.toJson);
-      if (response.statusCode == 200) {
-        Product newProduct = Product.fromJson(response.data['data']);
+          await _dio.postUri(storeProductUri, data: jsonEncode(product));
+      if (response.statusCode == 201) {
+        Product newProduct = Product.fromJson(response.data['data'][0]);
 
         return ConnectionResponse<Product>(newProduct);
       }

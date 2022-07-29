@@ -9,6 +9,7 @@ class FetchProductsCubit extends Cubit<FetchProductsState> {
   FetchProductsCubit(this._productRepository) : super(FetchProductsInitial());
 
   Future<void> fetchProductList() async {
+    emit(FetchProductsLoading());
     final fetchProductRequest = await _productRepository.fetchProductList();
     fetchProductRequest.fold(
       (products) => emit(FetchProductsLoaded(products)),

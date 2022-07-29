@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../src/shared/app_colors.dart';
@@ -7,6 +8,7 @@ import '../../src/shared/styles.dart';
 import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
 import '../shared/cubit/fetch_products_cubit.dart';
+import 'add_product_page.dart';
 
 class ProductsOverviewPage extends StatefulWidget {
   ProductsOverviewPage({Key? key}) : super(key: key);
@@ -17,6 +19,9 @@ class ProductsOverviewPage extends StatefulWidget {
 
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   List<Product> selectedProduct = [];
+  final formKey = GlobalKey<FormState>();
+  TextEditingController labelTextFieldController = TextEditingController();
+  TextEditingController priceTextFieldController = TextEditingController();
 
   void _addProductToList(Product product) {
     selectedProduct.add(product);
@@ -71,8 +76,11 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
       body: BlocBuilder<FetchProductsCubit, FetchProductsState>(
         builder: (context, fetchProductState) {
           if (fetchProductState is FetchProductsLoading) {
-            return const Center(
-              child: Text('loading'),
+            return Center(
+              child: SpinKitWave(
+                color: Colors.grey.shade300,
+                size: 30.0,
+              ),
             );
           }
           if (fetchProductState is FetchProductsLoaded) {
@@ -125,9 +133,13 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                             ),
                             child: Center(
                               child: IconButton(
-                                onPressed: () {
-                                  print('Ajouter nouveau produit');
-                                },
+                                onPressed: () =>
+                                    buildBottomSheetForAddNewProduct(
+                                  context,
+                                  formKey,
+                                  labelTextFieldController,
+                                  priceTextFieldController,
+                                ),
                                 icon: Icon(
                                   Ionicons.add_outline,
                                   size: 30,
@@ -191,7 +203,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                                   const SizedBox(height: 5),
                                   Container(
                                     alignment: Alignment.centerLeft,
-                                    child: BoxText.caption(
+                                    child: BoxText.body(
                                       'XOF ${products[index].price.toString()}',
                                       color: Colors.green,
                                     ),

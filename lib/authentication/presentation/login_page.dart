@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocListener<AuthenticationCubit, AuthenticationState>(
         listener: (context, authenticationState) {
           if (authenticationState is AuthenticationValidated) {
-            context.goNamed('main');
+            context.goNamed('dashboard');
           }
           if (authenticationState is AuthenticationNotValidated) {}
           if (authenticationState is AuthenticationFailed) {

@@ -64,9 +64,9 @@ class ProductRemoteService {
         Environment.getUri(unencodedPath: '/api/v1/products/$productId');
     try {
       final response =
-          await _dio.patchUri(storeProductUri, data: request.toJson);
+          await _dio.patchUri(storeProductUri, data: jsonEncode(request));
       if (response.statusCode == 200) {
-        Product newProduct = Product.fromJson(response.data['data']);
+        Product newProduct = Product.fromJson(response.data['data'][0]);
 
         return ConnectionResponse<Product>(newProduct);
       }

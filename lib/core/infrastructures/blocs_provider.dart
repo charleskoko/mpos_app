@@ -5,6 +5,7 @@ import '../../authentication/infrastructures/authentication_repository.dart';
 import '../../products/core/infrastructure/product_repository.dart';
 import '../../products/shared/cubit/fetch_products_cubit.dart';
 import '../../products/shared/cubit/store_product_cubit.dart';
+import '../../products/shared/cubit/update_product_cubit.dart';
 
 class BlocsProvider {
   static List init() {
@@ -21,6 +22,11 @@ class BlocsProvider {
       ),
       BlocProvider<StoreProductCubit>(
         create: (context) => StoreProductCubit(
+          context.read<ProductRepository>(),
+        ),
+      ),
+      BlocProvider<UpdateProductCubit>(
+        create: (context) => UpdateProductCubit(
           context.read<ProductRepository>(),
         ),
       ),

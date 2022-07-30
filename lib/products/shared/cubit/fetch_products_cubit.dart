@@ -18,4 +18,20 @@ class FetchProductsCubit extends Cubit<FetchProductsState> {
       ),
     );
   }
+
+  Future<void> filterProductsList(
+      {required String text, required List<Product> products}) async {
+    if (text.isEmpty) {
+      fetchProductList();
+    }
+    emit(FetchProductsLoading());
+    products = products
+        .where(
+          (product) => product.label!.toLowerCase().contains(
+                text.toLowerCase(),
+              ),
+        )
+        .toList();
+    emit(FetchProductsLoaded(products));
+  }
 }

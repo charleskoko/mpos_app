@@ -122,7 +122,12 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                               ),
                             ),
                             onChanged: (value) {
-                              print(value);
+                              context
+                                  .read<FetchProductsCubit>()
+                                  .filterProductsList(
+                                    text: value,
+                                    products: products,
+                                  );
                             }),
                       ),
                       const SizedBox(width: 5),

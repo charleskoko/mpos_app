@@ -5,6 +5,8 @@ import 'package:ionicons/ionicons.dart';
 import '../../core/presentation/snack_bar.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/shared/styles.dart';
+import '../../src/widgets/box_button.dart';
+import '../../src/widgets/box_input_field.dart';
 import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
 import '../shared/cubit/fetch_products_cubit.dart';
@@ -94,99 +96,52 @@ buildBottomSheetForAddNewProduct(
                     padding: const EdgeInsets.only(top: 10, right: 10),
                     child: Column(
                       children: [
-                        TextFormField(
+                        BoxInputField.text(
                           controller: labelTextFieldController,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            labelText: "Label du produit",
-                            labelStyle: subheadingStyle.copyWith(
-                              color: kblackColor,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: const BorderSide(
-                                color: kPrimaryColor,
-                              ),
-                            ),
-                          ),
+                          labelText: "Label du produit",
                           validator: (value) {
-                            if (value?.isEmpty ?? true) {
+                            if (value.isEmpty) {
                               return 'Label est obligatoire';
                             }
                             return null;
                           },
+                          onChanged: (value) {},
                         ),
                         const SizedBox(height: 16),
-                        TextFormField(
+                        BoxInputField.number(
                           controller: priceTextFieldController,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            labelText: "Prix du produit",
-                            labelStyle: subheadingStyle.copyWith(
-                              color: kblackColor,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: const BorderSide(
-                                color: kPrimaryColor,
-                              ),
-                            ),
-                          ),
+                          labelText: "Prix du produit",
+                          validator: (value) {
+                            return null;
+                          },
+                          onChanged: (value) {},
                         ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 30),
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: kPrimaryColor.withOpacity(0.5),
-                                offset: const Offset(0, 24),
-                                blurRadius: 50,
-                                spreadRadius: -18,
-                              ),
-                            ],
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              if (formKey.currentState!.validate()) {
-                                Product product = Product(
-                                  label: labelTextFieldController.text,
-                                  price: (priceTextFieldController.text.isEmpty)
-                                      ? 0
-                                      : double.parse(
-                                          priceTextFieldController.text,
-                                        ),
-                                );
-                                context
-                                    .read<StoreProductCubit>()
-                                    .storeProduct(product);
-                              }
-                            },
-                            child: Container(
-                              child: Center(
-                                child: BoxText.subheading(
-                                  'Enregistrer',
-                                  color: Colors.white,
-                                ),
-                              ),
-                              width: size.width - 110,
-                              height: 55,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    kPrimaryColorGradient,
-                                    kPrimaryColorDark,
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                        const SizedBox(height: 50),
+                        BlocBuilder<StoreProductCubit, StoreProductState>(
+                          builder: (context, storeProductCubit) {
+                            return BoxButton(
+                                isBusy:
+                                    (storeProductCubit is StoreProductLoading)
+                                        ? true
+                                        : false,
+                                title: 'Enregistrer',
+                                onTap: () {
+                                  if (formKey.currentState!.validate()) {
+                                    Product product = Product(
+                                      label: labelTextFieldController.text,
+                                      price: (priceTextFieldController
+                                              .text.isEmpty)
+                                          ? 0
+                                          : double.parse(
+                                              priceTextFieldController.text,
+                                            ),
+                                    );
+                                    context
+                                        .read<StoreProductCubit>()
+                                        .storeProduct(product);
+                                  }
+                                });
+                          },
                         ),
                       ],
                     ),

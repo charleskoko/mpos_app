@@ -4,12 +4,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/products/presentation/delete_product.dart';
 import 'package:mpos_app/products/presentation/edit_product_page.dart';
-
 import '../../src/shared/app_colors.dart';
 import '../../src/shared/styles.dart';
+import '../../src/widgets/box_input_field.dart';
 import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
-import '../shared/cubit/delete_product_cubit.dart';
 import '../shared/cubit/fetch_products_cubit.dart';
 import 'add_product_page.dart';
 
@@ -99,36 +98,18 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: TextField(
-                            cursorColor: kPrimaryColor,
-                            decoration: InputDecoration(
-                              labelStyle: subheadingStyle.copyWith(
-                                color: kblackColor,
-                              ),
-                              hintText: 'Rechercher un produit',
-                              hintStyle: bodyStyle,
-                              prefixIcon: const Icon(
-                                Ionicons.search,
-                                color: kPrimaryColor,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: const BorderSide(
-                                  color: kPrimaryColor,
-                                ),
-                              ),
-                            ),
-                            onChanged: (value) {
-                              context
-                                  .read<FetchProductsCubit>()
-                                  .filterProductsList(
-                                    text: value,
-                                    products: products,
-                                  );
-                            }),
+                        child: BoxInputField.text(
+                          hintText: 'Rechercher un produit',
+                          onChanged: (value) {
+                            context
+                                .read<FetchProductsCubit>()
+                                .filterProductsList(
+                                  text: value,
+                                  products: products,
+                                );
+                            return null;
+                          },
+                        ),
                       ),
                       const SizedBox(width: 5),
                       SizedBox(

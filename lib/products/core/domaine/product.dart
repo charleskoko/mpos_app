@@ -1,5 +1,3 @@
-import 'package:mpos_app/core/domain/user.dart';
-
 class Product {
   String? id;
   String? label;

@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../authentication/infrastructures/authentication_cubit.dart';
 import '../../authentication/infrastructures/authentication_repository.dart';
 import '../../products/core/infrastructure/product_repository.dart';
-import '../../products/shared/cubit/delete_product_cubit.dart';
-import '../../products/shared/cubit/fetch_products_cubit.dart';
-import '../../products/shared/cubit/store_product_cubit.dart';
-import '../../products/shared/cubit/update_product_cubit.dart';
+import '../../products/shared/cubit/delete_product/delete_product_cubit.dart';
+import '../../products/shared/cubit/fetch_product/fetch_products_cubit.dart';
+import '../../products/shared/cubit/store_product/store_product_cubit.dart';
+import '../../products/shared/cubit/update_product/update_product_cubit.dart';
 
 class BlocsProvider {
   static List init() {

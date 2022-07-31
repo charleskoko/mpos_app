@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/presentation/snack_bar.dart';
-import '../../src/shared/app_colors.dart';
-import '../../src/shared/styles.dart';
 import '../../src/widgets/box_button.dart';
 import '../../src/widgets/box_input_field.dart';
 import '../../src/widgets/box_text.dart';
@@ -26,7 +24,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: BlocListener<AuthenticationCubit, AuthenticationState>(
         listener: (context, authenticationState) {
@@ -74,7 +71,9 @@ class _LoginPageState extends State<LoginPage> {
                           }
                           return null;
                         },
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          return null;
+                        },
                       ),
                       const SizedBox(height: 20),
                       BoxInputField.password(
@@ -86,7 +85,9 @@ class _LoginPageState extends State<LoginPage> {
                           }
                           return null;
                         },
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          return null;
+                        },
                       )
                     ],
                   ),

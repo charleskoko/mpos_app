@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
-
 import '../../core/presentation/snack_bar.dart';
-import '../../src/shared/app_colors.dart';
-import '../../src/shared/styles.dart';
 import '../../src/widgets/box_button.dart';
 import '../../src/widgets/box_input_field.dart';
 import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
-import '../shared/cubit/fetch_products_cubit.dart';
-import '../shared/cubit/store_product_cubit.dart';
+import '../shared/cubit/fetch_product/fetch_products_cubit.dart';
+import '../shared/cubit/store_product/store_product_cubit.dart';
 
 buildBottomSheetForAddNewProduct(
   BuildContext context,
@@ -18,8 +15,6 @@ buildBottomSheetForAddNewProduct(
   TextEditingController labelTextFieldController,
   TextEditingController priceTextFieldController,
 ) {
-  final size = MediaQuery.of(context).size;
-
   return showBottomSheet(
     context: context,
     builder: (context) => BlocListener<StoreProductCubit, StoreProductState>(
@@ -105,7 +100,9 @@ buildBottomSheetForAddNewProduct(
                             }
                             return null;
                           },
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 16),
                         BoxInputField.number(
@@ -114,7 +111,9 @@ buildBottomSheetForAddNewProduct(
                           validator: (value) {
                             return null;
                           },
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 50),
                         BlocBuilder<StoreProductCubit, StoreProductState>(

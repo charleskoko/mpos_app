@@ -1,16 +1,14 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
-
+import 'package:mpos_app/core/shared/time_formater.dart';
 import '../../authentication/infrastructures/authentication_cubit.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_text.dart';
 
 class DashboardPage extends StatefulWidget {
-  DashboardPage({Key? key}) : super(key: key);
+  const DashboardPage({Key? key}) : super(key: key);
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
@@ -53,7 +51,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           child: Column(
             children: [
-              BoxText.caption('Dimanche, 29 avril 2022'),
+              BoxText.caption(TimeFormater().dashboardDay(DateTime.now())),
               const SizedBox(height: 16),
               Expanded(
                 child: Container(
@@ -83,19 +81,15 @@ class _DashboardPageState extends State<DashboardPage> {
                       ),
                       Positioned(
                         bottom: 40,
-                        child: Container(
-                          child: BoxText.subheading(
-                            'Ventes',
-                            color: Colors.grey.shade500,
-                          ),
+                        child: BoxText.subheading(
+                          'Ventes',
+                          color: Colors.grey.shade500,
                         ),
                       ),
-                      Positioned(
+                      const Positioned(
                         bottom: 5,
-                        child: Container(
-                          child: BoxText.headingThree(
-                            '00',
-                          ),
+                        child: BoxText.headingThree(
+                          '00',
                         ),
                       ),
                     ],
@@ -133,11 +127,9 @@ class _DashboardPageState extends State<DashboardPage> {
                       ),
                       Positioned(
                         bottom: 40,
-                        child: Container(
-                          child: BoxText.subheading(
-                            'Recette',
-                            color: Colors.grey.shade500,
-                          ),
+                        child: BoxText.subheading(
+                          'Recette',
+                          color: Colors.grey.shade500,
                         ),
                       ),
                       Positioned(
@@ -149,7 +141,7 @@ class _DashboardPageState extends State<DashboardPage> {
                               color: Colors.grey.shade500,
                             ),
                             const SizedBox(height: 5),
-                            BoxText.headingThree(
+                            const BoxText.headingThree(
                               '10',
                             ),
                           ],

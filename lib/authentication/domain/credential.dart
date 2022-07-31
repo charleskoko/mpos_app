@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 class Credential {
   String? name;
   String? email;
@@ -15,11 +17,7 @@ class Credential {
       };
 
   static Credential makeUserCredential(
-      // ignore: non_constant_identifier_names
-      {name,
-      email,
-      password,
-      password_confirmation}) {
+      {name, email, password, password_confirmation}) {
     return Credential(
       name: name,
       email: email,

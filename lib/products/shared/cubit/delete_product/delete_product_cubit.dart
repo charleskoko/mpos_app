@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import '../../core/infrastructure/product_repository.dart';
+import '../../../core/infrastructure/product_repository.dart';
 part 'delete_product_state.dart';
 
 class DeleteProductCubit extends Cubit<DeleteProductState> {

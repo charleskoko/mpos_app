@@ -23,7 +23,7 @@ class BoxButton extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: kPrimaryColor.withOpacity(0.5),
-            offset: Offset(0, 24),
+            offset: const Offset(0, 24),
             blurRadius: 50,
             spreadRadius: -18,
           ),

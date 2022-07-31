@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
-import '../shared/cubit/delete_product_cubit.dart';
-import '../shared/cubit/fetch_products_cubit.dart';
+import '../shared/cubit/delete_product/delete_product_cubit.dart';
+import '../shared/cubit/fetch_product/fetch_products_cubit.dart';
 
 buildAlertDialogeForDeleteProduct(BuildContext context, Product? product) {
   showDialog(

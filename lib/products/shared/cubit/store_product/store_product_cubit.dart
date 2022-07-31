@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:mpos_app/products/core/domaine/product.dart';
-import '../../core/infrastructure/product_repository.dart';
+import '../../../core/infrastructure/product_repository.dart';
 part 'store_product_state.dart';
 
 class StoreProductCubit extends Cubit<StoreProductState> {

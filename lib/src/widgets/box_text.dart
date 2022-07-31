@@ -1,6 +1,7 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:mpos_app/src/shared/styles.dart';
-
 import '../shared/app_colors.dart';
 
 class BoxText extends StatelessWidget {

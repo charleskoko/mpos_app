@@ -33,8 +33,7 @@ class _MposState extends State<Mpos> {
       ..options = BaseOptions(headers: {'Accept': 'application/json'})
       ..interceptors
           .add(AuthenticationInterceptor(_authenticationLocalService));
-    _authenticationRemoteService =
-        AuthenticationRemoteService(_dio, _authenticationLocalService);
+    _authenticationRemoteService = AuthenticationRemoteService(_dio);
     _productRemoteService = ProductRemoteService(_dio);
     super.initState();
   }

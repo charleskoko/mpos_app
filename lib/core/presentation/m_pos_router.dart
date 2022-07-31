@@ -37,7 +37,7 @@ class MposRouter {
         path: '/main',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: MainPage(),
+          child: const MainPage(),
         ),
       ),
     ],

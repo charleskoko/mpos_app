@@ -5,15 +5,14 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/products/presentation/delete_product.dart';
 import 'package:mpos_app/products/presentation/edit_product_page.dart';
 import '../../src/shared/app_colors.dart';
-import '../../src/shared/styles.dart';
 import '../../src/widgets/box_input_field.dart';
 import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
-import '../shared/cubit/fetch_products_cubit.dart';
+import '../shared/cubit/fetch_product/fetch_products_cubit.dart';
 import 'add_product_page.dart';
 
 class ProductsOverviewPage extends StatefulWidget {
-  ProductsOverviewPage({Key? key}) : super(key: key);
+  const ProductsOverviewPage({Key? key}) : super(key: key);
 
   @override
   State<ProductsOverviewPage> createState() => _ProductsOverviewPageState();

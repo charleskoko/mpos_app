@@ -3,18 +3,17 @@ import 'package:flutter/material.dart';
 import '../src/shared/app_colors.dart';
 import '../src/widgets/box_text.dart';
 
-class SalesOverviewPage extends StatefulWidget {
-  const SalesOverviewPage({Key? key}) : super(key: key);
+class InvoicesOverviewPage extends StatefulWidget {
+  const InvoicesOverviewPage({Key? key}) : super(key: key);
 
   @override
-  State<SalesOverviewPage> createState() => _SalesOverviewPage();
+  State<InvoicesOverviewPage> createState() => _InvoicesOverviewPageState();
 }
 
-class _SalesOverviewPage extends State<SalesOverviewPage> {
+class _InvoicesOverviewPageState extends State<InvoicesOverviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,

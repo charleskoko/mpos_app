@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:mpos_app/authentication/infrastructures/authentication_local_service.dart';
 import 'package:mpos_app/core/shared/dio_extension.dart';
 import '../../core/Environment/environement.dart';
 import '../../core/domain/user.dart';
@@ -9,10 +8,8 @@ import '../domain/credential.dart';
 
 class AuthenticationRemoteService {
   final Dio _dio;
-  final AuthenticationLocalService _authenticationLocalService;
   AuthenticationRemoteService(
     this._dio,
-    this._authenticationLocalService,
   );
 
   Future<RemoteResponse> login({required Credential credential}) async {
@@ -20,7 +17,6 @@ class AuthenticationRemoteService {
     try {
       final response = await _dio.postUri(loginUri, data: credential.toJson());
       if (response.statusCode == 201) {
-        print(response.data['data']['token']);
         final User user = User.fromJson(response.data['data']['user']);
         final String? bearerToken = response.data['data']['token'];
         Map<String, dynamic> responseData = {

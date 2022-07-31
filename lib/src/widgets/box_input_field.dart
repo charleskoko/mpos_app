@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 
+import 'package:flutter/material.dart';
 import '../shared/app_colors.dart';
 import '../shared/styles.dart';
 
@@ -66,7 +67,7 @@ class BoxInputField extends StatelessWidget {
           color: Colors.grey.shade600,
         ),
         hintText: hintText,
-        hintStyle: bodyStyle,
+        hintStyle: subheadingStyle,
         prefixIcon: (icon == null)
             ? null
             : Icon(

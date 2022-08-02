@@ -1,9 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-
 import '../../../products/core/domaine/product.dart';
 import '../../core/domain/order_line_item.dart';
-
 part 'selected_order_item_state.dart';
 
 class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
@@ -13,18 +11,25 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
     List<Map<String, dynamic>>? currentOrderItemsSelected =
         state.selectedOrderItem ?? [];
     if (currentOrderItemsSelected.isEmpty) {
-      currentOrderItemsSelected.add(OrderLineItem.localOrderItem(
-        product,
-        1,
-      ));
+      currentOrderItemsSelected.add(
+        OrderLineItem.localOrderItem(
+          product,
+          1,
+        ),
+      );
+      emit(
+        SelectedOrderItemState(selectedOrderItem: currentOrderItemsSelected),
+      );
+      return;
     }
     if (currentOrderItemsSelected.isNotEmpty) {
       currentOrderItemsSelected =
           _addOrderItemToNotEmptyList(currentOrderItemsSelected, product);
+      emit(
+        SelectedOrderItemState(selectedOrderItem: currentOrderItemsSelected),
+      );
+      return;
     }
-    emit(
-      SelectedOrderItemState(selectedOrderItem: currentOrderItemsSelected),
-    );
   }
 
   Future<void> cancelCurrentSelection() async {

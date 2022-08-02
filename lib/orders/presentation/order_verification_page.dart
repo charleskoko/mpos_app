@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/src/widgets/box_text.dart';
 
 import '../../products/core/domaine/product.dart';
@@ -41,15 +42,93 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
             child: ListView.builder(
               itemCount: selectedOrderItemState.selectedOrderItem?.length,
               itemBuilder: (BuildContext context, index) => Card(
-                  child: Container(
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.only(top: 5),
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                height: 100,
-                child: BoxText.subheading(
-                    '${orderItems[index]['product'].label ?? ''}, ${orderItems[index]['amount']}'),
-              )),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.only(top: 5),
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                  height: 170,
+                  child: Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: BoxText.subheading(
+                            '${orderItems[index]['product'].label ?? ''}'),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: BoxText.body(
+                                  'XOF ${orderItems[index]['product'].price ?? ''}'),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(right: 10),
+                              child: Row(
+                                children: [
+                                  BoxText.body(
+                                      '${orderItems[index]['amount']}'),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Column(children: [
+                                    InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            orderItems[index]['amount'] =
+                                                orderItems[index]['amount'] + 1;
+                                          });
+                                        },
+                                        child:
+                                            const Icon(Ionicons.add_outline)),
+                                    const SizedBox(height: 10),
+                                    InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            orderItems[index]['amount'] =
+                                                orderItems[index]['amount'] - 1;
+                                          });
+                                        },
+                                        child: const Icon(
+                                            Ionicons.remove_outline)),
+                                  ])
+                                ],
+                              ),
+                            )
+                          ]),
+                      Expanded(child: Container()),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            BoxText.body(
+                              'Total: ${orderItems[index]['product'].price * orderItems[index]['amount']}',
+                            ),
+                            IconButton(
+                              icon: const Icon(Ionicons.trash_bin_outline),
+                              onPressed: () {
+                                setState(() {
+                                  orderItems.removeWhere((element) =>
+                                      element['product'].id ==
+                                      orderItems[index]['product'].id);
+                                });
+                                context
+                                    .read<SelectedOrderItemCubit>()
+                                    .updateSelectedItemState(orderItems);
+                              },
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ),
           );
         },

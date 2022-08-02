@@ -37,6 +37,12 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
       const SelectedOrderItemState(),
     );
   }
+
+  void updateSelectedItemState(List<Map<String, dynamic>> orderItems) {
+    emit(
+      SelectedOrderItemState(selectedOrderItem: orderItems),
+    );
+  }
 }
 
 List<Map<String, dynamic>>? _addOrderItemToNotEmptyList(

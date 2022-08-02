@@ -20,4 +20,11 @@ class OrderLineItem {
         .map((element) => OrderLineItem.fromJson(element))
         .toList();
   }
+
+  static Map<String, dynamic> localOrderItem(Product product, int amount) {
+    return {
+      'product': product,
+      'amount': amount,
+    };
+  }
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/products/presentation/delete_product.dart';
 import 'package:mpos_app/products/presentation/edit_product_page.dart';
 import '../../orders/shared/cubit/selected_order_item_cubit.dart';
 import '../../src/shared/app_colors.dart';
-import '../../src/widgets/box_button.dart';
 import '../../src/widgets/box_input_field.dart';
 import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
@@ -55,7 +55,15 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                 Ionicons.basket_outline,
                 color: kThreeColor,
               ),
-              onPressed: () {},
+              onPressed: () {
+                final selectedOrderItemState =
+                    context.read<SelectedOrderItemCubit>().state;
+                if (selectedOrderItemState.selectedOrderItem?.isNotEmpty ??
+                    false) {
+                  print('here');
+                  context.goNamed('orderVerification');
+                }
+              },
             ),
             BlocBuilder<SelectedOrderItemCubit, SelectedOrderItemState>(
               builder: (context, selectOrderItemState) {

@@ -37,18 +37,19 @@ buildBottomSheetForEditProduct(
       },
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(10),
-              topLeft: Radius.circular(10),
-            ),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 10,
-                color: Colors.grey.shade300,
-                spreadRadius: 5,
-              )
-            ]),
+          color: Colors.white,
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(10),
+            topLeft: Radius.circular(10),
+          ),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 10,
+              color: Colors.grey.shade300,
+              spreadRadius: 5,
+            )
+          ],
+        ),
         child: Column(
           children: [
             Container(

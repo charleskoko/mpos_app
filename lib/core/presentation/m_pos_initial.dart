@@ -6,6 +6,7 @@ import 'package:mpos_app/core/presentation/m_pos_router.dart';
 import 'package:mpos_app/src/shared/app_colors.dart';
 import '../../authentication/infrastructures/authentication_local_service.dart';
 import '../../authentication/infrastructures/authentication_remote_service.dart';
+import '../../orders/core/infrastructure/order_remote_service.dart';
 import '../../products/core/infrastructure/product_remote_service.dart';
 import '../infrastructures/blocs_provider.dart';
 import '../infrastructures/repositories_provider.dart';
@@ -24,6 +25,7 @@ class _MposState extends State<Mpos> {
   late AuthenticationLocalService _authenticationLocalService;
   late AuthenticationRemoteService _authenticationRemoteService;
   late ProductRemoteService _productRemoteService;
+  late OrderRemoteService _orderRemoteService;
 
   @override
   void initState() {
@@ -36,6 +38,7 @@ class _MposState extends State<Mpos> {
           .add(AuthenticationInterceptor(_authenticationLocalService));
     _authenticationRemoteService = AuthenticationRemoteService(_dio);
     _productRemoteService = ProductRemoteService(_dio);
+    _orderRemoteService = OrderRemoteService(_dio);
     super.initState();
   }
 
@@ -48,6 +51,7 @@ class _MposState extends State<Mpos> {
           authenticationRemoteService: _authenticationRemoteService,
           authenticationLocalService: _authenticationLocalService,
           productRemoteService: _productRemoteService,
+          orderRemoteService: _orderRemoteService,
         )
       ],
       child: MultiBlocProvider(

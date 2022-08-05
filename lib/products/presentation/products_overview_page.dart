@@ -6,6 +6,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/products/presentation/delete_product.dart';
 import 'package:mpos_app/products/presentation/edit_product_page.dart';
 import '../../orders/shared/cubit/selected_order_item_cubit.dart';
+import '../../orders/shared/cubit/store_order_cubit.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_input_field.dart';
 import '../../src/widgets/box_text.dart';
@@ -23,7 +24,6 @@ class ProductsOverviewPage extends StatefulWidget {
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   List<Product> selectedProduct = [];
   final formKey = GlobalKey<FormState>();
-  bool cancelbuttonIsdisplayed = false;
   TextEditingController labelTextFieldController = TextEditingController();
   TextEditingController priceTextFieldController = TextEditingController();
 
@@ -106,53 +106,58 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           }
           if (fetchProductState is FetchProductsLoaded) {
             List<Product> products = fetchProductState.products;
-            return BlocListener<SelectedOrderItemCubit, SelectedOrderItemState>(
-              listener: (context, selectOrderItemState) {
-                if (selectOrderItemState.selectedOrderItem?.isNotEmpty ??
-                    false) {
-                  if (!cancelbuttonIsdisplayed) {
+            return MultiBlocListener(
+              listeners: [
+                BlocListener<StoreOrderCubit, StoreOrderState>(
+                    listener: (context, soreOrderState) {
+                  if (soreOrderState is StoreOrderLoaded) {
                     showBottomSheet(
                       context: context,
                       builder: (context) => Container(
-                        height: 60,
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 10,
-                                color: Colors.grey.shade300,
-                                spreadRadius: 5,
-                              )
-                            ]),
-                        child: Center(
-                          child: TextButton(
-                            onPressed: () {
-                              context
-                                  .read<SelectedOrderItemCubit>()
-                                  .cancelCurrentSelection();
-                              setState(() {
-                                cancelbuttonIsdisplayed = false;
-                              });
-                              Navigator.pop(context);
-                            },
-                            child: BoxText.subheading(
-                              "Annuler l'achat",
-                              color: kSecondaryColor,
-                            ),
+                          color: Colors.white,
+                          borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            topLeft: Radius.circular(10),
                           ),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 10,
+                              color: Colors.grey.shade300,
+                              spreadRadius: 5,
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(10)),
+                              margin: const EdgeInsets.only(top: 5),
+                              width: 100,
+                              height: 5,
+                            ),
+                            Expanded(
+                                child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Center(
+                                  child: Icon(
+                                    Ionicons.checkmark_circle,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                BoxText.caption("Achat enregistré avec succés")
+                              ],
+                            ))
+                          ],
                         ),
                       ),
                     );
-                    setState(() {
-                      cancelbuttonIsdisplayed = true;
-                    });
                   }
-                }
-              },
+                })
+              ],
               child: Column(
                 children: [
                   Container(

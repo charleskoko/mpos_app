@@ -4,7 +4,7 @@ class OrderLineItem {
   String? id;
   Product? product;
   double? price;
-  int? amount;
+  String? amount;
 
   OrderLineItem({this.id, this.product, this.price, this.amount});
 

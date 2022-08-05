@@ -19,8 +19,12 @@ class BoxText extends StatelessWidget {
   BoxText.caption(this.text, {Color color = kblackColor})
       : style = captionStyle.copyWith(color: color);
 
-  BoxText.body(this.text, {Color color = kblackColor})
-      : style = bodyStyle.copyWith(color: color);
+  BoxText.body(this.text,
+      {Color color = kblackColor, FontWeight fontWeight = FontWeight.normal})
+      : style = bodyStyle.copyWith(
+          color: color,
+          fontWeight: fontWeight,
+        );
 
   @override
   Widget build(BuildContext context) {

@@ -33,14 +33,29 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
   }
 
   Future<void> cancelCurrentSelection() async {
-    emit(
-      const SelectedOrderItemState(),
+    await Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        emit(
+          const SelectedOrderItemState(),
+        );
+      },
     );
   }
 
   void updateSelectedItemState(List<Map<String, dynamic>> orderItems) {
     emit(
       SelectedOrderItemState(selectedOrderItem: orderItems),
+    );
+  }
+
+  void removeItemFromList(
+      {required Map<String, dynamic> itemToDelete,
+      required List<Map<String, dynamic>> selectedItemList}) {
+    selectedItemList.removeWhere(
+        (item) => item['product'].id == itemToDelete['product'].id);
+    emit(
+      SelectedOrderItemState(selectedOrderItem: selectedItemList),
     );
   }
 }

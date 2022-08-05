@@ -21,4 +21,19 @@ class OrderProduct {
         orderPrice += element['product'].price * element['amount']);
     return orderPrice.toString();
   }
+
+  static Map<String, dynamic> rangeOrderData(
+      List<Map<String, dynamic>> orderItems) {
+    List<Map<String, dynamic>> orderData = [];
+    orderItems.forEach(
+      (element) => orderData.add(
+        {
+          'product_id': element['product'].id,
+          'amount': element['amount'],
+          'price': element['amount'] * element['product'].price
+        },
+      ),
+    );
+    return {'addOrderLineItem': orderData};
+  }
 }

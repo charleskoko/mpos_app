@@ -2,7 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../authentication/infrastructures/authentication_cubit.dart';
 import '../../authentication/infrastructures/authentication_repository.dart';
+import '../../orders/core/infrastructure/order_repository.dart';
 import '../../orders/shared/cubit/selected_order_item_cubit.dart';
+import '../../orders/shared/cubit/store_order_cubit.dart';
 import '../../products/core/infrastructure/product_repository.dart';
 import '../../products/shared/cubit/delete_product/delete_product_cubit.dart';
 import '../../products/shared/cubit/fetch_product/fetch_products_cubit.dart';
@@ -39,6 +41,11 @@ class BlocsProvider {
       ),
       BlocProvider<SelectedOrderItemCubit>(
         create: (context) => SelectedOrderItemCubit(),
+      ),
+      BlocProvider<StoreOrderCubit>(
+        create: (context) => StoreOrderCubit(
+          context.read<OrderRepository>(),
+        ),
       ),
     ];
   }

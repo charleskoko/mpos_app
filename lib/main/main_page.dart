@@ -4,7 +4,7 @@ import 'package:mpos_app/src/shared/styles.dart';
 import '../../src/shared/app_colors.dart';
 import '../dashboard/presentation/dashboard_page.dart';
 import '../products/presentation/products_overview_page.dart';
-import '../sales/sales_overview_page.dart';
+import '../sales/presentation/sales_overview_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);

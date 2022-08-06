@@ -5,6 +5,7 @@ import '../../authentication/presentation/register_page.dart';
 import '../../main/main_page.dart';
 import '../../orders/presentation/order_verification_page.dart';
 import '../../orders/presentation/save_order_status.dart';
+import '../../sales/presentation/sale_details.dart';
 import '../../splash/presentation/splash_page.dart';
 
 class MposRouter {
@@ -56,6 +57,14 @@ class MposRouter {
               pageBuilder: (context, state) => MaterialPage(
                 key: state.pageKey,
                 child: SaveOrderStatus(),
+              ),
+            ),
+            GoRoute(
+              name: 'salesDetails',
+              path: 'salesDetails',
+              pageBuilder: (context, state) => MaterialPage(
+                key: state.pageKey,
+                child: SaleDetails(),
               ),
             ),
           ]),

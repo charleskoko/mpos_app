@@ -1,11 +1,20 @@
+import 'package:intl/intl.dart';
+
 class TimeFormater {
-  String dashboardDay(DateTime date) {
+  String myDateFormat(DateTime date) {
     String weekDayInString = days[date.weekday - 1];
     int day = date.day;
     String month = months[date.month - 1];
     int year = date.year;
 
     return '$weekDayInString, $day $month $year';
+  }
+
+  String myDateAndTimeFormat(DateTime date) {
+    String dateFormatted = myDateFormat(date);
+    String hour = DateFormat.Hm().format(date);
+
+    return '$dateFormatted $hour';
   }
 
   List<String> days = [

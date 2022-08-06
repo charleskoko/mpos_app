@@ -60,7 +60,7 @@ class _DashboardPageState extends State<DashboardPage> {
             builder: (context, dashbboardState) {
               return Column(
                 children: [
-                  BoxText.caption(TimeFormater().dashboardDay(DateTime.now())),
+                  BoxText.caption(TimeFormater().myDateFormat(DateTime.now())),
                   const SizedBox(height: 16),
                   Expanded(
                     child: Container(

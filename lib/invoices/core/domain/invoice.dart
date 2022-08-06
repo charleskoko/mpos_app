@@ -25,7 +25,7 @@ class Invoice {
     double total = 0;
     List<OrderLineItem> orderItem = order?.orderLineItems ?? [];
     for (var item in orderItem) {
-      total += double.parse(item.amount ?? '0') * double.parse('${item.price}');
+      total += item.amount * double.parse('${item.price}');
     }
     return '$total';
   }

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import '../core/shared/error_message.dart';
-import '../core/shared/time_formater.dart';
-import '../invoices/core/domain/invoice.dart';
-import '../invoices/shared/fetch_invoice_cubit.dart';
-import '../src/shared/app_colors.dart';
-import '../src/widgets/box_text.dart';
+import '../../core/shared/error_message.dart';
+import '../../core/shared/time_formater.dart';
+import '../../invoices/core/domain/invoice.dart';
+import '../../invoices/shared/fetch_invoice_cubit.dart';
+import '../../src/shared/app_colors.dart';
+import '../../src/widgets/box_text.dart';
+import '../shared/sale_details_cubit.dart';
 
 class SalesOverviewPage extends StatefulWidget {
   const SalesOverviewPage({Key? key}) : super(key: key);
@@ -49,7 +51,7 @@ class _SalesOverviewPage extends State<SalesOverviewPage> {
             List<Invoice> invoices = fetchInvoiceState.invoices;
             return Column(
               children: [
-                BoxText.caption(TimeFormater().dashboardDay(DateTime.now())),
+                BoxText.caption(TimeFormater().myDateFormat(DateTime.now())),
                 const SizedBox(height: 10),
                 if (invoices.isNotEmpty)
                   Expanded(
@@ -61,21 +63,30 @@ class _SalesOverviewPage extends State<SalesOverviewPage> {
                       child: ListView.separated(
                           itemCount: invoices.length,
                           itemBuilder: (BuildContext context, index) =>
-                              ListTile(
-                                title: BoxText.body(
-                                  '#' +
-                                      '${invoices[index].number}'
-                                          .padLeft(10, '0'),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                trailing: BoxText.body(
-                                  DateFormat.Hm().format(
-                                    invoices[index].createdAt ?? DateTime.now(),
+                              GestureDetector(
+                                onTap: () {
+                                  context
+                                      .read<SaleDetailsCubit>()
+                                      .show(invoices[index]);
+                                  context.goNamed('salesDetails');
+                                },
+                                child: ListTile(
+                                  title: BoxText.body(
+                                    '#' +
+                                        '${invoices[index].number}'
+                                            .padLeft(10, '0'),
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ),
-                                subtitle: BoxText.body(
-                                  '${invoices[index].total()} XOF',
-                                  color: Colors.grey.shade700,
+                                  trailing: BoxText.body(
+                                    DateFormat.Hm().format(
+                                      invoices[index].createdAt ??
+                                          DateTime.now(),
+                                    ),
+                                  ),
+                                  subtitle: BoxText.body(
+                                    '${invoices[index].total()} XOF',
+                                    color: Colors.grey.shade700,
+                                  ),
                                 ),
                               ),
                           separatorBuilder: (context, index) {

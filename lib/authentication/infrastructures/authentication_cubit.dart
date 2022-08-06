@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:mpos_app/authentication/infrastructures/authentication_repository.dart';
 
 import '../../core/domain/user.dart';
+import '../../core/infrastructures/network_exception.dart';
 import '../domain/credential.dart';
 
 part 'authentication_state.dart';
@@ -37,7 +38,12 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
   Future<void> logout() async {
     emit(AuthenticationLoading());
-    await _authenticationRepository.logout();
-    emit(AuthenticationNotValidated());
+    try {
+      await _authenticationRepository.logout();
+      emit(AuthenticationNotValidated());
+    } on RestApiException catch (exception) {
+      _authenticationRepository.offLineLogout();
+      emit(AuthenticationNotValidated());
+    }
   }
 }

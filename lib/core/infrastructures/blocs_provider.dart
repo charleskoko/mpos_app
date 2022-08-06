@@ -2,6 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../authentication/infrastructures/authentication_cubit.dart';
 import '../../authentication/infrastructures/authentication_repository.dart';
+import '../../dashboard/shared/dashboard_cubit.dart';
+import '../../invoices/core/infrastructure/invoice_repository.dart';
+import '../../invoices/shared/fetch_invoice_cubit.dart';
 import '../../orders/core/infrastructure/order_repository.dart';
 import '../../orders/shared/cubit/selected_order_item_cubit.dart';
 import '../../orders/shared/cubit/store_order_cubit.dart';
@@ -45,6 +48,16 @@ class BlocsProvider {
       BlocProvider<StoreOrderCubit>(
         create: (context) => StoreOrderCubit(
           context.read<OrderRepository>(),
+        ),
+      ),
+      BlocProvider<FetchInvoiceCubit>(
+        create: (context) => FetchInvoiceCubit(
+          context.read<InvoiceRepository>(),
+        ),
+      ),
+      BlocProvider<DashboardCubit>(
+        create: (context) => DashboardCubit(
+          context.read<InvoiceRepository>(),
         ),
       ),
     ];

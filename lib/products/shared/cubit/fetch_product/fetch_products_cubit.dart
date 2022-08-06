@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import '../../../../core/infrastructures/network_exception.dart';
 import '../../../core/domaine/product.dart';
 import '../../../core/infrastructure/product_repository.dart';
 part 'fetch_products_state.dart';
@@ -10,13 +11,19 @@ class FetchProductsCubit extends Cubit<FetchProductsState> {
 
   Future<void> fetchProductList() async {
     emit(FetchProductsLoading());
-    final fetchProductRequest = await _productRepository.fetchProductList();
-    fetchProductRequest.fold(
-      (products) => emit(FetchProductsLoaded(products)),
-      (errorMessage) => emit(
-        FetchProductsError(errorMessage.message),
-      ),
-    );
+    try {
+      final fetchProductRequest = await _productRepository.fetchProductList();
+      fetchProductRequest.fold(
+        (products) => emit(FetchProductsLoaded(products)),
+        (errorMessage) => emit(
+          FetchProductsError(errorMessage.message),
+        ),
+      );
+    } on RestApiException catch (exception) {
+      emit(
+        FetchProductsError(exception.message),
+      );
+    }
   }
 
   Future<void> filterProductsList(

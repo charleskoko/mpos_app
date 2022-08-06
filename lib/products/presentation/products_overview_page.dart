@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/products/presentation/delete_product.dart';
 import 'package:mpos_app/products/presentation/edit_product_page.dart';
+import '../../core/shared/error_message.dart';
 import '../../orders/shared/cubit/selected_order_item_cubit.dart';
 import '../../orders/shared/cubit/store_order_cubit.dart';
 import '../../src/shared/app_colors.dart';
@@ -60,7 +61,6 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                     context.read<SelectedOrderItemCubit>().state;
                 if (selectedOrderItemState.selectedOrderItem?.isNotEmpty ??
                     false) {
-                  print('here');
                   context.goNamed('orderVerification');
                 }
               },
@@ -169,18 +169,20 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                     child: Row(
                       children: [
                         Expanded(
-                          child: BoxInputField.text(
-                            hintText: 'Rechercher un produit',
-                            onChanged: (value) {
-                              context
-                                  .read<FetchProductsCubit>()
-                                  .filterProductsList(
-                                    text: value,
-                                    products: products,
-                                  );
-                              return null;
-                            },
-                          ),
+                          child: SizedBox(
+                              height: 55,
+                              child: BoxInputField.text(
+                                hintText: 'Rechercher un produit',
+                                onChanged: (value) {
+                                  context
+                                      .read<FetchProductsCubit>()
+                                      .filterProductsList(
+                                        text: value,
+                                        products: products,
+                                      );
+                                  return null;
+                                },
+                              )),
                         ),
                         const SizedBox(width: 5),
                         SizedBox(
@@ -211,114 +213,128 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                      ),
-                      child: ListView.builder(
-                        itemCount: products.length,
-                        itemBuilder: (BuildContext context, index) =>
-                            GestureDetector(
-                          onTap: () {
-                            context
-                                .read<SelectedOrderItemCubit>()
-                                .selectOrderItem(
-                                  products[index],
-                                );
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: kSecondaryColor,
-                                width: 0.5,
-                              ),
-                            ),
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            padding: const EdgeInsets.all(2),
-                            width: double.infinity,
-                            child: Row(children: [
-                              Container(
-                                padding: const EdgeInsets.all(3),
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade300,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: const Image(
-                                    image: AssetImage(
-                                        "assets/images/image_placeholder.jpeg")),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      child: BoxText.subheading(
-                                        products[index].label ?? '',
-                                      ),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      child: BoxText.body(
-                                        'XOF ${products[index].price.toString()}',
-                                        color: Colors.green,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Row(children: [
-                                GestureDetector(
-                                  onTap: () => buildBottomSheetForEditProduct(
-                                    context,
-                                    formKey,
+                  if (products.isNotEmpty)
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                        ),
+                        child: ListView.builder(
+                          itemCount: products.length,
+                          itemBuilder: (BuildContext context, index) =>
+                              GestureDetector(
+                            onTap: () {
+                              context
+                                  .read<SelectedOrderItemCubit>()
+                                  .selectOrderItem(
                                     products[index],
-                                    labelTextFieldController,
-                                    priceTextFieldController,
+                                  );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: kSecondaryColor,
+                                  width: 0.5,
+                                ),
+                              ),
+                              margin: const EdgeInsets.symmetric(vertical: 5),
+                              padding: const EdgeInsets.all(2),
+                              width: double.infinity,
+                              child: Row(children: [
+                                Container(
+                                  padding: const EdgeInsets.all(3),
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade300,
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Icon(
-                                    Ionicons.pencil_outline,
-                                    size: 20,
-                                    color: Colors.grey.shade500,
+                                  child: const Image(
+                                      image: AssetImage(
+                                          "assets/images/image_placeholder.jpeg")),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: BoxText.body(
+                                          products[index].label ?? '',
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: BoxText.body(
+                                          'XOF ${products[index].price.toString()}',
+                                          color: Colors.green,
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
-                                const SizedBox(width: 15),
-                                GestureDetector(
-                                  onTap: () {
-                                    buildAlertDialogeForDeleteProduct(
+                                Row(children: [
+                                  GestureDetector(
+                                    onTap: () => buildBottomSheetForEditProduct(
                                       context,
+                                      formKey,
                                       products[index],
-                                    );
-                                  },
-                                  child: Container(
-                                    margin: const EdgeInsets.only(right: 5),
+                                      labelTextFieldController,
+                                      priceTextFieldController,
+                                    ),
                                     child: Icon(
-                                      Ionicons.trash_outline,
+                                      Ionicons.pencil_outline,
                                       size: 20,
                                       color: Colors.grey.shade500,
                                     ),
                                   ),
-                                ),
-                              ])
-                            ]),
+                                  const SizedBox(width: 15),
+                                  GestureDetector(
+                                    onTap: () {
+                                      buildAlertDialogeForDeleteProduct(
+                                        context,
+                                        products[index],
+                                      );
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.only(right: 5),
+                                      child: Icon(
+                                        Ionicons.trash_outline,
+                                        size: 20,
+                                        color: Colors.grey.shade500,
+                                      ),
+                                    ),
+                                  ),
+                                ])
+                              ]),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                  if (products.isEmpty)
+                    Expanded(
+                      child: Center(
+                        child: BoxText.body(
+                          'Ajouter vos Produits en cliquant sur "+"',
+                          color: Colors.grey.shade500,
+                        ),
+                      ),
+                    )
                 ],
               ),
             );
           }
           if (fetchProductState is FetchProductsError) {
-            return const Center(
-              child: Text('error'),
+            return Center(
+              child: BoxText.body(
+                '${ErrorMessage.errorMessages['${fetchProductState.message}']}',
+                color: Colors.grey.shade500,
+              ),
             );
           }
           return const Center(

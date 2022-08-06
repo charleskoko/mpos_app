@@ -4,6 +4,8 @@ import 'package:mpos_app/orders/core/infrastructure/order_remote_service.dart';
 import '../../authentication/infrastructures/authentication_local_service.dart';
 import '../../authentication/infrastructures/authentication_remote_service.dart';
 import '../../authentication/infrastructures/authentication_repository.dart';
+import '../../invoices/core/infrastructure/invoice_remote_service.dart';
+import '../../invoices/core/infrastructure/invoice_repository.dart';
 import '../../orders/core/infrastructure/order_repository.dart';
 import '../../products/core/infrastructure/product_remote_service.dart';
 import '../../products/core/infrastructure/product_repository.dart';
@@ -15,6 +17,7 @@ class RepositoriesProvider {
     required AuthenticationRemoteService authenticationRemoteService,
     required ProductRemoteService productRemoteService,
     required OrderRemoteService orderRemoteService,
+    required InvoiceRemoteService invoiceRemoteService,
   }) {
     return [
       RepositoryProvider<AuthenticationRepository>(
@@ -31,6 +34,11 @@ class RepositoriesProvider {
       RepositoryProvider<OrderRepository>(
         create: (context) => OrderRepository(
           orderRemoteService,
+        ),
+      ),
+      RepositoryProvider<InvoiceRepository>(
+        create: (context) => InvoiceRepository(
+          invoiceRemoteService,
         ),
       )
     ];

@@ -22,6 +22,5 @@ class StoreOrderCubit extends Cubit<StoreOrderState> {
         StoreOrderError(orderError.message),
       ),
     );
-    print(state);
   }
 }

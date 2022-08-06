@@ -51,4 +51,9 @@ class AuthenticationRepository {
     await _authenticationLocalService.clearAuthUserStored();
     await _authenticationLocalService.clearStoredBearerToken();
   }
+
+  Future<void> offLineLogout() async {
+    await _authenticationLocalService.clearAuthUserStored();
+    await _authenticationLocalService.clearStoredBearerToken();
+  }
 }

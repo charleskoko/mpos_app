@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mpos_app/core/presentation/m_pos_router.dart';
-import 'package:mpos_app/src/shared/app_colors.dart';
 import '../../authentication/infrastructures/authentication_local_service.dart';
 import '../../authentication/infrastructures/authentication_remote_service.dart';
+import '../../invoices/core/infrastructure/invoice_remote_service.dart';
 import '../../orders/core/infrastructure/order_remote_service.dart';
 import '../../products/core/infrastructure/product_remote_service.dart';
 import '../infrastructures/blocs_provider.dart';
@@ -26,6 +26,7 @@ class _MposState extends State<Mpos> {
   late AuthenticationRemoteService _authenticationRemoteService;
   late ProductRemoteService _productRemoteService;
   late OrderRemoteService _orderRemoteService;
+  late InvoiceRemoteService _invoiceRemoteService;
 
   @override
   void initState() {
@@ -39,6 +40,7 @@ class _MposState extends State<Mpos> {
     _authenticationRemoteService = AuthenticationRemoteService(_dio);
     _productRemoteService = ProductRemoteService(_dio);
     _orderRemoteService = OrderRemoteService(_dio);
+    _invoiceRemoteService = InvoiceRemoteService(_dio);
     super.initState();
   }
 
@@ -52,6 +54,7 @@ class _MposState extends State<Mpos> {
           authenticationLocalService: _authenticationLocalService,
           productRemoteService: _productRemoteService,
           orderRemoteService: _orderRemoteService,
+          invoiceRemoteService: _invoiceRemoteService,
         )
       ],
       child: MultiBlocProvider(

@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors_in_immutables
-
 import 'package:flutter/material.dart';
 import '../shared/app_colors.dart';
 import '../shared/styles.dart';
@@ -63,14 +61,14 @@ class BoxInputField extends StatelessWidget {
       obscureText: isPasswordTextField,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle: subheadingStyle.copyWith(
+        labelStyle: bodyStyle.copyWith(
           color: Colors.grey.shade600,
         ),
         hintText: hintText,
         hintStyle: subheadingStyle,
         prefixIcon: (icon == null)
             ? null
-            : Icon(
+            : Icon( 
                 icon,
                 color: kPrimaryColor,
               ),

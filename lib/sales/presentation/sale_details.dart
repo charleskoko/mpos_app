@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/shared/time_formater.dart';
+import '../../invoices/core/domain/invoice.dart';
+import '../../orders/core/domain/order.dart';
 import '../../orders/core/domain/order_line_item.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_text.dart';
@@ -23,6 +25,8 @@ class _SaleDetailsState extends State<SaleDetails> {
         builder: (context, saleDetailsState) {
           List<OrderLineItem>? orderItems =
               saleDetailsState.invoice?.order?.orderLineItems;
+          Invoice? invoice = saleDetailsState.invoice;
+          OrderProduct? order = saleDetailsState.invoice?.order;
           return NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScolled) => [
               SliverAppBar(
@@ -61,16 +65,17 @@ class _SaleDetailsState extends State<SaleDetails> {
               ),
               Container(
                 padding: const EdgeInsets.all(16),
-                color: Colors.white,
+                color: kPrimaryColor,
                 child: Column(
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          BoxText.headingThree('Total'),
-                          BoxText.headingThree('100000')
+                        children: [
+                          BoxText.headingThree('Total:'),
+                          BoxText.headingThree(
+                              '${order?.getOrderTotalFromListOrderLineItems}')
                         ],
                       ),
                     ),

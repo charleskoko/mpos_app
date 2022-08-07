@@ -94,7 +94,7 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
                           children: [
                             const BoxText.headingThree('Total'),
                             BoxText.headingThree(
-                                'XOF ${OrderProduct.getOrderTotal(orderItems)}')
+                                'XOF ${OrderProduct.getOrderTotalFromMapList(orderItems)}')
                           ],
                         ),
                       ),

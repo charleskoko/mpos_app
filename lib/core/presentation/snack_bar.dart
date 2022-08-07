@@ -10,7 +10,7 @@ buidSnackbar({
 }) {
   SnackBar snackBar = SnackBar(
     backgroundColor: backgroundColor,
-    content: BoxText.subheading(
+    content: BoxText.body(
       text,
       color: Colors.white,
     ),

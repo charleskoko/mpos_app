@@ -12,10 +12,20 @@ class OrderProduct {
     number = jsonObject["number"].toString();
 
     orderLineItems =
-        OrderLineItem.orderLineItemList(jsonObject['Order_line_items']);
+        OrderLineItem.orderLineItemList(jsonObject['order_line_items']);
   }
 
-  static String getOrderTotal(List<Map<String, dynamic>> orderItems) {
+  double get getOrderTotalFromListOrderLineItems {
+    double orderTotalPrice = 0;
+    orderLineItems?.forEach(
+      (element) => orderTotalPrice += element.price * element.amount,
+    );
+
+    return orderTotalPrice;
+  }
+
+  static String getOrderTotalFromMapList(
+      List<Map<String, dynamic>> orderItems) {
     double orderPrice = 0;
     orderItems.forEach((element) =>
         orderPrice += element['product'].price * element['amount']);

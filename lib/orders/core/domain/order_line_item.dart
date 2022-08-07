@@ -19,7 +19,6 @@ class OrderLineItem {
     product = Product.fromJson(jsonObject['product']);
     price = double.parse(jsonObject["price"].toString());
     amount = double.parse(jsonObject['amount']);
-    print('price: $price, amount: $amount, total: ${price * amount}');
     total = price * amount;
   }
 

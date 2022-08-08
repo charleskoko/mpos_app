@@ -61,39 +61,38 @@ class _SalesOverviewPage extends State<SalesOverviewPage> {
                         right: 16,
                       ),
                       child: ListView.separated(
-                          itemCount: invoices.length,
-                          itemBuilder: (BuildContext context, index) =>
-                              GestureDetector(
-                                onTap: () {
-                                  context
-                                      .read<SaleDetailsCubit>()
-                                      .show(invoices[index]);
-                                  context.goNamed('salesDetails');
-                                },
-                                child: ListTile(
-                                  title: BoxText.body(
-                                    '#' +
-                                        '${invoices[index].number}'
-                                            .padLeft(10, '0'),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  trailing: BoxText.body(
-                                    DateFormat.Hm().format(
-                                      invoices[index].createdAt ??
-                                          DateTime.now(),
-                                    ),
-                                  ),
-                                  subtitle: BoxText.body(
-                                    '${invoices[index].total()} XOF',
-                                    color: Colors.grey.shade700,
-                                  ),
-                                ),
+                        itemCount: invoices.length,
+                        itemBuilder: (BuildContext context, index) =>
+                            GestureDetector(
+                          onTap: () {
+                            context
+                                .read<SaleDetailsCubit>()
+                                .show(invoices[index]);
+                            context.goNamed('salesDetails');
+                          },
+                          child: ListTile(
+                            title: BoxText.body(
+                              '#' +
+                                  '${invoices[index].number}'.padLeft(10, '0'),
+                              fontWeight: FontWeight.bold,
+                            ),
+                            trailing: BoxText.body(
+                              DateFormat.Hm().format(
+                                invoices[index].createdAt ?? DateTime.now(),
                               ),
-                          separatorBuilder: (context, index) {
-                            return const Divider(
-                              color: kPrimaryColor,
-                            );
-                          }),
+                            ),
+                            subtitle: BoxText.body(
+                              '${invoices[index].total()} XOF',
+                              color: Colors.grey.shade700,
+                            ),
+                          ),
+                        ),
+                        separatorBuilder: (context, index) {
+                          return const Divider(
+                            color: kPrimaryColor,
+                          );
+                        },
+                      ),
                     ),
                   ),
                 if (invoices.isEmpty)

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mpos_app/core/shared/extension.dart';
 import 'package:mpos_app/products/presentation/delete_product.dart';
 import 'package:mpos_app/products/presentation/edit_product_page.dart';
 import '../../core/shared/error_message.dart';
@@ -219,10 +220,9 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16,
                         ),
-                        child: ListView.builder(
+                        child: ListView.separated(
                           itemCount: products.length,
-                          itemBuilder: (BuildContext context, index) =>
-                              GestureDetector(
+                          itemBuilder: (BuildContext context, index) => InkWell(
                             onTap: () {
                               context
                                   .read<SelectedOrderItemCubit>()
@@ -230,89 +230,123 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                                     products[index],
                                   );
                             },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: kSecondaryColor,
-                                  width: 0.5,
-                                ),
+                            child: ListTile(
+                              title: BoxText.body(
+                                '${products[index].label}'.capitalize(),
+                                fontWeight: FontWeight.bold,
                               ),
-                              margin: const EdgeInsets.symmetric(vertical: 5),
-                              padding: const EdgeInsets.all(2),
-                              width: double.infinity,
-                              child: Row(children: [
-                                Container(
-                                  padding: const EdgeInsets.all(3),
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade300,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: const Image(
-                                      image: AssetImage(
-                                          "assets/images/image_placeholder.jpeg")),
+                              subtitle: BoxText.body(
+                                'XOF ${products[index].price.toString()}',
+                                color: Colors.green,
+                              ),
+                              trailing: IconButton(
+                                onPressed: () => buildBottomSheetForEditProduct(
+                                  context,
+                                  formKey,
+                                  products[index],
+                                  labelTextFieldController,
+                                  priceTextFieldController,
                                 ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: BoxText.body(
-                                          products[index].label ?? '',
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: BoxText.body(
-                                          'XOF ${products[index].price.toString()}',
-                                          color: Colors.green,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Row(children: [
-                                  GestureDetector(
-                                    onTap: () => buildBottomSheetForEditProduct(
-                                      context,
-                                      formKey,
-                                      products[index],
-                                      labelTextFieldController,
-                                      priceTextFieldController,
-                                    ),
-                                    child: Icon(
-                                      Ionicons.pencil_outline,
-                                      size: 20,
-                                      color: Colors.grey.shade500,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 15),
-                                  GestureDetector(
-                                    onTap: () {
-                                      buildAlertDialogeForDeleteProduct(
-                                        context,
-                                        products[index],
-                                      );
-                                    },
-                                    child: Container(
-                                      margin: const EdgeInsets.only(right: 5),
-                                      child: Icon(
-                                        Ionicons.trash_outline,
-                                        size: 20,
-                                        color: Colors.grey.shade500,
-                                      ),
-                                    ),
-                                  ),
-                                ])
-                              ]),
+                                icon: const Icon(Ionicons.pencil_outline),
+                              ),
                             ),
                           ),
+                          separatorBuilder: (context, index) {
+                            return const Divider(
+                              color: kPrimaryColor,
+                            );
+                          },
+                          //     GestureDetector(
+                          //   onTap: () {
+                          //     context
+                          //         .read<SelectedOrderItemCubit>()
+                          //         .selectOrderItem(
+                          //           products[index],
+                          //         );
+                          //   },
+                          //   child: Container(
+                          //     decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(10),
+                          //       border: Border.all(
+                          //         color: kSecondaryColor,
+                          //         width: 0.5,
+                          //       ),
+                          //     ),
+                          //     margin: const EdgeInsets.symmetric(vertical: 5),
+                          //     padding: const EdgeInsets.all(2),
+                          //     width: double.infinity,
+                          //     child: Row(children: [
+                          //       Container(
+                          //         padding: const EdgeInsets.all(3),
+                          //         width: 50,
+                          //         height: 50,
+                          //         decoration: BoxDecoration(
+                          //           color: Colors.grey.shade300,
+                          //           borderRadius: BorderRadius.circular(10),
+                          //         ),
+                          //         child: const Image(
+                          //             image: AssetImage(
+                          //                 "assets/images/image_placeholder.jpeg")),
+                          //       ),
+                          //       const SizedBox(width: 10),
+                          //       Expanded(
+                          //         child: Column(
+                          //           mainAxisAlignment: MainAxisAlignment.start,
+                          //           children: [
+                          //             Container(
+                          //               alignment: Alignment.centerLeft,
+                          //               child: BoxText.body(
+                          //                 products[index].label ?? '',
+                          //                 fontWeight: FontWeight.bold,
+                          //               ),
+                          //             ),
+                          //             const SizedBox(height: 5),
+                          //             Container(
+                          //               alignment: Alignment.centerLeft,
+                          //               child: BoxText.body(
+                          //                 'XOF ${products[index].price.toString()}',
+                          //                 color: Colors.green,
+                          //               ),
+                          //             )
+                          //           ],
+                          //         ),
+                          //       ),
+                          //       Row(children: [
+                          //         GestureDetector(
+                          //           onTap: () => buildBottomSheetForEditProduct(
+                          //             context,
+                          //             formKey,
+                          //             products[index],
+                          //             labelTextFieldController,
+                          //             priceTextFieldController,
+                          //           ),
+                          //           child: Icon(
+                          //             Ionicons.pencil_outline,
+                          //             size: 20,
+                          //             color: Colors.grey.shade500,
+                          //           ),
+                          //         ),
+                          //         const SizedBox(width: 15),
+                          //         GestureDetector(
+                          //           onTap: () {
+                          //             buildAlertDialogeForDeleteProduct(
+                          //               context,
+                          //               products[index],
+                          //             );
+                          //           },
+                          //           child: Container(
+                          //             margin: const EdgeInsets.only(right: 5),
+                          //             child: Icon(
+                          //               Ionicons.trash_outline,
+                          //               size: 20,
+                          //               color: Colors.grey.shade500,
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ])
+                          //     ]),
+                          //   ),
+                          // ),
                         ),
                       ),
                     ),

@@ -22,7 +22,10 @@ class UpdateProductCubit extends Cubit<UpdateProductState> {
       productId: productId,
     );
     updatProductOrFailure.fold(
-      (product) => emit(UpdateProductUpdated(product)),
+      (product) {
+        emit(UpdateProductUpdated(product));
+        emit(UpdateProductInitial());
+      },
       (errorMessage) => emit(
         UpdateProductError(errorMessage.message ?? ''),
       ),

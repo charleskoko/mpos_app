@@ -28,7 +28,10 @@ buildAlertDialogeForDeleteProduct(BuildContext context, Product? product) {
               'Annuler',
               color: Colors.grey.shade500,
             ),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              Navigator.pop(context);
+              context.read<FetchProductsCubit>().fetchProductList();
+            },
           ),
           TextButton(
             child: BoxText.body('oui'),

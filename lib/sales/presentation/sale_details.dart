@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../core/shared/time_formater.dart';
 import '../../invoices/core/domain/invoice.dart';
@@ -41,48 +42,58 @@ class _SaleDetailsState extends State<SaleDetails> {
                 elevation: 0,
               )
             ],
-            body: Column(children: [
-              BoxText.caption(
-                  TimeFormater().myDateAndTimeFormat(DateTime.now())),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: orderItems?.length,
-                  itemBuilder: (BuildContext context, index) => ListTile(
-                    title: BoxText.body(
-                      '${orderItems?[index].product?.label}',
-                      fontWeight: FontWeight.bold,
-                    ),
-                    subtitle: BoxText.body(
-                      '${orderItems?[index].price} XOF x ${orderItems?[index].amount}',
-                      color: Colors.grey.shade600,
-                    ),
-                    trailing: BoxText.body(
-                      '${orderItems?[index].total}',
-                      color: Colors.grey.shade600,
+            body: Column(
+              children: [
+                BoxText.caption(
+                    TimeFormater().myDateAndTimeFormat(DateTime.now())),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: orderItems?.length,
+                    itemBuilder: (BuildContext context, index) => ListTile(
+                      title: BoxText.body(
+                        '${orderItems?[index].product?.label}',
+                        fontWeight: FontWeight.bold,
+                      ),
+                      subtitle: BoxText.body(
+                        '${orderItems?[index].price} XOF x ${orderItems?[index].amount}',
+                        color: Colors.grey.shade600,
+                      ),
+                      trailing: BoxText.body(
+                        '${orderItems?[index].total}',
+                        color: Colors.grey.shade600,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                color: kPrimaryColor,
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          BoxText.headingThree('Total:'),
-                          BoxText.headingThree(
-                              '${order?.getOrderTotalFromListOrderLineItems}')
-                        ],
-                      ),
+                Container(
+                  height: 80,
+                  color: Colors.grey.shade300,
+                  padding: const EdgeInsets.all(20),
+                  child: Center(
+                    child: Row(
+                      children: [
+                        BoxText.subheading(
+                            'Total: ${order?.getOrderTotalFromListOrderLineItems}'),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(Ionicons.print),
+                            label: BoxText.body('Imprimer'),
+                            style: TextButton.styleFrom(
+                              primary: Colors.white,
+                              backgroundColor: kPrimaryColor,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  ],
-                ),
-              )
-            ]),
+                  ),
+                )
+              ],
+            ),
           );
         },
       ),

@@ -55,6 +55,7 @@ class BoxInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textAlignVertical: TextAlignVertical.center,
       cursorColor: kPrimaryColor,
       controller: controller,
       keyboardType: textInputType,
@@ -68,7 +69,7 @@ class BoxInputField extends StatelessWidget {
         hintStyle: subheadingStyle,
         prefixIcon: (icon == null)
             ? null
-            : Icon( 
+            : Icon(
                 icon,
                 color: kPrimaryColor,
               ),

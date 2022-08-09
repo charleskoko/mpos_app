@@ -23,10 +23,14 @@ class OrderRemoteService {
       }
       throw RestApiException(response.statusCode, response.statusMessage);
     } on DioError catch (error) {
+      print(error);
       if (error.isNoConnectionError) {
         return NoConnection();
       }
       if (error.response?.statusCode != null) {
+        if (error.response?.statusCode == 404) {
+          throw RestApiException(404, 'Veuillez réessayer s\'il vous plait');
+        }
         throw RestApiException(
             error.response?.statusCode, error.response?.data['message']);
       }

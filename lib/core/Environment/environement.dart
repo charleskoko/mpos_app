@@ -4,12 +4,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Environment {
   static String get fileName {
-    if (kDebugMode) {
-      if (Platform.isAndroid) {
-        return ".env.production";
-      }
-      return ".env.development";
-    }
+    // if (kDebugMode) {
+    //   if (Platform.isAndroid) {
+    //     return ".env.production";
+    //   }
+    //   return ".env.development";
+    // }
     return ".env.production";
   }
 

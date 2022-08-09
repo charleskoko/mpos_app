@@ -30,7 +30,6 @@ buildAlertDialogeForDeleteProduct(BuildContext context, Product? product) {
             ),
             onPressed: () {
               Navigator.pop(context);
-              context.read<FetchProductsCubit>().fetchProductList();
             },
           ),
           TextButton(

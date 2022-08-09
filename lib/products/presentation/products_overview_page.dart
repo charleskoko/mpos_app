@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mpos_app/core/shared/extension.dart';
 import 'package:mpos_app/products/presentation/delete_product.dart';
 import 'package:mpos_app/products/presentation/edit_product_page.dart';
 import '../../core/shared/error_message.dart';

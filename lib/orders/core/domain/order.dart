@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:mpos_app/orders/core/domain/order_line_item.dart';
 
 class OrderProduct {
@@ -14,6 +16,12 @@ class OrderProduct {
     orderLineItems =
         OrderLineItem.orderLineItemList(jsonObject['order_line_items']);
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'number': number,
+        'order_line_items': orderLineItems?.map((e) => e.toJson()).toList()
+      };
 
   double get getOrderTotalFromListOrderLineItems {
     double orderTotalPrice = 0;

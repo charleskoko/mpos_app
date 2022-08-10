@@ -16,7 +16,9 @@ class FetchInvoiceCubit extends Cubit<FetchInvoiceState> {
     try {
       final fetchTodayInvoiceList = await _invoiceRepository.fetchInvoiceList();
       fetchTodayInvoiceList.fold(
-        (invoices) => emit(FetchInvoiceLoaded(invoices)),
+        (fresh) {
+          emit(FetchInvoiceLoaded(fresh.entity));
+        },
         (invoiceError) => emit(FetchInvoiceError(invoiceError.message)),
       );
     } on RestApiException catch (exception) {

@@ -23,9 +23,9 @@ class DashboardCubit extends Cubit<DashboardState> {
     try {
       final dayInvoicesOrFailure = await _invoiceRepository.fetchInvoiceList();
       dayInvoicesOrFailure.fold(
-        (invoices) {
-          int numberOfSalesOfTheDay = invoices.length;
-          double incomeOftheday = _getIncomeOfTheDay(invoices);
+        (fresh) {
+          int numberOfSalesOfTheDay = fresh.entity.length;
+          double incomeOftheday = _getIncomeOfTheDay(fresh.entity);
           emit(DashboardState(
             incomeOftheday: incomeOftheday,
             numberOfSalesOfTheDay: numberOfSalesOfTheDay,

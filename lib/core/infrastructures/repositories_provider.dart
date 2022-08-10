@@ -5,6 +5,7 @@ import 'package:mpos_app/orders/core/infrastructure/order_remote_service.dart';
 import '../../authentication/infrastructures/authentication_local_service.dart';
 import '../../authentication/infrastructures/authentication_remote_service.dart';
 import '../../authentication/infrastructures/authentication_repository.dart';
+import '../../invoices/core/infrastructure/invoice_local_service.dart';
 import '../../invoices/core/infrastructure/invoice_remote_service.dart';
 import '../../invoices/core/infrastructure/invoice_repository.dart';
 import '../../orders/core/infrastructure/order_repository.dart';
@@ -21,6 +22,7 @@ class RepositoriesProvider {
     required ProductLocalService productLocalService,
     required OrderRemoteService orderRemoteService,
     required InvoiceRemoteService invoiceRemoteService,
+    required InvoiceLocalService invoiceLocalservice,
   }) {
     return [
       RepositoryProvider<SembastDatabase>(
@@ -46,6 +48,7 @@ class RepositoriesProvider {
       RepositoryProvider<InvoiceRepository>(
         create: (context) => InvoiceRepository(
           invoiceRemoteService,
+          invoiceLocalservice,
         ),
       ),
     ];

@@ -16,7 +16,6 @@ class FetchProductsCubit extends Cubit<FetchProductsState> {
       final fetchProductRequest = await _productRepository.fetchProductList();
       fetchProductRequest.fold(
         (fresh) {
-          print('is fresh: ${fresh.isFresh}');
           emit(FetchProductsLoaded(fresh));
         },
         (errorMessage) => emit(

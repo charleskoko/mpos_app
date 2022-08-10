@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../../../orders/core/domain/order.dart';
 import '../../../orders/core/domain/order_line_item.dart';
 
@@ -20,6 +22,13 @@ class Invoice {
     order = OrderProduct.fromJson(jsonObject["order"]);
     createdAt = DateTime.parse(jsonObject["created_at"].toString()).toLocal();
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'number': number,
+        'created_at': createdAt.toString(),
+        'order': order?.toJson()
+      };
 
   String total() {
     double total = 0;

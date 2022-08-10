@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../../../products/core/domaine/product.dart';
 
 class OrderLineItem {
@@ -21,6 +23,13 @@ class OrderLineItem {
     amount = double.parse(jsonObject['amount']);
     total = price * amount;
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'product': product?.toJson(),
+        'price': price.toString(),
+        'amount': amount.toString(),
+      };
 
   static List<OrderLineItem>? orderLineItemList(List<dynamic> dynamicList) {
     return dynamicList

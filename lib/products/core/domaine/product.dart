@@ -9,10 +9,10 @@ class Product {
     this.price,
   });
 
-  Product.fromJson(Map<String, dynamic> jsonObject) {
-    id = jsonObject["id"].toString();
-    label = jsonObject["label"].toString();
-    price = double.parse(jsonObject["price"] ?? '0');
+  Product.fromJson(Map<String, dynamic>? jsonObject) {
+    id = jsonObject?["id"].toString();
+    label = jsonObject?["label"].toString();
+    price = double.parse(jsonObject?["price"] ?? '0');
   }
 
   Map<String, dynamic> toJson() => {

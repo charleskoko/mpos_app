@@ -41,6 +41,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     try {
       await _authenticationRepository.logout();
       emit(AuthenticationNotValidated());
+      // ignore: unused_catch_clause
     } on RestApiException catch (exception) {
       _authenticationRepository.offLineLogout();
       emit(AuthenticationNotValidated());

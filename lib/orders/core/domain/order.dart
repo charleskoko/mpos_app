@@ -27,23 +27,24 @@ class OrderProduct {
   static String getOrderTotalFromMapList(
       List<Map<String, dynamic>> orderItems) {
     double orderPrice = 0;
-    orderItems.forEach((element) =>
-        orderPrice += element['product'].price * element['amount']);
+    for (var element in orderItems) {
+      orderPrice += element['product'].price * element['amount'];
+    }
     return orderPrice.toString();
   }
 
   static Map<String, dynamic> rangeOrderData(
       List<Map<String, dynamic>> orderItems) {
     List<Map<String, dynamic>> orderData = [];
-    orderItems.forEach(
-      (element) => orderData.add(
+    for (var element in orderItems) {
+      orderData.add(
         {
           'product_id': element['product'].id,
           'amount': element['amount'],
           'price': element['amount'] * element['product'].price
         },
-      ),
-    );
+      );
+    }
     return {'addOrderLineItem': orderData};
   }
 }

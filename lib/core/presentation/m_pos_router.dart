@@ -48,7 +48,7 @@ class MposRouter {
               path: 'orderVerification',
               pageBuilder: (context, state) => MaterialPage(
                 key: state.pageKey,
-                child: OrderVerificationPage(),
+                child: const OrderVerificationPage(),
               ),
             ),
             GoRoute(
@@ -56,7 +56,7 @@ class MposRouter {
               path: 'saveOrderStatus',
               pageBuilder: (context, state) => MaterialPage(
                 key: state.pageKey,
-                child: SaveOrderStatus(),
+                child: const SaveOrderStatus(),
               ),
             ),
             GoRoute(
@@ -64,7 +64,7 @@ class MposRouter {
               path: 'salesDetails',
               pageBuilder: (context, state) => MaterialPage(
                 key: state.pageKey,
-                child: SaleDetails(),
+                child: const SaleDetails(),
               ),
             ),
           ]),

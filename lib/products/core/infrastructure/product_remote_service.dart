@@ -23,7 +23,6 @@ class ProductRemoteService {
       }
       throw RestApiException(response.statusCode, response.statusMessage);
     } on DioError catch (error) {
-      print(error);
       if (error.isNoConnectionError) {
         return NoConnection();
       }

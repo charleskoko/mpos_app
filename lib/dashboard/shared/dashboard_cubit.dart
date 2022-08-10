@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:meta/meta.dart';
 import 'package:mpos_app/invoices/core/domain/invoice.dart';
 
@@ -15,7 +13,7 @@ class DashboardCubit extends Cubit<DashboardState> {
   final InvoiceRepository _invoiceRepository;
   DashboardCubit(this._invoiceRepository)
       : super(
-          DashboardState(
+          const DashboardState(
             incomeOftheday: 0,
             numberOfSalesOfTheDay: 0,
           ),

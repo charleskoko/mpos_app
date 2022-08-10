@@ -8,6 +8,7 @@ import '../../core/presentation/snack_bar.dart';
 import '../../core/shared/error_message.dart';
 import '../../invoices/shared/fetch_invoice_cubit.dart';
 import '../../src/shared/app_colors.dart';
+import '../../src/widgets/box_dashboard_info.dart';
 import '../../src/widgets/box_text.dart';
 import '../shared/dashboard_cubit.dart';
 
@@ -59,7 +60,6 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           BlocListener<FetchInvoiceCubit, FetchInvoiceState>(
             listener: (context, fetchInvoiceState) {
-              print(fetchInvoiceState);
               if (fetchInvoiceState is FetchInvoiceError) {
                 buidSnackbar(
                   context: context,
@@ -80,105 +80,22 @@ class _DashboardPageState extends State<DashboardPage> {
             builder: (context, dashbboardState) {
               return Column(
                 children: [
-                  BoxText.caption(TimeFormater().myDateFormat(DateTime.now())),
+                  BoxText.caption(
+                    TimeFormater().myDateFormat(
+                      DateTime.now(),
+                    ),
+                  ),
                   const SizedBox(height: 16),
                   Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: const Color(0xffF4E9F3),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFE9DFE8),
-                                borderRadius: BorderRadius.circular(
-                                  10,
-                                ),
-                              ),
-                              height: 60,
-                              width: 60,
-                              child: const Center(
-                                child: Icon(Ionicons.receipt_outline),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 40,
-                            child: BoxText.subheading(
-                              'Ventes',
-                              color: Colors.grey.shade500,
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 5,
-                            child: BoxText.headingThree(
-                              '${dashbboardState.numberOfSalesOfTheDay}',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    child: BoxDashboardInfo.salesDetails(
+                        data: '${dashbboardState.numberOfSalesOfTheDay}'),
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF6E8EA),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFE8DDDF),
-                                borderRadius: BorderRadius.circular(
-                                  10,
-                                ),
-                              ),
-                              height: 60,
-                              width: 60,
-                              child: const Center(
-                                child: Icon(Ionicons.cash_outline),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 40,
-                            child: BoxText.subheading(
-                              'Recette',
-                              color: Colors.grey.shade500,
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 10,
-                            child: Row(
-                              children: [
-                                BoxText.caption(
-                                  'XOF',
-                                  color: Colors.grey.shade500,
-                                ),
-                                const SizedBox(height: 5),
-                                BoxText.headingThree(
-                                  '${dashbboardState.incomeOftheday}',
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    child: BoxDashboardInfo.salesTotal(
+                        data: '${dashbboardState.incomeOftheday}'),
                   ),
                 ],
               );

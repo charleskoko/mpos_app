@@ -4,12 +4,13 @@ import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/src/widgets/box_text.dart';
 import '../../src/shared/app_colors.dart';
+import '../../src/widgets/box_order_item.dart';
 import '../core/domain/order.dart';
 import '../shared/cubit/selected_order_item_cubit.dart';
 import '../shared/cubit/store_order_cubit.dart';
 
 class OrderVerificationPage extends StatefulWidget {
-  OrderVerificationPage({Key? key}) : super(key: key);
+  const OrderVerificationPage({Key? key}) : super(key: key);
 
   @override
   State<OrderVerificationPage> createState() => _OrderVerificationPageState();
@@ -32,7 +33,7 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
             ),
             actions: [
               IconButton(
-                icon: Icon(Ionicons.trash_outline),
+                icon: const Icon(Ionicons.trash_outline),
                 onPressed: () {
                   Navigator.pop(context);
                   context
@@ -53,34 +54,28 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
               children: [
                 Expanded(
                   child: ListView.builder(
-                      itemCount:
-                          selectedOrderItemState.selectedOrderItem?.length,
-                      itemBuilder: (BuildContext context, index) => Dismissible(
-                            key: Key(orderItems[index]['product'].id),
-                            direction: DismissDirection.endToStart,
-                            onDismissed: (direction) {
-                              context
-                                  .read<SelectedOrderItemCubit>()
-                                  .removeItemFromList(
-                                    itemToDelete: orderItems[index],
-                                    selectedItemList: orderItems,
-                                  );
-                            },
-                            child: ListTile(
-                              title: BoxText.body(
-                                '${orderItems[index]['product'].label ?? ''}',
-                                fontWeight: FontWeight.bold,
-                              ),
-                              subtitle: BoxText.body(
-                                '${orderItems[index]['product'].price ?? ''} XOF x ${orderItems[index]['amount']}',
-                                color: Colors.grey.shade600,
-                              ),
-                              trailing: BoxText.body(
-                                '${orderItems[index]['product'].price * orderItems[index]['amount']} XOF',
-                                color: Colors.grey.shade600,
-                              ),
-                            ),
-                          )),
+                    itemCount: selectedOrderItemState.selectedOrderItem?.length,
+                    itemBuilder: (BuildContext context, index) => Dismissible(
+                      key: Key(orderItems[index]['product'].id),
+                      direction: DismissDirection.endToStart,
+                      onDismissed: (direction) {
+                        context
+                            .read<SelectedOrderItemCubit>()
+                            .removeItemFromList(
+                              itemToDelete: orderItems[index],
+                              selectedItemList: orderItems,
+                            );
+                      },
+                      child: BoxOrderItem(
+                        productLabel:
+                            '${orderItems[index]['product'].label ?? ''}',
+                        price: '${orderItems[index]['product'].price ?? ''}',
+                        amount: '${orderItems[index]['amount']}',
+                        total:
+                            '${orderItems[index]['product'].price * orderItems[index]['amount']} XOF',
+                      ),
+                    ),
+                  ),
                 ),
                 Container(
                   padding: const EdgeInsets.all(16),

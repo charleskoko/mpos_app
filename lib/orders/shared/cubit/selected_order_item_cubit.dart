@@ -5,7 +5,7 @@ import '../../core/domain/order_line_item.dart';
 part 'selected_order_item_state.dart';
 
 class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
-  SelectedOrderItemCubit() : super(SelectedOrderItemState());
+  SelectedOrderItemCubit() : super(const SelectedOrderItemState());
 
   Future<void> selectOrderItem(Product product) async {
     List<Map<String, dynamic>>? currentOrderItemsSelected =
@@ -74,6 +74,7 @@ List<Map<String, dynamic>>? _addOrderItemToNotEmptyList(
     currentOrderItemsSelected.add(currentProductAdded);
 
     return currentOrderItemsSelected;
+    // ignore: unused_catch_clause
   } on Error catch (e) {
     currentOrderItemsSelected.add(OrderLineItem.localOrderItem(product, 1));
     return currentOrderItemsSelected;

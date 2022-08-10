@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/products/presentation/delete_product.dart';
@@ -10,6 +9,9 @@ import '../../orders/shared/cubit/selected_order_item_cubit.dart';
 import '../../orders/shared/cubit/store_order_cubit.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_input_field.dart';
+import '../../src/widgets/box_loading.dart';
+import '../../src/widgets/box_message.dart';
+import '../../src/widgets/box_product.dart';
 import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
 import '../shared/cubit/fetch_product/fetch_products_cubit.dart';
@@ -27,10 +29,6 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   final formKey = GlobalKey<FormState>();
   TextEditingController labelTextFieldController = TextEditingController();
   TextEditingController priceTextFieldController = TextEditingController();
-
-  void _addProductToList(Product product) {
-    selectedProduct.add(product);
-  }
 
   @override
   void initState() {
@@ -97,12 +95,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
       body: BlocBuilder<FetchProductsCubit, FetchProductsState>(
         builder: (context, fetchProductState) {
           if (fetchProductState is FetchProductsLoading) {
-            return Center(
-              child: SpinKitWave(
-                color: Colors.grey.shade300,
-                size: 30.0,
-              ),
-            );
+            return const BoxLoading();
           }
           if (fetchProductState is FetchProductsLoaded) {
             List<Product> products = fetchProductState.products;
@@ -239,106 +232,40 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                                       products[index],
                                     );
                               },
-                              child: Card(
-                                child: Container(
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Positioned(
-                                        right: 0,
-                                        child: InkWell(
-                                          onTap: () =>
-                                              buildAlertDialogeForDeleteProduct(
-                                            context,
-                                            products[index],
-                                          ),
-                                          child: const Icon(
-                                            Ionicons.close_circle_outline,
-                                            color: Colors.red,
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        left: 0,
-                                        child: InkWell(
-                                          onTap: () =>
-                                              buildBottomSheetForEditProduct(
-                                            context,
-                                            formKey,
-                                            products[index],
-                                            labelTextFieldController,
-                                            priceTextFieldController,
-                                          ),
-                                          child: const Icon(
-                                            Ionicons.pencil_outline,
-                                            size: 17,
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        bottom: 28,
-                                        left: 10,
-                                        child: BoxText.body(
-                                            '${products[index].label}'),
-                                      ),
-                                      Positioned(
-                                        bottom: 5,
-                                        left: 10,
-                                        child: BoxText.body(
-                                          '${products[index].price} XOF',
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Positioned(
-                                        child: Container(
-                                          margin: const EdgeInsets.only(
-                                            top: 20,
-                                            left: 10,
-                                            right: 10,
-                                            bottom: 50,
-                                          ),
-                                          child: const Center(
-                                            child: Image(
-                                                image: AssetImage(
-                                                    "assets/images/image_placeholder.jpeg")),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                              child: BoxProduct(
+                                onDelete: () =>
+                                    buildAlertDialogeForDeleteProduct(
+                                  context,
+                                  products[index],
                                 ),
+                                onEdit: () => buildBottomSheetForEditProduct(
+                                  context,
+                                  formKey,
+                                  products[index],
+                                  labelTextFieldController,
+                                  priceTextFieldController,
+                                ),
+                                product: products[index],
                               ),
                             ),
                           )),
                     ),
                   if (products.isEmpty)
-                    Expanded(
-                      child: Center(
-                        child: BoxText.body(
-                          'Ajouter vos Produits en cliquant sur "+"',
-                          color: Colors.grey.shade500,
-                        ),
-                      ),
+                    const Expanded(
+                      child: BoxMessage(
+                          message: 'Ajouter vos Produits en cliquant sur "+"'),
                     )
                 ],
               ),
             );
           }
           if (fetchProductState is FetchProductsError) {
-            return Center(
-              child: BoxText.body(
-                '${ErrorMessage.errorMessages['${fetchProductState.message}']}',
-                color: Colors.grey.shade500,
-              ),
+            return BoxMessage(
+              message:
+                  '${ErrorMessage.errorMessages['${fetchProductState.message}']}',
             );
           }
-          return const Center(
-            child: Text('initial'),
-          );
+          return const BoxMessage(message: '');
         },
       ),
     );

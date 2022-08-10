@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import '../../core/shared/error_message.dart';
 import '../../core/shared/time_formater.dart';
 import '../../invoices/core/domain/invoice.dart';
 import '../../invoices/shared/fetch_invoice_cubit.dart';
 import '../../src/shared/app_colors.dart';
+import '../../src/widgets/box_loading.dart';
+import '../../src/widgets/box_message.dart';
+import '../../src/widgets/box_sale.dart';
 import '../../src/widgets/box_text.dart';
 import '../shared/sale_details_cubit.dart';
 
@@ -40,12 +41,7 @@ class _SalesOverviewPage extends State<SalesOverviewPage> {
       body: BlocBuilder<FetchInvoiceCubit, FetchInvoiceState>(
         builder: (context, fetchInvoiceState) {
           if (fetchInvoiceState is FetchInvoiceLoading) {
-            return Center(
-              child: SpinKitWave(
-                color: Colors.grey.shade300,
-                size: 30.0,
-              ),
-            );
+            return const BoxLoading();
           }
           if (fetchInvoiceState is FetchInvoiceLoaded) {
             List<Invoice> invoices = fetchInvoiceState.invoices;
@@ -70,22 +66,7 @@ class _SalesOverviewPage extends State<SalesOverviewPage> {
                                 .show(invoices[index]);
                             context.goNamed('salesDetails');
                           },
-                          child: ListTile(
-                            title: BoxText.body(
-                              '#' +
-                                  '${invoices[index].number}'.padLeft(10, '0'),
-                              fontWeight: FontWeight.bold,
-                            ),
-                            trailing: BoxText.body(
-                              DateFormat.Hm().format(
-                                invoices[index].createdAt ?? DateTime.now(),
-                              ),
-                            ),
-                            subtitle: BoxText.body(
-                              '${invoices[index].total()} XOF',
-                              color: Colors.grey.shade700,
-                            ),
-                          ),
+                          child: BoxSale(invoice: invoices[index]),
                         ),
                         separatorBuilder: (context, index) {
                           return const Divider(
@@ -96,22 +77,17 @@ class _SalesOverviewPage extends State<SalesOverviewPage> {
                     ),
                   ),
                 if (invoices.isEmpty)
-                  Expanded(
-                      child: Center(
-                    child: BoxText.body(
-                      "Aucune vente enregistrer pour l'instant",
-                      color: Colors.grey.shade500,
-                    ),
-                  ))
+                  const Expanded(
+                    child: BoxMessage(
+                        message: "Aucune vente enregistrer pour l'instant"),
+                  )
               ],
             );
           }
           if (fetchInvoiceState is FetchInvoiceError) {
-            return Center(
-              child: BoxText.body(
-                '${ErrorMessage.errorMessages['${fetchInvoiceState.message}']}',
-                color: Colors.grey.shade500,
-              ),
+            return BoxMessage(
+              message:
+                  '${ErrorMessage.errorMessages['${fetchInvoiceState.message}']}',
             );
           }
           return Container();

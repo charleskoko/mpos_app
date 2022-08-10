@@ -10,7 +10,7 @@ import '../shared/cubit/selected_order_item_cubit.dart';
 import '../shared/cubit/store_order_cubit.dart';
 
 class SaveOrderStatus extends StatefulWidget {
-  SaveOrderStatus({Key? key}) : super(key: key);
+  const SaveOrderStatus({Key? key}) : super(key: key);
 
   @override
   State<SaveOrderStatus> createState() => _SaveOrderStatusState();

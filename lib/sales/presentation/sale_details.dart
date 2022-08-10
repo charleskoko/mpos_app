@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
-
 import '../../core/shared/time_formater.dart';
-import '../../invoices/core/domain/invoice.dart';
 import '../../orders/core/domain/order.dart';
 import '../../orders/core/domain/order_line_item.dart';
 import '../../src/shared/app_colors.dart';
+import '../../src/widgets/box_order_item.dart';
 import '../../src/widgets/box_text.dart';
 import '../shared/sale_details_cubit.dart';
 
 class SaleDetails extends StatefulWidget {
-  SaleDetails({Key? key}) : super(key: key);
+  const SaleDetails({Key? key}) : super(key: key);
 
   @override
   State<SaleDetails> createState() => _SaleDetailsState();
@@ -26,7 +25,6 @@ class _SaleDetailsState extends State<SaleDetails> {
         builder: (context, saleDetailsState) {
           List<OrderLineItem>? orderItems =
               saleDetailsState.invoice?.order?.orderLineItems;
-          Invoice? invoice = saleDetailsState.invoice;
           OrderProduct? order = saleDetailsState.invoice?.order;
           return NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScolled) => [
@@ -49,20 +47,11 @@ class _SaleDetailsState extends State<SaleDetails> {
                 Expanded(
                   child: ListView.builder(
                     itemCount: orderItems?.length,
-                    itemBuilder: (BuildContext context, index) => ListTile(
-                      title: BoxText.body(
-                        '${orderItems?[index].product?.label}',
-                        fontWeight: FontWeight.bold,
-                      ),
-                      subtitle: BoxText.body(
-                        '${orderItems?[index].price} XOF x ${orderItems?[index].amount}',
-                        color: Colors.grey.shade600,
-                      ),
-                      trailing: BoxText.body(
-                        '${orderItems?[index].total}',
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
+                    itemBuilder: (BuildContext context, index) => BoxOrderItem(
+                        productLabel: '${orderItems?[index].product?.label}',
+                        price: '${orderItems?[index].price} ',
+                        amount: '${orderItems?[index].amount}',
+                        total: '${orderItems?[index].total}'),
                   ),
                 ),
                 Container(

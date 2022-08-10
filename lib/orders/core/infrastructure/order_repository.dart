@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:mpos_app/orders/core/infrastructure/order_remote_service.dart';
 import '../../../core/infrastructures/network_exception.dart';
-import '../../../core/infrastructures/remote_response.dart';
+import '../../../core/domain/remote_response.dart';
 import '../domain/order_error.dart';
 import '../domain/order.dart';
 

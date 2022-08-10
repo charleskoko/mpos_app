@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:mpos_app/invoices/core/infrastructure/invoice_remote_service.dart';
 
 import '../../../core/infrastructures/network_exception.dart';
-import '../../../core/infrastructures/remote_response.dart';
+import '../../../core/domain/remote_response.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_error.dart';
 

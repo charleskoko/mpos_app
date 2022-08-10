@@ -8,8 +8,8 @@ class FetchProductsInitial extends FetchProductsState {}
 class FetchProductsLoading extends FetchProductsState {}
 
 class FetchProductsLoaded extends FetchProductsState {
-  final List<Product> products;
-  FetchProductsLoaded(this.products);
+  final Fresh<List<Product>> fresh;
+  FetchProductsLoaded(this.fresh);
 }
 
 class FetchProductsError extends FetchProductsState {

@@ -98,7 +98,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
             return const BoxLoading();
           }
           if (fetchProductState is FetchProductsLoaded) {
-            List<Product> products = fetchProductState.products;
+            List<Product> products = fetchProductState.fresh.entity;
             return MultiBlocListener(
               listeners: [
                 BlocListener<StoreOrderCubit, StoreOrderState>(

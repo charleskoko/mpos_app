@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import '../../../../core/domain/fresh.dart';
 import '../../../../core/infrastructures/network_exception.dart';
 import '../../../core/domaine/product.dart';
 import '../../../core/infrastructure/product_repository.dart';
@@ -14,7 +15,10 @@ class FetchProductsCubit extends Cubit<FetchProductsState> {
     try {
       final fetchProductRequest = await _productRepository.fetchProductList();
       fetchProductRequest.fold(
-        (products) => emit(FetchProductsLoaded(products)),
+        (fresh) {
+          print('is fresh: ${fresh.isFresh}');
+          emit(FetchProductsLoaded(fresh));
+        },
         (errorMessage) => emit(
           FetchProductsError(errorMessage.message),
         ),
@@ -39,6 +43,7 @@ class FetchProductsCubit extends Cubit<FetchProductsState> {
               ),
         )
         .toList();
-    emit(FetchProductsLoaded(products));
+    Fresh<List<Product>> productList = Fresh.yes(products);
+    emit(FetchProductsLoaded(productList));
   }
 }

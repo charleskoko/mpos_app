@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:mpos_app/core/shared/dio_extension.dart';
 import '../../../core/Environment/environement.dart';
 import '../../../core/infrastructures/network_exception.dart';
-import '../../../core/infrastructures/remote_response.dart';
+import '../../../core/domain/remote_response.dart';
 import '../domaine/product.dart';
 
 class ProductRemoteService {

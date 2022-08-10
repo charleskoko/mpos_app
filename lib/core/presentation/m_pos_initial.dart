@@ -7,13 +7,19 @@ import '../../authentication/infrastructures/authentication_local_service.dart';
 import '../../authentication/infrastructures/authentication_remote_service.dart';
 import '../../invoices/core/infrastructure/invoice_remote_service.dart';
 import '../../orders/core/infrastructure/order_remote_service.dart';
+import '../../products/core/infrastructure/product_local_service.dart';
 import '../../products/core/infrastructure/product_remote_service.dart';
 import '../infrastructures/blocs_provider.dart';
 import '../infrastructures/repositories_provider.dart';
+import '../infrastructures/sembast_database.dart';
 import '../shared/dio_interceptor.dart';
 
 class Mpos extends StatefulWidget {
-  const Mpos({Key? key}) : super(key: key);
+  final SembastDatabase sembastDatabase;
+  const Mpos({
+    Key? key,
+    required this.sembastDatabase,
+  }) : super(key: key);
 
   @override
   State<Mpos> createState() => _MposState();
@@ -25,6 +31,7 @@ class _MposState extends State<Mpos> {
   late AuthenticationLocalService _authenticationLocalService;
   late AuthenticationRemoteService _authenticationRemoteService;
   late ProductRemoteService _productRemoteService;
+  late ProductLocalService _productLocalService;
   late OrderRemoteService _orderRemoteService;
   late InvoiceRemoteService _invoiceRemoteService;
 
@@ -41,6 +48,7 @@ class _MposState extends State<Mpos> {
     _productRemoteService = ProductRemoteService(_dio);
     _orderRemoteService = OrderRemoteService(_dio);
     _invoiceRemoteService = InvoiceRemoteService(_dio);
+    _productLocalService = ProductLocalService(widget.sembastDatabase);
     super.initState();
   }
 
@@ -53,6 +61,7 @@ class _MposState extends State<Mpos> {
           authenticationRemoteService: _authenticationRemoteService,
           authenticationLocalService: _authenticationLocalService,
           productRemoteService: _productRemoteService,
+          productLocalService: _productLocalService,
           orderRemoteService: _orderRemoteService,
           invoiceRemoteService: _invoiceRemoteService,
         )

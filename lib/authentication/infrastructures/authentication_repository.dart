@@ -5,7 +5,7 @@ import 'package:mpos_app/authentication/infrastructures/authentication_remote_se
 
 import '../../core/domain/user.dart';
 import '../../core/infrastructures/network_exception.dart';
-import '../../core/infrastructures/remote_response.dart';
+import '../../core/domain/remote_response.dart';
 import '../domain/authentication_error.dart';
 
 class AuthenticationRepository {

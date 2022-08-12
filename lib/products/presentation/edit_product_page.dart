@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import '../../core/presentation/snack_bar.dart';
+import '../../core/shared/error_message.dart';
 import '../../src/widgets/box_button.dart';
 import '../../src/widgets/box_input_field.dart';
 import '../../src/widgets/box_text.dart';
@@ -22,7 +23,17 @@ buildBottomSheetForEditProduct(
     context: context,
     builder: (context) => BlocListener<UpdateProductCubit, UpdateProductState>(
       listener: (context, updateProductState) {
-        if (updateProductState is UpdateProductError) {}
+        if (updateProductState is UpdateProductError) {
+          String errorKey = ErrorMessage.determineMessageKey(
+            updateProductState.message,
+          );
+          buidSnackbar(
+            context: context,
+            backgroundColor: Colors.red,
+            text: ErrorMessage.errorMessages[errorKey] ??
+                'Une erreur a eu lieu. Veuillez réessayer',
+          );
+        }
         if (updateProductState is UpdateProductUpdated) {
           Navigator.pop(context);
           context.read<FetchProductsCubit>().fetchProductList();

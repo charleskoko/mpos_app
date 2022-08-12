@@ -12,7 +12,6 @@ class ProductLocalService {
 
   Future<void> upsertProducts(List<Product> products) async {
     const sembastPage = _page - 1;
-
     await _store
         .records(products
             .mapIndexed((index, _) => index + _itemsPerPage * sembastPage))
@@ -34,5 +33,22 @@ class ProductLocalService {
     );
 
     return records.map((e) => Product.fromJson(e.value)).toList();
+  }
+
+  Future<void> update(Product product) async {
+    final finder = Finder(filter: Filter.equals('id', product.id));
+    await _store.update(
+      _sembastDatabase.instance,
+      product.toJson(),
+      finder: finder,
+    );
+  }
+
+  Future<void> deleteProduct(Product product) async {
+    final finder = Finder(filter: Filter.equals('id', product.id));
+    final int result = await _store.delete(
+      _sembastDatabase.instance,
+      finder: finder,
+    );
   }
 }

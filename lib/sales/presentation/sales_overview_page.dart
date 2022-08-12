@@ -31,6 +31,7 @@ class _SalesOverviewPage extends State<SalesOverviewPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
         title: BoxText.headingTwo(

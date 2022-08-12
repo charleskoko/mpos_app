@@ -8,8 +8,8 @@ class DeleteProductInitial extends DeleteProductState {}
 class DeleteProductDeleted extends DeleteProductState {}
 
 class DeleteProductError extends DeleteProductState {
-  final String? errorMessage;
-  DeleteProductError(this.errorMessage);
+  final String? message;
+  DeleteProductError(this.message);
 }
 
 class DeleteProductLoading extends DeleteProductState {}

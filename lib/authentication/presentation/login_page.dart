@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/presentation/snack_bar.dart';
+import '../../core/shared/error_message.dart';
 import '../../src/widgets/box_button.dart';
 import '../../src/widgets/box_input_field.dart';
 import '../../src/widgets/box_text.dart';
@@ -32,10 +33,13 @@ class _LoginPageState extends State<LoginPage> {
           }
           if (authenticationState is AuthenticationNotValidated) {}
           if (authenticationState is AuthenticationFailed) {
+            String errorKey =
+                ErrorMessage.determineMessageKey(authenticationState.message);
             buidSnackbar(
               context: context,
               backgroundColor: Colors.red,
-              text: authenticationState.message,
+              text: ErrorMessage.errorMessages[errorKey] ??
+                  'Une erreur a eu lieu. Veuillez réessayer',
             );
           }
         },

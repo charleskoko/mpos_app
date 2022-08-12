@@ -56,7 +56,7 @@ class BoxDashboardInfo extends StatelessWidget {
           Positioned(
             bottom: 40,
             child: BoxText.subheading(
-              'Ventes',
+              label,
               color: Colors.grey.shade500,
             ),
           ),

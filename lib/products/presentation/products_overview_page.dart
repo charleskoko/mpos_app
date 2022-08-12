@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/products/presentation/delete_product.dart';
 import 'package:mpos_app/products/presentation/edit_product_page.dart';
+import '../../core/presentation/snack_bar.dart';
 import '../../core/shared/error_message.dart';
 import '../../orders/shared/cubit/selected_order_item_cubit.dart';
 import '../../orders/shared/cubit/store_order_cubit.dart';
@@ -41,6 +42,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.grey.shade100,
         elevation: 0,
         title: BoxText.headingTwo(
@@ -60,6 +62,13 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                 if (selectedOrderItemState.selectedOrderItem?.isNotEmpty ??
                     false) {
                   context.goNamed('orderVerification');
+                }
+                if (selectedOrderItemState.selectedOrderItem?.isEmpty ?? true) {
+                  buidSnackbar(
+                    context: context,
+                    backgroundColor: kSecondaryColor,
+                    text: 'Votre panier d\'achat est vide',
+                  );
                 }
               },
             ),
@@ -102,54 +111,56 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
             return MultiBlocListener(
               listeners: [
                 BlocListener<StoreOrderCubit, StoreOrderState>(
-                    listener: (context, soreOrderState) {
-                  if (soreOrderState is StoreOrderLoaded) {
-                    showBottomSheet(
-                      context: context,
-                      builder: (context) => Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            topLeft: Radius.circular(10),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 10,
-                              color: Colors.grey.shade300,
-                              spreadRadius: 5,
-                            )
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius: BorderRadius.circular(10)),
-                              margin: const EdgeInsets.only(top: 5),
-                              width: 100,
-                              height: 5,
+                  listener: (context, storeOrderState) {
+                    if (storeOrderState is StoreOrderLoaded) {
+                      showBottomSheet(
+                        context: context,
+                        builder: (context) => Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              topLeft: Radius.circular(10),
                             ),
-                            Expanded(
-                                child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Center(
-                                  child: Icon(
-                                    Ionicons.checkmark_circle,
-                                    color: Colors.green,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 10,
+                                color: Colors.grey.shade300,
+                                spreadRadius: 5,
+                              )
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(10)),
+                                margin: const EdgeInsets.only(top: 5),
+                                width: 100,
+                                height: 5,
+                              ),
+                              Expanded(
+                                  child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Center(
+                                    child: Icon(
+                                      Ionicons.checkmark_circle,
+                                      color: Colors.green,
+                                    ),
                                   ),
-                                ),
-                                BoxText.caption("Achat enregistré avec succés")
-                              ],
-                            ))
-                          ],
+                                  BoxText.caption(
+                                      "Achat enregistré avec succés")
+                                ],
+                              ))
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                })
+                      );
+                    }
+                  },
+                ),
               ],
               child: Column(
                 children: [
@@ -253,7 +264,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                   if (products.isEmpty)
                     const Expanded(
                       child: BoxMessage(
-                          message: 'Ajouter vos Produits en cliquant sur "+"'),
+                          message: 'Ajouter vos produits en cliquant sur "+"'),
                     )
                 ],
               ),

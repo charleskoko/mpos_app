@@ -11,9 +11,9 @@ class ProductRemoteService {
   final Dio _dio;
   ProductRemoteService(this._dio);
   Future<RemoteResponse> fetchProductList() async {
-    final fetchProductListUri =
-        Environment.getUri(unencodedPath: '/api/v1/products');
     try {
+      final fetchProductListUri =
+          Environment.getUri(unencodedPath: '/api/v1/products');
       final response = await _dio.getUri(fetchProductListUri);
       if (response.statusCode == 200) {
         final List<dynamic> productListJson = response.data['data'][0];

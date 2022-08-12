@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import '../../core/presentation/snack_bar.dart';
+import '../../core/shared/error_message.dart';
 import '../../src/widgets/box_button.dart';
 import '../../src/widgets/box_input_field.dart';
 import '../../src/widgets/box_text.dart';
@@ -17,21 +18,34 @@ buildBottomSheetForAddNewProduct(
 ) {
   return showBottomSheet(
     context: context,
-    builder: (context) => BlocListener<StoreProductCubit, StoreProductState>(
-      listener: (context, storeProductState) {
-        if (storeProductState is StoreProductError) {}
-        if (storeProductState is StoreProductStored) {
-          Navigator.pop(context);
-          context.read<FetchProductsCubit>().fetchProductList();
-          labelTextFieldController.text = '';
-          priceTextFieldController.text = '';
-          buidSnackbar(
-            context: context,
-            backgroundColor: Colors.green,
-            text: 'un nouveau produit ajouté',
-          );
-        }
-      },
+    builder: (context) => MultiBlocListener(
+      listeners: [
+        BlocListener<StoreProductCubit, StoreProductState>(
+          listener: (context, storeProductState) {
+            if (storeProductState is StoreProductError) {
+              String errorKey = ErrorMessage.determineMessageKey(
+                  storeProductState.message ?? '');
+              buidSnackbar(
+                context: context,
+                backgroundColor: Colors.red,
+                text: ErrorMessage.errorMessages[errorKey] ??
+                    'Une erreur a eu lieu. Veuillez réessayer',
+              );
+            }
+            if (storeProductState is StoreProductStored) {
+              Navigator.pop(context);
+              context.read<FetchProductsCubit>().fetchProductList();
+              labelTextFieldController.text = '';
+              priceTextFieldController.text = '';
+              buidSnackbar(
+                context: context,
+                backgroundColor: Colors.green,
+                text: 'Nouveau produit ajouté avec succès',
+              );
+            }
+          },
+        ),
+      ],
       child: Container(
           decoration: BoxDecoration(
               color: Colors.white,

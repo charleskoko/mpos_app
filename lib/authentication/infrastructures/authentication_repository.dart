@@ -35,13 +35,13 @@ class AuthenticationRepository {
 
         return left(authUser);
       } else if (loginRequestResponse is NotAuthorized) {
-        return right(AuthenticationError('not authorized'));
+        return right(AuthenticationError('notAuthorized'));
       } else {
-        return right(AuthenticationError('no connection'));
+        return right(AuthenticationError('noConnection'));
       }
     } on RestApiException catch (exception) {
       return right(
-        AuthenticationError(exception.message ?? 'no error message'),
+        AuthenticationError(exception.message ?? 'noErrorMessage'),
       );
     }
   }

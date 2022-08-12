@@ -33,7 +33,7 @@ class BoxProduct extends StatelessWidget {
                 child: const Icon(
                   Ionicons.close_circle_outline,
                   color: Colors.red,
-                  size: 20,
+                  size: 25,
                 ),
               ),
             ),

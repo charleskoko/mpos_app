@@ -29,6 +29,7 @@ class _SaleDetailsState extends State<SaleDetails> {
           return NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScolled) => [
               SliverAppBar(
+                centerTitle: true,
                 title: BoxText.headingTwo(
                   '#' + '${saleDetailsState.invoice?.number}'.padLeft(10, '0'),
                   color: kThreeColor,

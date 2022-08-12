@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core/presentation/snack_bar.dart';
+import '../../core/shared/error_message.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
@@ -12,8 +14,22 @@ buildAlertDialogeForDeleteProduct(BuildContext context, Product? product) {
     context: context,
     builder: (context) => BlocListener<DeleteProductCubit, DeleteProductState>(
       listener: (context, deleteProductState) {
-        if (deleteProductState is DeleteProductError) {}
+        if (deleteProductState is DeleteProductError) {
+          String errorKey = ErrorMessage.determineMessageKey(
+              deleteProductState.message ?? '');
+          buidSnackbar(
+            context: context,
+            backgroundColor: Colors.red,
+            text: ErrorMessage.errorMessages[errorKey] ??
+                'Une erreur a eu lieu. Veuillez réessayer',
+          );
+        }
         if (deleteProductState is DeleteProductDeleted) {
+          buidSnackbar(
+            context: context,
+            backgroundColor: Colors.green,
+            text: 'Le produit a été supprimé avec succès',
+          );
           Navigator.pop(context);
           context.read<FetchProductsCubit>().fetchProductList();
         }
@@ -36,7 +52,7 @@ buildAlertDialogeForDeleteProduct(BuildContext context, Product? product) {
             child: BoxText.body('oui'),
             onPressed: () {
               context.read<DeleteProductCubit>().deleteProduct(
-                    product?.id ?? '',
+                    product!,
                   );
             },
           )

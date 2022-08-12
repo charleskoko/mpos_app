@@ -32,6 +32,7 @@ class _DashboardPageState extends State<DashboardPage> {
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         backgroundColor: Colors.grey.shade100,
+        centerTitle: true,
         elevation: 0,
         title: BoxText.headingTwo(
           'Boutique'.toUpperCase(),

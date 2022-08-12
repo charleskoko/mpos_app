@@ -5,7 +5,8 @@ import '../../core/domain/order_line_item.dart';
 part 'selected_order_item_state.dart';
 
 class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
-  SelectedOrderItemCubit() : super(const SelectedOrderItemState());
+  SelectedOrderItemCubit()
+      : super(const SelectedOrderItemState.orderNotCanceled());
 
   Future<void> selectOrderItem(Product product) async {
     List<Map<String, dynamic>>? currentOrderItemsSelected =
@@ -18,7 +19,8 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
         ),
       );
       emit(
-        SelectedOrderItemState(selectedOrderItem: currentOrderItemsSelected),
+        SelectedOrderItemState.orderNotCanceled(
+            selectedOrderItem: currentOrderItemsSelected),
       );
       return;
     }
@@ -26,26 +28,28 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
       currentOrderItemsSelected =
           _addOrderItemToNotEmptyList(currentOrderItemsSelected, product);
       emit(
-        SelectedOrderItemState(selectedOrderItem: currentOrderItemsSelected),
+        SelectedOrderItemState.orderNotCanceled(
+            selectedOrderItem: currentOrderItemsSelected),
       );
       return;
     }
   }
 
-  Future<void> cancelCurrentSelection() async {
-    await Future.delayed(
-      const Duration(seconds: 1),
-      () {
-        emit(
-          const SelectedOrderItemState(),
-        );
-      },
-    );
+  Future<void> cancelCurrentSelection({bool isOrderCanceled = false}) async {
+    if (isOrderCanceled) {
+      emit(
+        const SelectedOrderItemState.orderCanceled(),
+      );
+    } else {
+      emit(
+        const SelectedOrderItemState.orderNotCanceled(),
+      );
+    }
   }
 
   void updateSelectedItemState(List<Map<String, dynamic>> orderItems) {
     emit(
-      SelectedOrderItemState(selectedOrderItem: orderItems),
+      SelectedOrderItemState.orderNotCanceled(selectedOrderItem: orderItems),
     );
   }
 
@@ -55,7 +59,8 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
     selectedItemList.removeWhere(
         (item) => item['product'].id == itemToDelete['product'].id);
     emit(
-      SelectedOrderItemState(selectedOrderItem: selectedItemList),
+      SelectedOrderItemState.orderNotCanceled(
+          selectedOrderItem: selectedItemList),
     );
   }
 }

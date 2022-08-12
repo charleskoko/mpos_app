@@ -20,19 +20,19 @@ class OrderRepository {
       } else if (storeNewProductRequestresponse is NotAuthorized) {
         return right(
           OrderError(
-            'not authorized',
+            'notAuthorized',
           ),
         );
       } else {
         return right(
           OrderError(
-            'no connection',
+            'noConnection',
           ),
         );
       }
     } on RestApiException catch (exception) {
       return right(
-        OrderError(exception.message ?? 'no error message'),
+        OrderError(exception.message ?? 'noErrorMessage'),
       );
     }
   }

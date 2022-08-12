@@ -48,13 +48,13 @@ class ProductRepository {
         Product newStoredProduct = storeNewProductRequestresponse.response;
         return left(newStoredProduct);
       } else if (storeNewProductRequestresponse is NotAuthorized) {
-        return right(ProductError('not authorized'));
+        return right(ProductError('notAuthorized'));
       } else {
-        return right(ProductError('no connection'));
+        return right(ProductError('noConnection'));
       }
     } on RestApiException catch (exception) {
       return right(
-        ProductError(exception.message ?? 'no error message'),
+        ProductError(exception.message ?? 'noErrorMessage'),
       );
     }
   }
@@ -75,32 +75,34 @@ class ProductRepository {
         Product newUpdatedProduct = updateProductrequestResponse.response;
         return left(newUpdatedProduct);
       } else if (updateProductrequestResponse is NotAuthorized) {
-        return right(ProductError('not authorized'));
+        return right(ProductError('notAuthorized'));
       } else {
-        return right(ProductError('no connection'));
+        return right(ProductError('noConnection'));
       }
     } on RestApiException catch (exception) {
       return right(
-        ProductError(exception.message ?? 'no error message'),
+        ProductError(exception.message ?? 'noErrorMessage'),
       );
     }
   }
 
-  Future<Either<bool, ProductError>> deleteProduct({required productId}) async {
+  Future<Either<bool, ProductError>> deleteProduct(
+      {required Product product}) async {
     try {
-      final deleteProductRequestresponse =
-          await _productRemoteService.deleteProduct(productId: productId);
+      final deleteProductRequestresponse = await _productRemoteService
+          .deleteProduct(productId: product.id ?? '');
       if (deleteProductRequestresponse is ConnectionResponse) {
         bool productDeleteResult = deleteProductRequestresponse.response;
+        await _productLocalService.deleteProduct(product);
         return left(productDeleteResult);
       } else if (deleteProductRequestresponse is NotAuthorized) {
-        return right(ProductError('not authorized'));
+        return right(ProductError('notAuthorized'));
       } else {
-        return right(ProductError('no connection'));
+        return right(ProductError('noConnection'));
       }
     } on RestApiException catch (exception) {
       return right(
-        ProductError(exception.message ?? 'no error message'),
+        ProductError(exception.message ?? 'noErrorMessage'),
       );
     }
   }

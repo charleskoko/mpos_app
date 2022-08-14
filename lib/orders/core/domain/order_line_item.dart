@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import '../../../products/core/domaine/product.dart';
 
 class OrderLineItem {

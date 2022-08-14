@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../authentication/presentation/login_page.dart';
 import '../../authentication/presentation/register_page.dart';
+import '../../invoices/core/domain/invoice.dart';
 import '../../main/main_page.dart';
 import '../../orders/presentation/order_verification_page.dart';
 import '../../orders/presentation/save_order_status.dart';
@@ -70,10 +73,11 @@ class MposRouter {
             ),
             GoRoute(
               name: 'printPage',
-              path: 'printPage',
+              path: 'printPage/:invoice',
               pageBuilder: (context, state) => MaterialPage(
                 key: state.pageKey,
-                child: PrintPage(),
+                child: PrintPage(Invoice.fromJson(
+                    jsonDecode(state.params['invoice'] ?? ''))),
               ),
             ),
           ]),

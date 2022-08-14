@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import '../../core/shared/time_formater.dart';
 import '../../orders/core/domain/order.dart';
@@ -69,7 +72,11 @@ class _SaleDetailsState extends State<SaleDetails> {
                         ),
                         Expanded(
                           child: TextButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.goNamed('printPage', params: {
+                                'invoice': jsonEncode(saleDetailsState.invoice)
+                              });
+                            },
                             icon: const Icon(Ionicons.print),
                             label: BoxText.body('Imprimer'),
                             style: TextButton.styleFrom(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_app/authentication/infrastructures/authentication_cubit.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -11,8 +12,24 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  void requestBleuthooth() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.location,
+      Permission.bluetoothAdvertise,
+      Permission.bluetoothConnect,
+      Permission.bluetoothScan
+    ].request();
+    print('location permission: ${statuses[Permission.location]}');
+    print(
+        'bluetoothAdvertise permission: ${statuses[Permission.bluetoothAdvertise]}');
+    print(
+        'bluetoothConnect permission: ${statuses[Permission.bluetoothConnect]}');
+    print('bluetoothScan permission: ${statuses[Permission.bluetoothScan]}');
+  }
+
   @override
   void initState() {
+    requestBleuthooth();
     context.read<AuthenticationCubit>().isUserLoggedIn();
     super.initState();
   }

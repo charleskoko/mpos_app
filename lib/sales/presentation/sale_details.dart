@@ -49,10 +49,12 @@ class _SaleDetailsState extends State<SaleDetails> {
                   child: ListView.builder(
                     itemCount: orderItems?.length,
                     itemBuilder: (BuildContext context, index) => BoxOrderItem(
-                        productLabel: '${orderItems?[index].product?.label}',
-                        price: '${orderItems?[index].price} ',
-                        amount: '${orderItems?[index].amount}',
-                        total: '${orderItems?[index].total}'),
+                      productLabel: '${orderItems?[index].product?.label}',
+                      price: '${orderItems?[index].price} ',
+                      amount: '${orderItems?[index].amount}',
+                      total: '${orderItems?[index].total}',
+                      isOrderVerification: false,
+                    ),
                   ),
                 ),
                 Container(

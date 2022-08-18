@@ -111,6 +111,18 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
                             amount: '${orderItems[index]['amount']}',
                             total:
                                 '${orderItems[index]['product'].price * orderItems[index]['amount']} XOF',
+                            onRemove: () {
+                              setState(() {
+                                orderItems[index]['amount'] =
+                                    orderItems[index]['amount'] - 1;
+                              });
+                            },
+                            onAdd: () {
+                              setState(() {
+                                orderItems[index]['amount'] =
+                                    orderItems[index]['amount'] + 1;
+                              });
+                            },
                           ),
                         ),
                       ),

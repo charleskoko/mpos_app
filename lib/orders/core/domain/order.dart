@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:mpos_app/orders/core/domain/order_line_item.dart';
+import 'package:mpos_app/orders/core/domain/selected_order_item.dart';
 
 class OrderProduct {
   String? id;
@@ -32,26 +31,19 @@ class OrderProduct {
     return orderTotalPrice;
   }
 
-  static String getOrderTotalFromMapList(
-      List<Map<String, dynamic>> orderItems) {
+  static String getOrderTotalFromMapList(List<SelectedOrderItem> orderItems) {
     double orderPrice = 0;
     for (var element in orderItems) {
-      orderPrice += element['product'].price * element['amount'];
+      orderPrice += element.product?.price ?? 0 * element.amount!;
     }
     return orderPrice.toString();
   }
 
   static Map<String, dynamic> rangeOrderData(
-      List<Map<String, dynamic>> orderItems) {
+      List<SelectedOrderItem> orderItems) {
     List<Map<String, dynamic>> orderData = [];
     for (var element in orderItems) {
-      orderData.add(
-        {
-          'product_id': element['product'].id,
-          'amount': element['amount'],
-          'price': element['amount'] * element['product'].price
-        },
-      );
+      orderData.add(element.mapToOrderLineItemBackend());
     }
     return {'addOrderLineItem': orderData};
   }

@@ -9,6 +9,7 @@ import '../../core/shared/error_message.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_order_item.dart';
 import '../core/domain/order.dart';
+import '../core/domain/selected_order_item.dart';
 import '../shared/cubit/selected_order_item_cubit.dart';
 import '../shared/cubit/store_order_cubit.dart';
 
@@ -82,7 +83,7 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
           },
           child: BlocBuilder<SelectedOrderItemCubit, SelectedOrderItemState>(
             builder: (context, selectedOrderItemState) {
-              List<Map<String, dynamic>> orderItems =
+              List<SelectedOrderItem> orderItems =
                   selectedOrderItemState.selectedOrderItem ?? [];
               if (orderItems.isNotEmpty) {
                 return Column(
@@ -93,7 +94,7 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
                             selectedOrderItemState.selectedOrderItem?.length,
                         itemBuilder: (BuildContext context, index) =>
                             Dismissible(
-                          key: Key(orderItems[index]['product'].id),
+                          key: Key(orderItems[index].product?.id ?? ''),
                           direction: DismissDirection.endToStart,
                           onDismissed: (direction) {
                             context
@@ -105,22 +106,19 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
                           },
                           child: BoxOrderItem(
                             productLabel:
-                                '${orderItems[index]['product'].label ?? ''}',
-                            price:
-                                '${orderItems[index]['product'].price ?? ''}',
-                            amount: '${orderItems[index]['amount']}',
+                                orderItems[index].product?.label ?? '',
+                            price: '${orderItems[index].product?.price ?? ''}',
+                            amount: '${orderItems[index].amount}',
                             total:
-                                '${orderItems[index]['product'].price * orderItems[index]['amount']} XOF',
+                                '${orderItems[index].product?.price ?? 0 * orderItems[index].amount!} XOF',
                             onRemove: () {
                               setState(() {
-                                orderItems[index]['amount'] =
-                                    orderItems[index]['amount'] - 1;
+                                orderItems[index].decrementAmount();
                               });
                             },
                             onAdd: () {
                               setState(() {
-                                orderItems[index]['amount'] =
-                                    orderItems[index]['amount'] + 1;
+                                orderItems[index].incrementAmount();
                               });
                             },
                           ),

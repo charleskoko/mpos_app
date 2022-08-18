@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import '../../../products/core/domaine/product.dart';
-import '../../core/domain/order_line_item.dart';
+import '../../core/domain/selected_order_item.dart';
 part 'selected_order_item_state.dart';
 
 class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
@@ -9,15 +9,14 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
       : super(const SelectedOrderItemState.orderNotCanceled());
 
   Future<void> selectOrderItem(Product product) async {
-    List<Map<String, dynamic>>? currentOrderItemsSelected =
+    List<SelectedOrderItem>? currentOrderItemsSelected =
         state.selectedOrderItem ?? [];
     if (currentOrderItemsSelected.isEmpty) {
-      currentOrderItemsSelected.add(
-        OrderLineItem.localOrderItem(
-          product,
-          1,
-        ),
-      );
+      currentOrderItemsSelected.add(SelectedOrderItem(
+        product,
+        1,
+        product.price,
+      ));
       emit(
         SelectedOrderItemState.orderNotCanceled(
             selectedOrderItem: currentOrderItemsSelected),
@@ -47,17 +46,17 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
     }
   }
 
-  void updateSelectedItemState(List<Map<String, dynamic>> orderItems) {
+  void updateSelectedItemState(List<SelectedOrderItem> orderItems) {
     emit(
       SelectedOrderItemState.orderNotCanceled(selectedOrderItem: orderItems),
     );
   }
 
   void removeItemFromList(
-      {required Map<String, dynamic> itemToDelete,
-      required List<Map<String, dynamic>> selectedItemList}) {
-    selectedItemList.removeWhere(
-        (item) => item['product'].id == itemToDelete['product'].id);
+      {required SelectedOrderItem itemToDelete,
+      required List<SelectedOrderItem> selectedItemList}) {
+    selectedItemList
+        .removeWhere((item) => item.product?.id == itemToDelete.product?.id);
     emit(
       SelectedOrderItemState.orderNotCanceled(
           selectedOrderItem: selectedItemList),
@@ -65,23 +64,27 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
   }
 }
 
-List<Map<String, dynamic>>? _addOrderItemToNotEmptyList(
-    List<Map<String, dynamic>> currentOrderItemsSelected, Product product) {
+List<SelectedOrderItem>? _addOrderItemToNotEmptyList(
+    List<SelectedOrderItem> currentOrderItemsSelected, Product product) {
   try {
-    Map<String, dynamic>? currentProductAdded = currentOrderItemsSelected
-        .where((orderItem) => orderItem['product'].id == product.id)
+    SelectedOrderItem? currentProductAdded = currentOrderItemsSelected
+        .where((orderItem) => orderItem.product?.id == product.id)
         .toList()
         .first;
-    currentProductAdded['amount'] = currentProductAdded['amount'] + 1;
+    currentProductAdded.incrementAmount();
     currentOrderItemsSelected
-        .removeWhere((orderItem) => orderItem['product'].id == product.id);
+        .removeWhere((orderItem) => orderItem.product?.id == product.id);
 
     currentOrderItemsSelected.add(currentProductAdded);
 
     return currentOrderItemsSelected;
     // ignore: unused_catch_clause
   } on Error catch (e) {
-    currentOrderItemsSelected.add(OrderLineItem.localOrderItem(product, 1));
+    currentOrderItemsSelected.add(SelectedOrderItem(
+      product,
+      1,
+      product.price,
+    ));
     return currentOrderItemsSelected;
   }
 }

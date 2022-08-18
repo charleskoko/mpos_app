@@ -3,6 +3,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/src/shared/styles.dart';
 import '../../src/shared/app_colors.dart';
 import '../dashboard/presentation/dashboard_page.dart';
+import '../orders/presentation/not_processed_order_page.dart';
 import '../products/presentation/products_overview_page.dart';
 import '../sales/presentation/sales_overview_page.dart';
 
@@ -41,6 +42,10 @@ class _MainPage extends State<MainPage> {
             label: 'Produits',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Ionicons.file_tray_full_outline),
+            label: 'Sauvegardes',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Ionicons.albums_outline),
             label: 'Ventes',
           ),
@@ -49,6 +54,7 @@ class _MainPage extends State<MainPage> {
       body: [
         const DashboardPage(),
         const ProductsOverviewPage(),
+        const NotProcessedOrderPage(),
         const SalesOverviewPage(),
       ].elementAt(_selectedScreenIndex),
     );

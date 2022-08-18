@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import '../../../products/core/domaine/product.dart';
 
 class OrderLineItem {
@@ -35,12 +33,5 @@ class OrderLineItem {
     return dynamicList
         .map((element) => OrderLineItem.fromJson(element))
         .toList();
-  }
-
-  static Map<String, dynamic> localOrderItem(Product product, int amount) {
-    return {
-      'product': product,
-      'amount': amount,
-    };
   }
 }

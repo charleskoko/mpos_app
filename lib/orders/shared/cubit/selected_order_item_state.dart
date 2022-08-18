@@ -2,7 +2,7 @@ part of 'selected_order_item_cubit.dart';
 
 @immutable
 class SelectedOrderItemState {
-  final List<Map<String, dynamic>>? selectedOrderItem;
+  final List<SelectedOrderItem>? selectedOrderItem;
   final bool isOrderCanceled;
   const SelectedOrderItemState.orderNotCanceled({
     this.selectedOrderItem,

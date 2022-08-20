@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import '../../core/shared/time_formater.dart';
 import '../../orders/core/domain/order.dart';
 import '../../orders/core/domain/order_line_item.dart';
+import '../../orders/core/domain/selected_order_item.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_order_item.dart';
 import '../../src/widgets/box_text.dart';
@@ -49,10 +50,11 @@ class _SaleDetailsState extends State<SaleDetails> {
                   child: ListView.builder(
                     itemCount: orderItems?.length,
                     itemBuilder: (BuildContext context, index) => BoxOrderItem(
-                      productLabel: '${orderItems?[index].product?.label}',
-                      price: '${orderItems?[index].price} ',
-                      amount: '${orderItems?[index].amount}',
-                      total: '${orderItems?[index].total}',
+                      selectedOrderItem: SelectedOrderItem(
+                        orderItems?[index].product,
+                        orderItems?[index].amount,
+                        orderItems?[index].price,
+                      ),
                       isOrderVerification: false,
                     ),
                   ),

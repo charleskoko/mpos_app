@@ -6,8 +6,11 @@ import '../../dashboard/shared/dashboard_cubit.dart';
 import '../../invoices/core/infrastructure/invoice_repository.dart';
 import '../../invoices/shared/fetch_invoice_cubit.dart';
 import '../../orders/core/infrastructure/order_repository.dart';
+import '../../orders/shared/cubit/fetch_not_processed_order_cubit.dart';
 import '../../orders/shared/cubit/selected_order_item_cubit.dart';
+import '../../orders/shared/cubit/store_not_processed_order_cubit.dart';
 import '../../orders/shared/cubit/store_order_cubit.dart';
+import '../../orders/shared/cubit/update_not_processed_order_cubit.dart';
 import '../../products/core/infrastructure/product_repository.dart';
 import '../../products/shared/cubit/delete_product/delete_product_cubit.dart';
 import '../../products/shared/cubit/fetch_product/fetch_products_cubit.dart';
@@ -63,6 +66,21 @@ class BlocsProvider {
       ),
       BlocProvider<SaleDetailsCubit>(
         create: (context) => SaleDetailsCubit(),
+      ),
+      BlocProvider<StoreNotProcessedOrderCubit>(
+        create: (context) => StoreNotProcessedOrderCubit(
+          context.read<OrderRepository>(),
+        ),
+      ),
+      BlocProvider<FetchNotProcessedOrderCubit>(
+        create: (context) => FetchNotProcessedOrderCubit(
+          context.read<OrderRepository>(),
+        ),
+      ),
+      BlocProvider<UpdateNotProcessedOrderCubit>(
+        create: (context) => UpdateNotProcessedOrderCubit(
+          context.read<OrderRepository>(),
+        ),
       ),
     ];
   }

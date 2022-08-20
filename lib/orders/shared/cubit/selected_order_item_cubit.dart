@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import '../../../products/core/domaine/product.dart';
+import '../../core/domain/not_processed_order.dart';
 import '../../core/domain/selected_order_item.dart';
 part 'selected_order_item_state.dart';
 
@@ -46,9 +47,15 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
     }
   }
 
-  void updateSelectedItemState(List<SelectedOrderItem> orderItems) {
+  void updateSelectedItemState(List<SelectedOrderItem> orderItems,
+      {bool isNotProcessedOrder = false,
+      NotProcessedOrder? notProcessedOrder}) {
     emit(
-      SelectedOrderItemState.orderNotCanceled(selectedOrderItem: orderItems),
+      SelectedOrderItemState.orderNotCanceled(
+        selectedOrderItem: orderItems,
+        isNotProcessedOrder: isNotProcessedOrder,
+        notProcessedOrder: notProcessedOrder,
+      ),
     );
   }
 
@@ -59,7 +66,8 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
         .removeWhere((item) => item.product?.id == itemToDelete.product?.id);
     emit(
       SelectedOrderItemState.orderNotCanceled(
-          selectedOrderItem: selectedItemList),
+        selectedOrderItem: selectedItemList,
+      ),
     );
   }
 }

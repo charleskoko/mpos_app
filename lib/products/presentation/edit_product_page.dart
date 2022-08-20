@@ -133,7 +133,7 @@ buildBottomSheetForEditProduct(
                       const SizedBox(height: 50),
                       BlocBuilder<UpdateProductCubit, UpdateProductState>(
                         builder: (context, updateProductCubit) {
-                          return BoxButton(
+                          return BoxButton.normal(
                             isBusy: (updateProductCubit is UpdateProductUpdated)
                                 ? true
                                 : false,

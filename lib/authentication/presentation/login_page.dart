@@ -99,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 50),
                 BlocBuilder<AuthenticationCubit, AuthenticationState>(
                   builder: (context, authenticationState) {
-                    return BoxButton(
+                    return BoxButton.normal(
                         isBusy: (authenticationState is AuthenticationLoading)
                             ? true
                             : false,

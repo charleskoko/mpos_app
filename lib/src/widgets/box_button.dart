@@ -7,12 +7,24 @@ class BoxButton extends StatelessWidget {
   final String title;
   final bool isBusy;
   final void Function()? onTap;
-  const BoxButton({
+  final Color primaryColor;
+  final Color darkColor;
+  BoxButton.normal({
     Key? key,
     required this.title,
     this.isBusy = false,
     this.onTap,
-  }) : super(key: key);
+  })  : primaryColor = kPrimaryColorGradient,
+        darkColor = kPrimaryColorDark,
+        super(key: key);
+
+  BoxButton.changedColor({
+    required this.title,
+    this.isBusy = false,
+    this.onTap,
+    required this.primaryColor,
+    required this.darkColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +59,10 @@ class BoxButton extends StatelessWidget {
           height: 55,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            gradient: const LinearGradient(
+            gradient: LinearGradient(
               colors: [
-                kPrimaryColorGradient,
-                kPrimaryColorDark,
+                primaryColor,
+                darkColor,
               ],
             ),
           ),

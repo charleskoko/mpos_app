@@ -132,7 +132,7 @@ buildBottomSheetForAddNewProduct(
                         const SizedBox(height: 50),
                         BlocBuilder<StoreProductCubit, StoreProductState>(
                           builder: (context, storeProductCubit) {
-                            return BoxButton(
+                            return BoxButton.normal(
                                 isBusy:
                                     (storeProductCubit is StoreProductLoading)
                                         ? true

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mpos_app/core/infrastructures/sembast_database.dart';
+import 'package:mpos_app/orders/core/infrastructure/not_processed_order_local_service.dart';
 import 'package:mpos_app/orders/core/infrastructure/order_remote_service.dart';
 import '../../authentication/infrastructures/authentication_local_service.dart';
 import '../../authentication/infrastructures/authentication_remote_service.dart';
@@ -23,6 +24,7 @@ class RepositoriesProvider {
     required OrderRemoteService orderRemoteService,
     required InvoiceRemoteService invoiceRemoteService,
     required InvoiceLocalService invoiceLocalservice,
+    required NotProcessedOrderLocalservice notProcessedOrderLocalservice,
   }) {
     return [
       RepositoryProvider<SembastDatabase>(
@@ -43,6 +45,7 @@ class RepositoriesProvider {
       RepositoryProvider<OrderRepository>(
         create: (context) => OrderRepository(
           orderRemoteService,
+          notProcessedOrderLocalservice,
         ),
       ),
       RepositoryProvider<InvoiceRepository>(

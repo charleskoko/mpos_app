@@ -34,7 +34,8 @@ class OrderProduct {
   static String getOrderTotalFromMapList(List<SelectedOrderItem> orderItems) {
     double orderPrice = 0;
     for (var element in orderItems) {
-      orderPrice += element.product?.price ?? 0 * element.amount!;
+      print(element.amount);
+      orderPrice += (element.price! * element.amount!);
     }
     return orderPrice.toString();
   }

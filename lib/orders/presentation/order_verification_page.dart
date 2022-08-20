@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/src/widgets/box_button.dart';
+import 'package:mpos_app/src/widgets/box_input_field.dart';
 import 'package:mpos_app/src/widgets/box_text.dart';
 import '../../core/presentation/snack_bar.dart';
 import '../../core/shared/error_message.dart';
@@ -11,6 +12,7 @@ import '../../src/widgets/box_order_item.dart';
 import '../core/domain/order.dart';
 import '../core/domain/selected_order_item.dart';
 import '../shared/cubit/selected_order_item_cubit.dart';
+import '../shared/cubit/store_not_processed_order_cubit.dart';
 import '../shared/cubit/store_order_cubit.dart';
 
 class OrderVerificationPage extends StatefulWidget {
@@ -21,6 +23,8 @@ class OrderVerificationPage extends StatefulWidget {
 }
 
 class _OrderVerificationPageState extends State<OrderVerificationPage> {
+  TextEditingController inputTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,23 +109,19 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
                                 );
                           },
                           child: BoxOrderItem(
-                            productLabel:
-                                orderItems[index].product?.label ?? '',
-                            price: '${orderItems[index].product?.price ?? ''}',
-                            amount: '${orderItems[index].amount}',
-                            total:
-                                '${orderItems[index].product?.price ?? 0 * orderItems[index].amount!} XOF',
-                            onRemove: () {
-                              setState(() {
-                                orderItems[index].decrementAmount();
-                              });
-                            },
-                            onAdd: () {
-                              setState(() {
-                                orderItems[index].incrementAmount();
-                              });
-                            },
-                          ),
+                              selectedOrderItem: orderItems[index],
+                              onAdd: () {
+                                setState(() {
+                                  orderItems[index].amount =
+                                      orderItems[index].amount! + 1;
+                                });
+                              },
+                              onRemove: () {
+                                setState(() {
+                                  orderItems[index].amount =
+                                      orderItems[index].amount! + 1;
+                                });
+                              }),
                         ),
                       ),
                     ),
@@ -142,28 +142,107 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          BlocBuilder<StoreOrderCubit, StoreOrderState>(
-                            builder: (context, storeOrderState) {
-                              return BoxButton(
-                                title: 'Encaisser',
-                                isBusy: (storeOrderState is StoreOrderLoading)
-                                    ? true
-                                    : false,
+                          Row(children: [
+                            Expanded(
+                              child: BoxButton.changedColor(
                                 onTap: () {
-                                  context
-                                      .read<StoreOrderCubit>()
-                                      .store(orderItems);
-
-                                  var orderState =
-                                      context.read<StoreOrderCubit>().state;
-
-                                  if (orderState is StoreOrderLoaded) {
-                                    context.goNamed('saveOrderStatus');
+                                  if (selectedOrderItemState
+                                      .isNotProcessedOrder) {}
+                                  if (!selectedOrderItemState
+                                      .isNotProcessedOrder) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => BlocListener<
+                                          StoreNotProcessedOrderCubit,
+                                          StoreNotProcessedOrderState>(
+                                        listener: (context,
+                                            storeNotProcessedOrderStateate) {
+                                          if (storeNotProcessedOrderStateate
+                                              is StoreNotProcessedOrderLoaded) {
+                                            context.goNamed('main');
+                                            context
+                                                .read<SelectedOrderItemCubit>()
+                                                .cancelCurrentSelection();
+                                          }
+                                        },
+                                        child: AlertDialog(
+                                            title: BoxText.headingTwo(
+                                              'Intitulé',
+                                              color: kPrimaryColor,
+                                            ),
+                                            content: BoxInputField.text(
+                                              controller: inputTextController,
+                                              onChanged: (value) {
+                                                return null;
+                                              },
+                                              hintText: 'Table 1',
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                child: BoxText.body(
+                                                  'Annuler',
+                                                  color: Colors.grey.shade500,
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                              TextButton(
+                                                child:
+                                                    BoxText.body('Enregistrer'),
+                                                onPressed: () {
+                                                  context
+                                                      .read<
+                                                          StoreNotProcessedOrderCubit>()
+                                                      .store(
+                                                        label:
+                                                            inputTextController
+                                                                .text,
+                                                        orderItems: orderItems,
+                                                      );
+                                                },
+                                              )
+                                            ]),
+                                      ),
+                                    );
                                   }
                                 },
-                              );
-                            },
-                          )
+                                title:
+                                    (selectedOrderItemState.isNotProcessedOrder)
+                                        ? 'Actualiser'
+                                        : 'Sauvegarder',
+                                primaryColor: kSecondaryColor,
+                                darkColor: kSecondaryDarkColor,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child:
+                                  BlocBuilder<StoreOrderCubit, StoreOrderState>(
+                                builder: (context, storeOrderState) {
+                                  return BoxButton.normal(
+                                    title: 'Encaisser',
+                                    isBusy:
+                                        (storeOrderState is StoreOrderLoading)
+                                            ? true
+                                            : false,
+                                    onTap: () {
+                                      context
+                                          .read<StoreOrderCubit>()
+                                          .store(orderItems);
+
+                                      var orderState =
+                                          context.read<StoreOrderCubit>().state;
+
+                                      if (orderState is StoreOrderLoaded) {
+                                        context.goNamed('saveOrderStatus');
+                                      }
+                                    },
+                                  );
+                                },
+                              ),
+                            )
+                          ])
                         ],
                       ),
                     )

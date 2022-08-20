@@ -2,26 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/src/widgets/box_text.dart';
 
-class BoxOrderItem extends StatelessWidget {
-  final String productLabel;
-  final String price;
-  final String amount;
-  final String total;
+import '../../orders/core/domain/selected_order_item.dart';
+
+class BoxOrderItem extends StatefulWidget {
+  SelectedOrderItem selectedOrderItem;
   final bool isOrderVerification;
   final void Function()? onRemove;
   final void Function()? onAdd;
 
-  const BoxOrderItem({
+  BoxOrderItem({
     Key? key,
-    required this.productLabel,
-    required this.price,
-    required this.amount,
-    required this.total,
+    required this.selectedOrderItem,
     this.onRemove,
     this.isOrderVerification = true,
     this.onAdd,
   }) : super(key: key);
 
+  @override
+  State<BoxOrderItem> createState() => _BoxOrderItemState();
+}
+
+class _BoxOrderItemState extends State<BoxOrderItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -38,7 +39,7 @@ class BoxOrderItem extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerLeft,
                   child: BoxText.body(
-                    productLabel,
+                    widget.selectedOrderItem.product?.label ?? '',
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -47,9 +48,9 @@ class BoxOrderItem extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Row(
                     children: [
-                      if (isOrderVerification)
+                      if (widget.isOrderVerification)
                         InkWell(
-                          onTap: onRemove,
+                          onTap: widget.onRemove,
                           child: Icon(
                             Ionicons.remove_circle_outline,
                             size: 32,
@@ -59,14 +60,14 @@ class BoxOrderItem extends StatelessWidget {
                       const SizedBox(width: 5),
                       Center(
                         child: BoxText.body(
-                          amount,
+                          '${widget.selectedOrderItem.amount ?? 0}',
                           color: Colors.grey.shade900,
                         ),
                       ),
                       const SizedBox(width: 5),
-                      if (isOrderVerification)
+                      if (widget.isOrderVerification)
                         InkWell(
-                          onTap: onAdd,
+                          onTap: widget.onAdd,
                           child: Icon(
                             Ionicons.add_circle_outline,
                             size: 32,
@@ -74,7 +75,7 @@ class BoxOrderItem extends StatelessWidget {
                           ),
                         ),
                       BoxText.body(
-                        ' x $price XOF',
+                        ' x ${widget.selectedOrderItem.price} XOF',
                         color: Colors.grey.shade900,
                       )
                     ],
@@ -86,7 +87,7 @@ class BoxOrderItem extends StatelessWidget {
           Container(
             alignment: Alignment.centerRight,
             child: BoxText.body(
-              '$total XOF',
+              '${widget.selectedOrderItem.price! * widget.selectedOrderItem.amount!} XOF',
               color: Colors.grey.shade900,
             ),
           )

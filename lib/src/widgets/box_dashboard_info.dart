@@ -66,7 +66,7 @@ class BoxDashboardInfo extends StatelessWidget {
               children: [
                 if (withCurrency)
                   BoxText.caption(
-                    'XOF',
+                    'FCFA',
                     color: Colors.grey.shade500,
                   ),
                 const SizedBox(height: 5),

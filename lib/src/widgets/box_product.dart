@@ -6,14 +6,10 @@ import '../../products/core/domaine/product.dart';
 
 class BoxProduct extends StatelessWidget {
   final Product product;
-  final void Function()? onEdit;
-  final void Function()? onDelete;
 
   const BoxProduct({
     Key? key,
     required this.product,
-    required this.onEdit,
-    required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -27,27 +23,6 @@ class BoxProduct extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              right: 0,
-              child: InkWell(
-                onTap: onDelete,
-                child: const Icon(
-                  Ionicons.close_circle_outline,
-                  color: Colors.red,
-                  size: 25,
-                ),
-              ),
-            ),
-            Positioned(
-              left: 0,
-              child: InkWell(
-                onTap: onEdit,
-                child: const Icon(
-                  Ionicons.pencil_outline,
-                  size: 17,
-                ),
-              ),
-            ),
-            Positioned(
               bottom: 28,
               left: 10,
               child: BoxText.body('${product.label}'),
@@ -56,16 +31,13 @@ class BoxProduct extends StatelessWidget {
               bottom: 5,
               left: 10,
               child: BoxText.body(
-                '${product.price} XOF',
+                '${product.price} FCFA',
                 fontWeight: FontWeight.bold,
               ),
             ),
             Positioned(
               child: Container(
                 margin: const EdgeInsets.only(
-                  top: 20,
-                  left: 10,
-                  right: 10,
                   bottom: 50,
                 ),
                 child: const Center(

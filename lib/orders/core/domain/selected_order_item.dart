@@ -19,7 +19,6 @@ class SelectedOrderItem {
 
   void incrementAmount() {
     amount = amount! + 1;
-    print(amount);
   }
 
   void decrementAmount() {

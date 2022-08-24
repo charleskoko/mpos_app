@@ -29,7 +29,10 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
           _addOrderItemToNotEmptyList(currentOrderItemsSelected, product);
       emit(
         SelectedOrderItemState.orderNotCanceled(
-            selectedOrderItem: currentOrderItemsSelected),
+          selectedOrderItem: currentOrderItemsSelected,
+          isNotProcessedOrder: state.isNotProcessedOrder,
+          notProcessedOrder: state.notProcessedOrder,
+        ),
       );
       return;
     }

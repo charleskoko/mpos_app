@@ -63,6 +63,10 @@ class OrderRepository {
     return (orderLineItems);
   }
 
+  Future<void> deleteNotProcessedOrder(NotProcessedOrder order) async {
+    await _notProcessedOrderLocalservice.delete(order);
+  }
+
   Future<Either<int, String>> updateNotProcessedOrder(
       NotProcessedOrder order) async {
     try {

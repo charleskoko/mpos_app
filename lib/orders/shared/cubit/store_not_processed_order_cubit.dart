@@ -21,6 +21,5 @@ class StoreNotProcessedOrderCubit extends Cubit<StoreNotProcessedOrderState> {
       (success) => emit(StoreNotProcessedOrderLoaded()),
       (error) => emit(StoreNotProcessedOrderError()),
     );
-    print(state);
   }
 }

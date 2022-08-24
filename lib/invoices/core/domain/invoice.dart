@@ -26,7 +26,7 @@ class Invoice {
   Map<String, dynamic> toJson() => {
         'id': id,
         'number': number,
-        'created_at': createdAt.toString(),
+        'createdAt': createdAt.toString(),
         'order': order?.toJson()
       };
 

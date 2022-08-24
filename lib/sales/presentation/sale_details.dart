@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ionicons/ionicons.dart';
 import '../../core/shared/time_formater.dart';
 import '../../orders/core/domain/order.dart';
 import '../../orders/core/domain/order_line_item.dart';
-import '../../orders/core/domain/selected_order_item.dart';
 import '../../src/shared/app_colors.dart';
-import '../../src/widgets/box_order_item.dart';
 import '../../src/widgets/box_text.dart';
 import '../shared/sale_details_cubit.dart';
 
@@ -44,19 +41,113 @@ class _SaleDetailsState extends State<SaleDetails> {
             ],
             body: Column(
               children: [
-                BoxText.caption(
-                    TimeFormater().myDateAndTimeFormat(DateTime.now())),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: orderItems?.length,
-                    itemBuilder: (BuildContext context, index) => BoxOrderItem(
-                      selectedOrderItem: SelectedOrderItem(
-                        orderItems?[index].product,
-                        orderItems?[index].amount,
-                        orderItems?[index].price,
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(left: 16),
+                      alignment: Alignment.centerLeft,
+                      child: BoxText.caption(
+                        TimeFormater().myDateAndTimeFormat(
+                            saleDetailsState.invoice?.createdAt ??
+                                DateTime.now()),
                       ),
-                      isOrderVerification: false,
                     ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 16, right: 16),
+                      alignment: Alignment.centerRight,
+                      child: BoxText.caption(
+                        'N°CMD: ${saleDetailsState.invoice?.order?.number}',
+                      ),
+                    )
+                  ],
+                ),
+                Flexible(
+                  child: ListView.builder(
+                    shrinkWrap: true, // and set this
+                    itemCount: orderItems?.length,
+                    itemBuilder: (BuildContext context, index) {
+                      String? label = orderItems?[index].product?.label;
+                      double? amount = orderItems?[index].amount;
+                      double? price = orderItems?[index].price;
+                      return Container(
+                        padding: const EdgeInsets.only(left: 16, right: 16),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.centerLeft,
+                                child: BoxText.body(
+                                  '$label',
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.centerRight,
+                                child: BoxText.body(
+                                  '${price! * amount!}',
+                                ),
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              width: 50,
+                              child: BoxText.body(
+                                '$amount',
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 16, right: 16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: BoxText.body(
+                          'SOMME (FCFA)',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        child: BoxText.body(
+                          '${order?.getOrderTotalFromListOrderLineItems}',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 50,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 16, right: 16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: BoxText.body(
+                          'PAIEMENT EN ESPÈCES ',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      BoxText.body(
+                        '-${order?.getOrderTotalFromListOrderLineItems}',
+                        fontWeight: FontWeight.bold,
+                      ),
+                      const SizedBox(
+                        width: 50,
+                      ),
+                    ],
                   ),
                 ),
                 Container(
@@ -64,26 +155,8 @@ class _SaleDetailsState extends State<SaleDetails> {
                   color: Colors.grey.shade300,
                   padding: const EdgeInsets.all(20),
                   child: Center(
-                    child: Row(
-                      children: [
-                        BoxText.subheading(
-                            'Total: ${order?.getOrderTotalFromListOrderLineItems}'),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                          child: TextButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(Ionicons.print),
-                            label: BoxText.body('Imprimer'),
-                            style: TextButton.styleFrom(
-                              primary: Colors.white,
-                              backgroundColor: kPrimaryColor,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                    child: BoxText.subheading(
+                        'FCFA ${order?.getOrderTotalFromListOrderLineItems}'),
                   ),
                 )
               ],

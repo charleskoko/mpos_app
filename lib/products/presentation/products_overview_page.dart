@@ -6,6 +6,7 @@ import 'package:mpos_app/products/presentation/delete_product.dart';
 import 'package:mpos_app/products/presentation/edit_product_page.dart';
 import '../../core/presentation/snack_bar.dart';
 import '../../core/shared/error_message.dart';
+import '../../orders/shared/cubit/fetch_not_processed_order_cubit.dart';
 import '../../orders/shared/cubit/selected_order_item_cubit.dart';
 import '../../orders/shared/cubit/store_order_cubit.dart';
 import '../../src/shared/app_colors.dart';
@@ -113,9 +114,13 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                 BlocListener<StoreOrderCubit, StoreOrderState>(
                   listener: (context, storeOrderState) {
                     if (storeOrderState is StoreOrderLoaded) {
+                      context
+                          .read<SelectedOrderItemCubit>()
+                          .cancelCurrentSelection(isOrderCanceled: false);
                       showBottomSheet(
                         context: context,
                         builder: (context) => Container(
+                          height: 500,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: const BorderRadius.only(
@@ -141,19 +146,20 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                                 height: 5,
                               ),
                               Expanded(
-                                  child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Center(
-                                    child: Icon(
-                                      Ionicons.checkmark_circle,
-                                      color: Colors.green,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Center(
+                                      child: Icon(
+                                        Ionicons.checkmark_circle,
+                                        color: Colors.green,
+                                      ),
                                     ),
-                                  ),
-                                  BoxText.caption(
-                                      "Achat enregistré avec succés")
-                                ],
-                              ))
+                                    BoxText.caption(
+                                        "Achat enregistré avec succés")
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -236,6 +242,82 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                                       : 4,
                             ),
                             itemBuilder: (context, index) => InkWell(
+                              onLongPress: () {
+                                showBottomSheet(
+                                  context: context,
+                                  builder: (context) => Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 150,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: const BorderRadius.only(
+                                        topRight: Radius.circular(10),
+                                        topLeft: Radius.circular(10),
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 10,
+                                          color: Colors.grey.shade300,
+                                          spreadRadius: 5,
+                                        )
+                                      ],
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          margin: const EdgeInsets.only(top: 5),
+                                          width: 100,
+                                          height: 5,
+                                        ),
+                                        Expanded(
+                                            child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            TextButton.icon(
+                                              icon: Icon(
+                                                Ionicons.trash_outline,
+                                                color: Colors.green.shade100,
+                                              ),
+                                              label: BoxText.subheading(
+                                                  'Supprimer'),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                                buildAlertDialogeForDeleteProduct(
+                                                  context,
+                                                  products[index],
+                                                );
+                                              },
+                                            ),
+                                            const Divider(),
+                                            TextButton.icon(
+                                              icon: Icon(
+                                                Ionicons.pencil_outline,
+                                                color: Colors.green.shade100,
+                                              ),
+                                              label: BoxText.subheading(
+                                                  'Modifier'),
+                                              onPressed: () {
+                                                buildBottomSheetForEditProduct(
+                                                  context,
+                                                  formKey,
+                                                  products[index],
+                                                  labelTextFieldController,
+                                                  priceTextFieldController,
+                                                );
+                                              },
+                                            )
+                                          ],
+                                        ))
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
                               onTap: () {
                                 context
                                     .read<SelectedOrderItemCubit>()
@@ -244,18 +326,6 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                                     );
                               },
                               child: BoxProduct(
-                                onDelete: () =>
-                                    buildAlertDialogeForDeleteProduct(
-                                  context,
-                                  products[index],
-                                ),
-                                onEdit: () => buildBottomSheetForEditProduct(
-                                  context,
-                                  formKey,
-                                  products[index],
-                                  labelTextFieldController,
-                                  priceTextFieldController,
-                                ),
                                 product: products[index],
                               ),
                             ),

@@ -49,12 +49,12 @@ class _BoxOrderItemState extends State<BoxOrderItem> {
                   child: Row(
                     children: [
                       if (widget.isOrderVerification)
-                        InkWell(
+                        GestureDetector(
                           onTap: widget.onRemove,
                           child: Icon(
                             Ionicons.remove_circle_outline,
                             size: 32,
-                            color: Colors.red.shade400,
+                            color: Colors.green.shade400,
                           ),
                         ),
                       const SizedBox(width: 5),
@@ -74,9 +74,11 @@ class _BoxOrderItemState extends State<BoxOrderItem> {
                             color: Colors.green.shade400,
                           ),
                         ),
-                      BoxText.body(
-                        ' x ${widget.selectedOrderItem.price} XOF',
-                        color: Colors.grey.shade900,
+                      Flexible(
+                        child: BoxText.body(
+                          ' x ${widget.selectedOrderItem.price} FCFA',
+                          color: Colors.grey.shade900,
+                        ),
                       )
                     ],
                   ),
@@ -87,7 +89,7 @@ class _BoxOrderItemState extends State<BoxOrderItem> {
           Container(
             alignment: Alignment.centerRight,
             child: BoxText.body(
-              '${widget.selectedOrderItem.price! * widget.selectedOrderItem.amount!} XOF',
+              '${widget.selectedOrderItem.price! * widget.selectedOrderItem.amount!} FCFA',
               color: Colors.grey.shade900,
             ),
           )

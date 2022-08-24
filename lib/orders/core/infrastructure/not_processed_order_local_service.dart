@@ -1,5 +1,6 @@
 import 'package:mpos_app/orders/core/domain/not_processed_order.dart';
 import 'package:sembast/sembast.dart';
+import 'package:uuid/uuid.dart';
 import '../../../core/infrastructures/sembast_database.dart';
 import '../domain/selected_order_item.dart';
 
@@ -13,30 +14,29 @@ class NotProcessedOrderLocalservice {
       {required List<SelectedOrderItem> orderLineItems,
       required String label}) async {
     NotProcessedOrder notProcessedOrder = NotProcessedOrder(
-        label: label,
-        selectedOrderItem: orderLineItems,
-        createdAt: DateTime.now());
-    print(notProcessedOrder.toJson());
-    final result = await _store.add(
+      id: Uuid().v1(),
+      label: label,
+      selectedOrderItem: orderLineItems,
+      createdAt: DateTime.now(),
+    );
+    await _store.add(
       _sembastDatabase.instance,
       notProcessedOrder.toJson(),
     );
-    print(result);
   }
 
   Future<int> update(NotProcessedOrder order) async {
-    final finder = Finder(filter: Filter.byKey(order.id));
+    final finder = Finder(filter: Filter.equals('id', order.id));
     final result = await _store.update(
       _sembastDatabase.instance,
       order.toJson(),
       finder: finder,
     );
-
     return result;
   }
 
   Future<void> delete(NotProcessedOrder order) async {
-    final finder = Finder(filter: Filter.byKey(order.id));
+    final finder = Finder(filter: Filter.equals('id', order.id));
     await _store.delete(
       _sembastDatabase.instance,
       finder: finder,

@@ -9,10 +9,20 @@ class FetchNotProcessedOrderCubit extends Cubit<FetchNotProcessedOrderState> {
   FetchNotProcessedOrderCubit(this._ordeRepository)
       : super(FetchNotProcessedOrderInitial());
 
-  Future<void> index() async {
+  Future<void> index({String? id}) async {
     emit(FetchNotProcessedOrderLoading());
     final notProcessedOrderOrFailure =
         await _ordeRepository.fetchNotProcessedOrder();
+    if (id?.isEmpty ?? true) {
+      emit(FetchNotProcessedOrderLoading());
+      emit(FetchNotProcessedOrderLoaded(notProcessedOrderOrFailure));
+      return;
+    }
+    emit(FetchNotProcessedOrderLoading());
+    notProcessedOrderOrFailure.removeWhere((element) => element.id == id);
+    emit(FetchNotProcessedOrderLoaded(const []));
     emit(FetchNotProcessedOrderLoaded(notProcessedOrderOrFailure));
+
+    return;
   }
 }

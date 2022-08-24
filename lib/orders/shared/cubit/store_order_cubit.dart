@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import '../../core/domain/not_processed_order.dart';
 import '../../core/domain/order.dart';
 import '../../core/domain/selected_order_item.dart';
 import '../../core/infrastructure/order_repository.dart';
@@ -9,7 +10,11 @@ class StoreOrderCubit extends Cubit<StoreOrderState> {
   final OrderRepository _ordeRepository;
   StoreOrderCubit(this._ordeRepository) : super(StoreOrderInitial());
 
-  Future<void> store(List<SelectedOrderItem> orderItems) async {
+  Future<void> store(
+    List<SelectedOrderItem> orderItems, {
+    bool isNotProcessedOrder = false,
+    NotProcessedOrder? notProcessedOrder,
+  }) async {
     emit(StoreOrderLoading());
     Map<String, dynamic> rangedOrderData =
         OrderProduct.rangeOrderData(orderItems);
@@ -17,7 +22,11 @@ class StoreOrderCubit extends Cubit<StoreOrderState> {
         await _ordeRepository.storeOrderProduct(orderData: rangedOrderData);
     storedOrderOrFailure.fold(
       (orderProduct) => emit(
-        StoreOrderLoaded(orderProduct),
+        StoreOrderLoaded(
+          orderProduct,
+          isNotProcessedOrder: isNotProcessedOrder,
+          notProcessedOrder: notProcessedOrder,
+        ),
       ),
       (orderError) => emit(
         StoreOrderError(orderError.message),

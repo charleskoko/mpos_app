@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ionicons/ionicons.dart';
 import '../../core/presentation/snack_bar.dart';
 import '../../core/shared/error_message.dart';
+import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_button.dart';
 import '../../src/widgets/box_input_field.dart';
-import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
 import '../shared/cubit/fetch_product/fetch_products_cubit.dart';
 import '../shared/cubit/update_product/update_product_cubit.dart';
@@ -47,112 +46,72 @@ buildBottomSheetForEditProduct(
         }
       },
       child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(10),
-            topLeft: Radius.circular(10),
-          ),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 10,
-              color: Colors.grey.shade300,
-              spreadRadius: 5,
-            )
-          ],
+        height: MediaQuery.of(context).size.height / 2.9,
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.only(
+          left: 16,
+          right: 16,
         ),
         child: Column(
           children: [
             Container(
-              margin: const EdgeInsets.only(
-                bottom: 10,
-                top: 5,
-              ),
-              alignment: Alignment.centerRight,
-              child: Stack(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(
-                      top: 10,
-                    ),
-                    child: const Center(
-                      child: BoxText.headingThree('Modifier produit'),
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Ionicons.close_circle_outline,
-                        size: 20,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ),
-                ],
+              margin: const EdgeInsets.only(top: 4),
+              height: 3,
+              width: 100,
+              decoration: BoxDecoration(
+                color: kScaffoldBackgroundColor,
+                borderRadius: BorderRadius.circular(5),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
+            const SizedBox(height: 20),
+            SizedBox(
+              height: 40,
+              child: BoxInputField.text(
+                controller: labelTextFieldController,
+                labelText: "Label du produit",
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Label est obligatoire';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  return null;
+                },
               ),
-              child: Form(
-                key: formKey,
-                child: Container(
-                  padding: const EdgeInsets.only(top: 10, right: 10),
-                  child: Column(
-                    children: [
-                      BoxInputField.text(
-                        controller: labelTextFieldController,
-                        labelText: "Label du produit",
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Label est obligatoire';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 16),
-                      BoxInputField.number(
-                        controller: priceTextFieldController,
-                        labelText: "Prix du produit",
-                        validator: (value) {
-                          return null;
-                        },
-                        onChanged: (value) {
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 50),
-                      BlocBuilder<UpdateProductCubit, UpdateProductState>(
-                        builder: (context, updateProductCubit) {
-                          return BoxButton.normal(
-                            isBusy: (updateProductCubit is UpdateProductUpdated)
-                                ? true
-                                : false,
-                            title: 'Enregistrer',
-                            onTap: () {
-                              context.read<UpdateProductCubit>().updateProduct(
-                                    label: labelTextFieldController.text,
-                                    productId: product.id ?? '',
-                                    price: double.parse(
-                                        priceTextFieldController.text),
-                                  );
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              height: 40,
+              child: BoxInputField.number(
+                controller: priceTextFieldController,
+                labelText: "Prix du produit",
+                validator: (value) {
+                  return null;
+                },
+                onChanged: (value) {
+                  return null;
+                },
               ),
+            ),
+            const SizedBox(height: 16),
+            BlocBuilder<UpdateProductCubit, UpdateProductState>(
+              builder: (context, updateProductCubit) {
+                return BoxButton.normal(
+                  width: MediaQuery.of(context).size.width,
+                  isBusy: (updateProductCubit is UpdateProductUpdated)
+                      ? true
+                      : false,
+                  title: 'Enregistrer',
+                  onTap: () {
+                    context.read<UpdateProductCubit>().updateProduct(
+                          label: labelTextFieldController.text,
+                          productId: product.id ?? '',
+                          price: double.parse(priceTextFieldController.text),
+                        );
+                  },
+                );
+              },
             ),
           ],
         ),

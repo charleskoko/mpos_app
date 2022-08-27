@@ -76,10 +76,10 @@ class BoxInputField extends StatelessWidget {
                 color: kPrimaryColor,
               ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(5),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(5),
           borderSide: const BorderSide(
             color: kPrimaryColor,
           ),

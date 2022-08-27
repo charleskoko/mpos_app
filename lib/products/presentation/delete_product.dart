@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../core/presentation/snack_bar.dart';
 import '../../core/shared/error_message.dart';
 import '../../src/shared/app_colors.dart';
+import '../../src/shared/styles.dart';
 import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
 import '../shared/cubit/delete_product/delete_product_cubit.dart';
@@ -35,28 +35,89 @@ buildAlertDialogeForDeleteProduct(BuildContext context, Product? product) {
         }
       },
       child: AlertDialog(
-        title: BoxText.headingTwo('Attention', color: kPrimaryColor),
-        content: BoxText.body(
-            'Voulez-vous vraiment supprimer cette article? \n${product?.label}'),
-        actions: [
-          TextButton(
-            child: BoxText.body(
-              'Annuler',
-              color: Colors.grey.shade500,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+        contentPadding: EdgeInsets.zero,
+        //BoxText.headingTwo('Attention', color: kPrimaryColor),
+        content: Container(
+          color: kScaffoldBackgroundColor,
+          height: 200,
+          child: Column(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                color: kAppBarBackgroundColor,
+                padding: const EdgeInsets.only(top: 16, bottom: 16),
+                child: Text(
+                  'Attention',
+                  style: subheadingStyle.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  top: 16,
+                  bottom: 16,
+                ),
+                child: Center(
+                    child: BoxText.body(
+                        'Voulez-vous vraiment supprimer ce produit?')),
+              ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.white,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                                border: Border(
+                              right: BorderSide(color: Colors.white),
+                            )),
+                            child: Center(
+                              child: BoxText.body(
+                                'Annuler',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red.shade400,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            context.read<DeleteProductCubit>().deleteProduct(
+                                  product!,
+                                );
+                          },
+                          child: Center(
+                            child: BoxText.body(
+                              'Confirmer',
+                              fontWeight: FontWeight.bold,
+                              color: kAppBarBackgroundColor,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-          TextButton(
-            child: BoxText.body('oui'),
-            onPressed: () {
-              context.read<DeleteProductCubit>().deleteProduct(
-                    product!,
-                  );
-            },
-          )
-        ],
+        ),
       ),
     ),
   );

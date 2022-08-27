@@ -26,9 +26,11 @@ class _MainPage extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: kScaffoldBackgroundColor,
         elevation: 0,
         unselectedItemColor: kSecondaryColor,
-        selectedItemColor: kThreeColor,
+        selectedItemColor: kAppBarBackgroundColor,
         currentIndex: _selectedScreenIndex,
         selectedLabelStyle: captionStyle,
         onTap: _selectScreen,

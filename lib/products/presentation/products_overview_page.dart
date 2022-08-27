@@ -41,313 +41,247 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.grey.shade100,
-        elevation: 0,
-        title: BoxText.headingTwo(
-          'Produits'.toUpperCase(),
-          color: kThreeColor,
-        ),
-        actions: [
-          Stack(children: [
-            IconButton(
-              icon: const Icon(
-                Ionicons.basket_outline,
-                color: kThreeColor,
-              ),
-              onPressed: () {
-                final selectedOrderItemState =
-                    context.read<SelectedOrderItemCubit>().state;
-                if (selectedOrderItemState.selectedOrderItem?.isNotEmpty ??
-                    false) {
-                  context.goNamed('orderVerification');
-                }
-                if (selectedOrderItemState.selectedOrderItem?.isEmpty ?? true) {
-                  buidSnackbar(
-                    context: context,
-                    backgroundColor: kSecondaryColor,
-                    text: 'Votre panier d\'achat est vide',
-                  );
-                }
-              },
+      backgroundColor: kScaffoldBackgroundColor,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: kAppBarBackgroundColor,
+            elevation: 0,
+            floating: true,
+            pinned: true,
+            snap: false,
+            centerTitle: true,
+            title: BoxText.headingTwo(
+              'Produits',
+              color: Colors.white,
             ),
-            BlocBuilder<SelectedOrderItemCubit, SelectedOrderItemState>(
-              builder: (context, selectOrderItemState) {
-                if (selectOrderItemState.selectedOrderItem?.isNotEmpty ??
-                    false) {
-                  return Positioned(
-                    top: 6,
-                    left: 5,
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      decoration: const BoxDecoration(
-                        color: kThreeColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: BoxText.caption(
-                            selectOrderItemState.selectedOrderItem!.length
-                                .toString(),
-                            color: Colors.white),
-                      ),
-                    ),
-                  );
-                }
-                return Container();
-              },
-            )
-          ])
-        ],
-      ),
-      body: BlocBuilder<FetchProductsCubit, FetchProductsState>(
-        builder: (context, fetchProductState) {
-          if (fetchProductState is FetchProductsLoading) {
-            return const BoxLoading();
-          }
-          if (fetchProductState is FetchProductsLoaded) {
-            List<Product> products = fetchProductState.fresh.entity;
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<StoreOrderCubit, StoreOrderState>(
-                  listener: (context, storeOrderState) {
-                    if (storeOrderState is StoreOrderLoaded) {
-                      context
-                          .read<SelectedOrderItemCubit>()
-                          .cancelCurrentSelection(isOrderCanceled: false);
-                      showBottomSheet(
+            actions: [
+              Stack(children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.shopping_cart,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    final selectedOrderItemState =
+                        context.read<SelectedOrderItemCubit>().state;
+                    if (selectedOrderItemState.selectedOrderItem?.isNotEmpty ??
+                        false) {
+                      context.goNamed('orderVerification');
+                    }
+                    if (selectedOrderItemState.selectedOrderItem?.isEmpty ??
+                        true) {
+                      buidSnackbar(
                         context: context,
-                        builder: (context) => Container(
-                          height: 500,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 10,
-                                color: Colors.grey.shade300,
-                                spreadRadius: 5,
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.circular(10)),
-                                margin: const EdgeInsets.only(top: 5),
-                                width: 100,
-                                height: 5,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Center(
-                                      child: Icon(
-                                        Ionicons.checkmark_circle,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                                    BoxText.caption(
-                                        "Achat enregistré avec succés")
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                        backgroundColor: kSecondaryColor,
+                        text: 'Le panier est vide',
                       );
                     }
                   },
                 ),
-              ],
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      top: 10,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                              height: 55,
-                              child: BoxInputField.text(
-                                hintText: 'Rechercher un produit',
-                                onChanged: (value) {
-                                  context
-                                      .read<FetchProductsCubit>()
-                                      .filterProductsList(
-                                        text: value,
-                                        products: products,
-                                      );
-                                  return null;
-                                },
-                              )),
-                        ),
-                        const SizedBox(width: 5),
-                        SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: kPrimaryColor,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Center(
-                                child: IconButton(
-                                  onPressed: () =>
-                                      buildBottomSheetForAddNewProduct(
-                                    context,
-                                    formKey,
-                                    labelTextFieldController,
-                                    priceTextFieldController,
-                                  ),
-                                  icon: Icon(
-                                    Ionicons.add_outline,
-                                    size: 30,
-                                    color: Colors.grey.shade300,
-                                  ),
-                                ),
-                              ),
-                            ))
-                      ],
-                    ),
-                  ),
-                  if (products.isNotEmpty)
-                    Expanded(
-                      child: Container(
-                          padding: const EdgeInsets.only(
-                            left: 16,
-                            right: 16,
+                BlocBuilder<SelectedOrderItemCubit, SelectedOrderItemState>(
+                  builder: (context, selectOrderItemState) {
+                    if (selectOrderItemState.selectedOrderItem?.isNotEmpty ??
+                        false) {
+                      return Positioned(
+                        top: 6,
+                        left: 5,
+                        child: Container(
+                          height: 20,
+                          width: 20,
+                          decoration: const BoxDecoration(
+                            color: kThreeColor,
+                            shape: BoxShape.circle,
                           ),
-                          child: GridView.builder(
-                            itemCount: products.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisSpacing: 1,
-                              crossAxisSpacing: 1,
-                              crossAxisCount:
-                                  MediaQuery.of(context).size.shortestSide < 600
-                                      ? 2
-                                      : 4,
-                            ),
-                            itemBuilder: (context, index) => InkWell(
-                              onLongPress: () {
-                                showBottomSheet(
-                                  context: context,
-                                  builder: (context) => Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 150,
+                          child: Center(
+                            child: BoxText.caption(
+                                selectOrderItemState.selectedOrderItem!.length
+                                    .toString(),
+                                color: Colors.white),
+                          ),
+                        ),
+                      );
+                    }
+                    return Container();
+                  },
+                )
+              ])
+            ],
+            bottom: AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: kAppBarBackgroundColor,
+              elevation: 0,
+              title: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                width: double.infinity,
+                height: 40,
+                child: Center(
+                  child: BoxInputField.text(
+                    icon: Ionicons.search,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          BlocBuilder<FetchProductsCubit, FetchProductsState>(
+            builder: (context, fetchProductsState) {
+              if (fetchProductsState is FetchProductsLoading) {
+                return SliverList(
+                  delegate: SliverChildListDelegate([
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: const BoxLoading(),
+                    )
+                  ]),
+                );
+              }
+              if (fetchProductsState is FetchProductsError) {
+                return SliverList(
+                  delegate: SliverChildListDelegate([
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: BoxMessage(
+                        message:
+                            '${ErrorMessage.errorMessages['${fetchProductsState.message}']}',
+                      ),
+                    )
+                  ]),
+                );
+              }
+              if (fetchProductsState is FetchProductsLoaded) {
+                List<Product> products = fetchProductsState.fresh.entity;
+                return SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 3,
+                    maxCrossAxisExtent: 200,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return InkWell(
+                        onLongPress: () {
+                          showBottomSheet(
+                            context: context,
+                            builder: (context) => Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 10,
+                                    color: Colors.grey.shade300,
+                                    spreadRadius: 5,
+                                  )
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 4),
+                                    height: 3,
+                                    width: 100,
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(10),
-                                        topLeft: Radius.circular(10),
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 10,
-                                          color: Colors.grey.shade300,
-                                          spreadRadius: 5,
+                                      color: kScaffoldBackgroundColor,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              buildAlertDialogeForDeleteProduct(
+                                                context,
+                                                products[index],
+                                              );
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color:
+                                                      kScaffoldBackgroundColor,
+                                                ),
+                                              ),
+                                              child: Center(
+                                                child: BoxText.subheading(
+                                                  'Supprimer',
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.red.shade400,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              buildBottomSheetForEditProduct(
+                                                context,
+                                                formKey,
+                                                products[index],
+                                                labelTextFieldController,
+                                                priceTextFieldController,
+                                              );
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color:
+                                                      kScaffoldBackgroundColor,
+                                                ),
+                                              ),
+                                              child: Center(
+                                                child: BoxText.subheading(
+                                                  'Modifier',
+                                                  fontWeight: FontWeight.bold,
+                                                  color: kAppBarBackgroundColor,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         )
                                       ],
                                     ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          margin: const EdgeInsets.only(top: 5),
-                                          width: 100,
-                                          height: 5,
-                                        ),
-                                        Expanded(
-                                            child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            TextButton.icon(
-                                              icon: Icon(
-                                                Ionicons.trash_outline,
-                                                color: Colors.green.shade100,
-                                              ),
-                                              label: BoxText.subheading(
-                                                  'Supprimer'),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                                buildAlertDialogeForDeleteProduct(
-                                                  context,
-                                                  products[index],
-                                                );
-                                              },
-                                            ),
-                                            const Divider(),
-                                            TextButton.icon(
-                                              icon: Icon(
-                                                Ionicons.pencil_outline,
-                                                color: Colors.green.shade100,
-                                              ),
-                                              label: BoxText.subheading(
-                                                  'Modifier'),
-                                              onPressed: () {
-                                                buildBottomSheetForEditProduct(
-                                                  context,
-                                                  formKey,
-                                                  products[index],
-                                                  labelTextFieldController,
-                                                  priceTextFieldController,
-                                                );
-                                              },
-                                            )
-                                          ],
-                                        ))
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                              onTap: () {
-                                context
-                                    .read<SelectedOrderItemCubit>()
-                                    .selectOrderItem(
-                                      products[index],
-                                    );
-                              },
-                              child: BoxProduct(
-                                product: products[index],
+                                  )
+                                ],
                               ),
                             ),
-                          )),
-                    ),
-                  if (products.isEmpty)
-                    const Expanded(
-                      child: BoxMessage(
-                          message: 'Ajouter vos produits en cliquant sur "+"'),
-                    )
-                ],
-              ),
-            );
-          }
-          if (fetchProductState is FetchProductsError) {
-            return BoxMessage(
-              message:
-                  '${ErrorMessage.errorMessages['${fetchProductState.message}']}',
-            );
-          }
-          return const BoxMessage(message: '');
-        },
+                          );
+                        },
+                        onTap: () {
+                          context
+                              .read<SelectedOrderItemCubit>()
+                              .selectOrderItem(
+                                products[index],
+                              );
+                        },
+                        child: BoxProduct(
+                          product: products[index],
+                        ),
+                      );
+                    },
+                    childCount: products.length,
+                  ),
+                );
+              }
+              return SliverList(
+                delegate: SliverChildListDelegate([
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: const BoxLoading(),
+                  )
+                ]),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

@@ -245,8 +245,6 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
                                           .isNotProcessedOrder)
                                       ? 'Actualiser'
                                       : 'Sauvegarder',
-                                  primaryColor: kSecondaryColor,
-                                  darkColor: kSecondaryDarkColor,
                                 ),
                               ),
                               const SizedBox(width: 10),

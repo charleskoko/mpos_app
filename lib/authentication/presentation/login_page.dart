@@ -107,8 +107,9 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: () {
                           if (formKey.currentState!.validate()) {
                             Credential credential = Credential(
-                                email: emailTextFieldController.text,
-                                password: passwordTextFieldController.text);
+                              email: emailTextFieldController.text,
+                              password: passwordTextFieldController.text,
+                            );
                             context
                                 .read<AuthenticationCubit>()
                                 .login(credential);

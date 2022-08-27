@@ -6,69 +6,49 @@ import '../shared/app_colors.dart';
 class BoxButton extends StatelessWidget {
   final String title;
   final bool isBusy;
+  double? width;
   final void Function()? onTap;
-  final Color primaryColor;
-  final Color darkColor;
   BoxButton.normal({
     Key? key,
     required this.title,
+    this.width,
     this.isBusy = false,
     this.onTap,
-  })  : primaryColor = kPrimaryColorGradient,
-        darkColor = kPrimaryColorDark,
-        super(key: key);
+  }) : super(key: key);
 
   BoxButton.changedColor({
     required this.title,
     this.isBusy = false,
+    this.width,
     this.onTap,
-    required this.primaryColor,
-    required this.darkColor,
   });
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: kPrimaryColor.withOpacity(0.5),
-            offset: const Offset(0, 24),
-            blurRadius: 50,
-            spreadRadius: -18,
-          ),
-        ],
-      ),
-      child: GestureDetector(
-        onTap: onTap,
-        child: AnimatedContainer(
-          child: Center(
-            child: !isBusy
-                ? BoxText.subheading(
-                    title,
-                    color: Colors.white,
-                  )
-                : const SpinKitWave(
-                    color: Colors.white,
-                    size: 20.0,
-                  ),
-          ),
-          width: size.width - 110,
-          height: 55,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            gradient: LinearGradient(
-              colors: [
-                primaryColor,
-                darkColor,
-              ],
-            ),
-          ),
-          duration: const Duration(
-            milliseconds: 350,
-          ),
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        decoration: BoxDecoration(
+          color: kAppBarBackgroundColor,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Center(
+          child: !isBusy
+              ? BoxText.body(
+                  title,
+                  color: Colors.white,
+                )
+              : const SpinKitWave(
+                  color: Colors.white,
+                  size: 20.0,
+                ),
+        ),
+        width: (width == null) ? size.width - 110 : width,
+        height: 55,
+        duration: const Duration(
+          milliseconds: 350,
         ),
       ),
     );

@@ -8,9 +8,9 @@ class BoxLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: SpinKitWave(
-        color: Colors.grey.shade300,
+        color: Colors.white,
         size: 30.0,
       ),
     );

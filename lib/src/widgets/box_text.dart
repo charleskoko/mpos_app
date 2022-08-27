@@ -14,10 +14,23 @@ class BoxText extends StatelessWidget {
       : style = heading2Style.copyWith(color: color);
   const BoxText.headingThree(this.text) : style = heading3Style;
   const BoxText.headline(this.text) : style = headlineStyle;
-  BoxText.subheading(this.text, {Color color = kblackColor})
-      : style = subheadingStyle.copyWith(color: color);
-  BoxText.caption(this.text, {Color color = kblackColor})
-      : style = captionStyle.copyWith(color: color);
+  BoxText.subheading(
+    this.text, {
+    Color color = kblackColor,
+    FontWeight fontWeight = FontWeight.normal,
+  }) : style = subheadingStyle.copyWith(
+          color: color,
+          fontWeight: fontWeight,
+        );
+  BoxText.caption(this.text,
+      {Color color = kblackColor,
+      double fontSize = 13.0,
+      FontWeight fontWeight = FontWeight.normal})
+      : style = captionStyle.copyWith(
+          color: color,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+        );
 
   BoxText.body(this.text,
       {Color color = kblackColor, FontWeight fontWeight = FontWeight.normal})

@@ -3,6 +3,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/src/widgets/box_text.dart';
 
 import '../../products/core/domaine/product.dart';
+import '../shared/app_colors.dart';
 
 class BoxProduct extends StatelessWidget {
   final Product product;
@@ -14,41 +15,40 @@ class BoxProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        padding: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+    return Container(
+      margin: const EdgeInsets.only(
+        left: 4,
+        top: 4,
+        right: 4,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+        border: Border.all(
+          color: Colors.grey.shade400,
         ),
-        child: Stack(
-          children: [
-            Positioned(
-              bottom: 28,
-              left: 10,
-              child: BoxText.body('${product.label}'),
+      ),
+      child: Stack(
+        children: [
+          Container(
+            alignment: const Alignment(0, 0),
+            child: BoxText.subheading(
+              '${product.label}',
+              fontWeight: FontWeight.bold,
+              color: kProductInfoColor,
             ),
-            Positioned(
-              bottom: 5,
-              left: 10,
-              child: BoxText.body(
-                '${product.price} FCFA',
-                fontWeight: FontWeight.bold,
-              ),
+          ),
+          Positioned(
+            bottom: 5,
+            right: 10,
+            child: BoxText.caption(
+              '${product.price} FCFA',
+              fontSize: 15,
+              color: kProductInfoColor,
+              fontWeight: FontWeight.bold,
             ),
-            Positioned(
-              child: Container(
-                margin: const EdgeInsets.only(
-                  bottom: 50,
-                ),
-                child: const Center(
-                  child: Image(
-                      image:
-                          AssetImage("assets/images/image_placeholder.jpeg")),
-                ),
-              ),
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

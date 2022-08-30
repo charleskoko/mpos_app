@@ -41,7 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   bottom: 50,
                 ),
                 child: BoxText.headingOne(
-                  'Enregistrement',
+                  "S'enregistrer",
                 ),
               ),
               Form(

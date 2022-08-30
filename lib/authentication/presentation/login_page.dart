@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                     bottom: 50,
                   ),
                   child: BoxText.headingOne(
-                    'mPOS',
+                    'Se connecter',
                   ),
                 ),
                 Form(
@@ -116,16 +116,17 @@ class _LoginPageState extends State<LoginPage> {
                         });
                   },
                 ),
-                Container(
-                  padding: const EdgeInsets.only(
-                    top: 25,
-                    bottom: 10,
-                  ),
-                  child: BoxText.caption(
-                    'Mot de passe oublié?',
-                  ),
-                ),
-                const SizedBox(width: 100, child: Divider()),
+                // Container(
+                //   padding: const EdgeInsets.only(
+                //     top: 25,
+                //     bottom: 10,
+                //   ),
+                //   child: BoxText.caption(
+                //     'Mot de passe oublié?',
+                //   ),
+                // ),
+                // const SizedBox(width: 100, child: Divider()),
+                const SizedBox(height: 50),
                 Container(
                   padding: const EdgeInsets.only(
                     top: 10,

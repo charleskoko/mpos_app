@@ -90,7 +90,7 @@ class _NotProcessedOrderPageState extends State<NotProcessedOrderPage> {
                             color: Colors.green,
                           ),
                         ),
-                        BoxText.caption("Achat enregistré avec succés")
+                        BoxText.caption("Achat enregistré avec succès")
                       ],
                     ))
                   ],
@@ -104,7 +104,7 @@ class _NotProcessedOrderPageState extends State<NotProcessedOrderPage> {
             if (fetchNotProcessedOrderState is FetchNotProcessedOrderLoaded) {
               if (fetchNotProcessedOrderState.orders.isEmpty) {
                 return const BoxMessage(
-                  message: 'Pas de commande enregistrés',
+                  message: 'Aucune de commande enregistrée',
                 );
               }
               return Container(

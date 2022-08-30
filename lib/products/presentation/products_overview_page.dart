@@ -156,7 +156,8 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                                       ),
                                     ),
                                     BoxText.caption(
-                                        "Achat enregistré avec succés")
+                                      "Achat enregistré avec succès",
+                                    )
                                   ],
                                 ),
                               )

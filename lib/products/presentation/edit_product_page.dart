@@ -42,7 +42,7 @@ buildBottomSheetForEditProduct(
           buidSnackbar(
             context: context,
             backgroundColor: Colors.green,
-            text: 'Le produit a été modifié',
+            text: 'Le produit a été modifié avec succès',
           );
         }
       },

@@ -37,7 +37,7 @@ buildAlertDialogeForDeleteProduct(BuildContext context, Product? product) {
       child: AlertDialog(
         title: BoxText.headingTwo('Attention', color: kPrimaryColor),
         content: BoxText.body(
-            'Voulez-vous vraiment supprimer cette article? \n${product?.label}'),
+            'Voulez-vous vraiment supprimer cet article? \n${product?.label}'),
         actions: [
           TextButton(
             child: BoxText.body(

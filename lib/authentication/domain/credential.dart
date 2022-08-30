@@ -3,15 +3,22 @@
 class Credential {
   String? name;
   String? email;
+  String? mobile;
   String? password;
   String? password_confirmation;
 
-  Credential(
-      {this.name, this.email, this.password, this.password_confirmation});
+  Credential({
+    this.name,
+    this.mobile,
+    this.email,
+    this.password,
+    this.password_confirmation,
+  });
 
   Map<String, dynamic> toJson() => {
         'name': name,
         'email': email,
+        'mobile': mobile,
         'password': password,
         'password_confirmation': password_confirmation
       };

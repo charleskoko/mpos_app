@@ -44,13 +44,14 @@ class AuthenticationRemoteService {
 
   Future<RemoteResponse> register({required Credential credential}) async {
     final registrationUri =
-        Environment.getUri(unencodedPath: '/api/v1/registration');
+        Environment.getUri(unencodedPath: '/api/v1/register');
     try {
       final response =
           await _dio.postUri(registrationUri, data: credential.toJson());
       if (response.statusCode == 201) {
-        final User user = User.fromJson(response.data['user']);
-        final String? bearerToken = response.data['token'];
+        print(response);
+        final User user = User.fromJson(response.data['data']['user']);
+        final String? bearerToken = response.data['data']['token'];
         Map<String, dynamic> responseData = {
           'user': user,
           'token': bearerToken
@@ -65,7 +66,9 @@ class AuthenticationRemoteService {
       }
       if (error.response?.statusCode != null) {
         throw RestApiException(
-            error.response?.statusCode, error.response?.data['message']);
+          error.response?.statusCode,
+          error.response?.data['message'],
+        );
       }
       rethrow;
     }

@@ -131,8 +131,13 @@ class _LoginPageState extends State<LoginPage> {
                     top: 10,
                     bottom: 10,
                   ),
-                  child: BoxText.caption(
-                    'S\'enregistrer',
+                  child: GestureDetector(
+                    onTap: () {
+                      context.goNamed('register');
+                    },
+                    child: BoxText.caption(
+                      'S\'enregistrer',
+                    ),
                   ),
                 ),
               ],

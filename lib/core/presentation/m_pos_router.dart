@@ -26,14 +26,16 @@ class MposRouter {
           key: state.pageKey,
           child: const LoginPage(),
         ),
-      ),
-      GoRoute(
-        name: 'register',
-        path: '/register',
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const RegisterPage(),
-        ),
+        routes: [
+          GoRoute(
+            name: 'register',
+            path: 'register',
+            pageBuilder: (context, state) => MaterialPage(
+              key: state.pageKey,
+              child: const RegisterPage(),
+            ),
+          ),
+        ],
       ),
       GoRoute(
           name: 'main',

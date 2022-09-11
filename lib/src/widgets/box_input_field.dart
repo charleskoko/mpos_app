@@ -65,7 +65,7 @@ class BoxInputField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: bodyStyle.copyWith(
-          color: Colors.grey.shade600,
+          color: Color(0xFF80808A),
         ),
         hintText: hintText,
         hintStyle: subheadingStyle,
@@ -73,15 +73,15 @@ class BoxInputField extends StatelessWidget {
             ? null
             : Icon(
                 icon,
-                color: kPrimaryColor,
+                color: Color(0xFF80808A),
               ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(12),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(
-            color: kPrimaryColor,
+            color: Color(0xFF80808A),
           ),
         ),
       ),

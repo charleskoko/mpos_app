@@ -47,21 +47,9 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: NunitoSans-Black
+    - family: Poppins-Regular
       fonts:
-        - asset: assets/fonts/NunitoSans-Black.ttf
-    - family: NunitoSans-Bold
-      fonts:
-        - asset: assets/fonts/NunitoSans-Bold.ttf
-    - family: NunitoSans-Light
-      fonts:
-        - asset: assets/fonts/NunitoSans-Light.ttf
-    - family: NunitoSans-Regular
-      fonts:
-        - asset: assets/fonts/NunitoSans-Regular.ttf
-    - family: NunitoSans-SemiBold
-      fonts:
-        - asset: assets/fonts/NunitoSans-SemiBold.ttf
+        - asset: assets/fonts/Poppins-Regular.ttf
       
     
   

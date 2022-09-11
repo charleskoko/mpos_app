@@ -8,10 +8,24 @@ class BoxText extends StatelessWidget {
   final String text;
   final TextStyle style;
 
+  BoxText.appBarTitle(this.text, {Color color = kPrimaryColor})
+      : style = appBarTileStyle.copyWith(
+          color: color,
+        );
+
+  BoxText.mainButtonText(this.text, {Color color = kPrimaryColor})
+      : style = mainButtonTextStyle.copyWith(
+          color: color,
+        );
+
   BoxText.headingOne(this.text, {Color color = kblackColor})
-      : style = heading1Style.copyWith(color: color);
+      : style = appBarTileStyle.copyWith(
+          color: color,
+        );
   BoxText.headingTwo(this.text, {Color color = kblackColor})
-      : style = heading2Style.copyWith(color: color);
+      : style = appBarTileStyle.copyWith(
+          color: color,
+        );
   const BoxText.headingThree(this.text) : style = heading3Style;
   const BoxText.headline(this.text) : style = headlineStyle;
   BoxText.subheading(
@@ -24,7 +38,7 @@ class BoxText extends StatelessWidget {
         );
   BoxText.caption(this.text,
       {Color color = kblackColor,
-      double fontSize = 13.0,
+      double fontSize = 14.0,
       FontWeight fontWeight = FontWeight.normal})
       : style = captionStyle.copyWith(
           color: color,

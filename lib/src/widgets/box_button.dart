@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/src/widgets/box_text.dart';
 import '../shared/app_colors.dart';
 
@@ -8,6 +9,15 @@ class BoxButton extends StatelessWidget {
   final bool isBusy;
   double? width;
   final void Function()? onTap;
+
+  BoxButton.main({
+    Key? key,
+    required this.title,
+    this.width,
+    this.isBusy = false,
+    this.onTap,
+  }) : super(key: key);
+
   BoxButton.normal({
     Key? key,
     required this.title,
@@ -30,23 +40,45 @@ class BoxButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
+        width: 317,
+        height: 58,
         decoration: BoxDecoration(
-          color: kAppBarBackgroundColor,
-          borderRadius: BorderRadius.circular(5),
+          color: kPrimaryColor,
+          borderRadius: BorderRadius.circular(15),
         ),
-        child: Center(
-          child: !isBusy
-              ? BoxText.body(
-                  title,
-                  color: Colors.white,
-                )
-              : const SpinKitWave(
-                  color: Colors.white,
-                  size: 20.0,
+        child: Stack(
+          children: [
+            Center(
+              child: !isBusy
+                  ? BoxText.mainButtonText(
+                      title.toUpperCase(),
+                      color: Colors.white,
+                    )
+                  : const SpinKitWave(
+                      color: Colors.white,
+                      size: 20.0,
+                    ),
+            ),
+            Positioned(
+              right: 12.27,
+              top: 14,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Color(0xFFFFD051),
+                  shape: BoxShape.circle,
                 ),
+                width: 30,
+                height: 30,
+                child: const Center(
+                  child: Icon(
+                    Ionicons.arrow_forward_outline,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
-        width: (width == null) ? size.width - 110 : width,
-        height: 55,
         duration: const Duration(
           milliseconds: 350,
         ),

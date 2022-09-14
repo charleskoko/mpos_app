@@ -26,13 +26,27 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
   Future<void> login(Credential credential) async {
     emit(AuthenticationLoading());
-    final fetchUserAuthenticationInfoOrFaillure =
-        await _authenticationRepository.loginOrRegister(credential);
-    fetchUserAuthenticationInfoOrFaillure.fold(
+    final userAuthenticationInfoOrFaillure =
+        await _authenticationRepository.login(credential);
+    userAuthenticationInfoOrFaillure.fold(
       (authenticatedUserInfo) =>
           emit(AuthenticationValidated(authenticatedUserInfo)),
       (faillureMessage) =>
           emit(AuthenticationFailed(message: faillureMessage.getMessage)),
+    );
+  }
+
+  Future<void> registration(Credential credential) async {
+    emit(AuthenticationLoading());
+    final userAuthenticationInfoOrFaillure =
+        await _authenticationRepository.register(credential);
+    userAuthenticationInfoOrFaillure.fold(
+      (authenticatedUserInfo) =>
+          emit(AuthenticationValidated(authenticatedUserInfo)),
+      (faillureMessage) {
+        print(faillureMessage.getMessage);
+        emit(AuthenticationFailed(message: faillureMessage.getMessage));
+      },
     );
   }
 

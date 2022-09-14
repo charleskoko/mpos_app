@@ -43,7 +43,7 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
                 buidSnackbar(
                     context: context,
                     backgroundColor: Colors.green.shade100,
-                    text: 'La commande a été modifée avec success');
+                    text: 'La commande a été modifée avec succès');
               }
             },
           ),
@@ -57,7 +57,7 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
                 buidSnackbar(
                     context: context,
                     backgroundColor: Colors.green.shade100,
-                    text: 'La commande a été sauvegardée avec success');
+                    text: 'La commande a été sauvegardée avec succès');
               }
             },
           ),

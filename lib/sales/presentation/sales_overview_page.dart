@@ -35,7 +35,7 @@ class _SalesOverviewPage extends State<SalesOverviewPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: BoxText.headingTwo(
-          'Ventes'.toUpperCase(),
+          'Reçus'.toUpperCase(),
           color: kThreeColor,
         ),
       ),
@@ -79,8 +79,7 @@ class _SalesOverviewPage extends State<SalesOverviewPage> {
                   ),
                 if (invoices.isEmpty)
                   const Expanded(
-                    child: BoxMessage(
-                        message: "Aucune vente enregistrer pour l'instant"),
+                    child: BoxMessage(message: "Aucun reçu généré"),
                   )
               ],
             );

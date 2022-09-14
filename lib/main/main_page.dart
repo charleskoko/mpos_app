@@ -49,7 +49,7 @@ class _MainPage extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Ionicons.albums_outline),
-            label: 'Ventes',
+            label: 'Reçus',
           ),
         ],
       ),

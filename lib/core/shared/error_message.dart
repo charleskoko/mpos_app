@@ -6,6 +6,7 @@ class ErrorMessage {
     'noConnection':
         'Vous êtes hors connexion. Vérifiez votre connexion internet',
     'password': 'Le mot de passe doit comporter au moins 8 caractères',
+    'The email has already been taken.': "L'email a déjà été pris",
     'noErrorMessage': 'Une erreur a eu lieu, veuillez réessayer.'
   };
 

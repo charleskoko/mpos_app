@@ -21,8 +21,7 @@ class AuthenticationRepository {
     return await _authenticationLocalService.readAuthUser();
   }
 
-  Future<Either<User, AuthenticationError>> loginOrRegister(
-      Credential credential) async {
+  Future<Either<User, AuthenticationError>> login(Credential credential) async {
     try {
       final loginRequestResponse =
           await _authenticationRemoteService.login(credential: credential);
@@ -35,6 +34,31 @@ class AuthenticationRepository {
 
         return left(authUser);
       } else if (loginRequestResponse is NotAuthorized) {
+        return right(AuthenticationError('notAuthorized'));
+      } else {
+        return right(AuthenticationError('noConnection'));
+      }
+    } on RestApiException catch (exception) {
+      return right(
+        AuthenticationError(exception.message ?? 'noErrorMessage'),
+      );
+    }
+  }
+
+  Future<Either<User, AuthenticationError>> register(
+      Credential credential) async {
+    try {
+      final registerRequestResponse =
+          await _authenticationRemoteService.register(credential: credential);
+      if (registerRequestResponse is ConnectionResponse) {
+        User authUser;
+        await _authenticationLocalService.saveAuthUser(
+            user: authUser = registerRequestResponse.response['user']);
+        await _authenticationLocalService.saveBearerToken(
+            bearerToken: registerRequestResponse.response['token']);
+
+        return left(authUser);
+      } else if (registerRequestResponse is NotAuthorized) {
         return right(AuthenticationError('notAuthorized'));
       } else {
         return right(AuthenticationError('noConnection'));

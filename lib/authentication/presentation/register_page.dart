@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mpos_app/authentication/domain/credential.dart';
 
 import '../../core/shared/mixin_scaffold.dart';
 import '../../core/shared/mixin_validation.dart';
@@ -210,7 +211,20 @@ class _RegisterPageState extends State<RegisterPage>
                               : false,
                           title: "S'ENREGISTRER",
                           onTap: () {
-                            if (formKey.currentState!.validate()) {}
+                            if (formKey.currentState!.validate()) {
+                              Credential credential = Credential(
+                                name: nameTextFieldController.text,
+                                email: emailTextFieldController.text,
+                                mobile: mobileTextFieldController.text,
+                                password: passwordTextFieldController.text,
+                                password_confirmation:
+                                    passwordConfirmationTextFieldController
+                                        .text,
+                              );
+                              context
+                                  .read<AuthenticationCubit>()
+                                  .login(credential);
+                            }
                           });
                     },
                   ),

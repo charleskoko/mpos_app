@@ -40,7 +40,7 @@ class BoxButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        width: 317,
+        width: MediaQuery.of(context).size.width,
         height: 58,
         decoration: BoxDecoration(
           color: kPrimaryColor,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../authentication/presentation/login_page.dart';
+import '../../authentication/presentation/password_forgot_page.dart';
 import '../../authentication/presentation/register_page.dart';
 import '../../main/main_page.dart';
 import '../../orders/presentation/order_verification_page.dart';
@@ -20,21 +21,30 @@ class MposRouter {
         ),
       ),
       GoRoute(
-        name: 'login',
-        path: '/login',
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const LoginPage(),
-        ),
-      ),
-      GoRoute(
-        name: 'register',
-        path: '/register',
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const RegisterPage(),
-        ),
-      ),
+          name: 'login',
+          path: '/login',
+          pageBuilder: (context, state) => MaterialPage(
+                key: state.pageKey,
+                child: const LoginPage(),
+              ),
+          routes: [
+            GoRoute(
+              name: 'register',
+              path: 'register',
+              pageBuilder: (context, state) => MaterialPage(
+                key: state.pageKey,
+                child: const RegisterPage(),
+              ),
+            ),
+            GoRoute(
+              name: 'passwordForgot',
+              path: 'passwordForgot',
+              pageBuilder: (context, state) => MaterialPage(
+                key: state.pageKey,
+                child: const PasswordForgotPage(),
+              ),
+            ),
+          ]),
       GoRoute(
           name: 'main',
           path: '/main',

@@ -9,8 +9,8 @@ class BoxInputField extends StatelessWidget {
   final String? labelText;
   final String? hintText;
   final IconData? icon;
+  final IconButton? showPassword;
   final String? Function(String value)? validator;
-  final String? Function(String value)? onChanged;
   final bool isPasswordTextField;
   final TextInputType? textInputType;
 
@@ -18,8 +18,8 @@ class BoxInputField extends StatelessWidget {
     this.controller,
     this.labelText,
     this.icon,
+    this.showPassword,
     this.hintText,
-    this.onChanged,
     this.validator,
   })  : isPasswordTextField = false,
         textInputType = TextInputType.text;
@@ -28,18 +28,18 @@ class BoxInputField extends StatelessWidget {
     this.controller,
     this.labelText,
     this.icon,
+    this.showPassword,
+    this.isPasswordTextField = true,
     this.hintText,
-    this.onChanged,
     this.validator,
-  })  : isPasswordTextField = true,
-        textInputType = TextInputType.text;
+  }) : textInputType = TextInputType.text;
 
   BoxInputField.email({
     this.controller,
     this.labelText,
     this.icon,
+    this.showPassword,
     this.hintText,
-    this.onChanged,
     this.validator,
   })  : isPasswordTextField = false,
         textInputType = TextInputType.emailAddress;
@@ -48,8 +48,8 @@ class BoxInputField extends StatelessWidget {
     this.controller,
     this.labelText,
     this.icon,
+    this.showPassword,
     this.hintText,
-    this.onChanged,
     this.validator,
   })  : isPasswordTextField = false,
         textInputType = TextInputType.number;
@@ -65,7 +65,8 @@ class BoxInputField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: bodyStyle.copyWith(
-          color: Color(0xFF80808A),
+          color: const Color(0xFF80808A),
+          fontWeight: FontWeight.normal,
         ),
         hintText: hintText,
         hintStyle: subheadingStyle,
@@ -73,8 +74,9 @@ class BoxInputField extends StatelessWidget {
             ? null
             : Icon(
                 icon,
-                color: Color(0xFF80808A),
+                color: const Color(0xFF80808A),
               ),
+        suffixIcon: (showPassword == null) ? null : showPassword,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -86,7 +88,6 @@ class BoxInputField extends StatelessWidget {
         ),
       ),
       validator: (value) => validator!(value!),
-      onChanged: (value) => onChanged!(value),
     );
   }
 }

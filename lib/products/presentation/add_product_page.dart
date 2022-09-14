@@ -114,18 +114,12 @@ buildBottomSheetForAddNewProduct(
                             }
                             return null;
                           },
-                          onChanged: (value) {
-                            return null;
-                          },
                         ),
                         const SizedBox(height: 16),
                         BoxInputField.number(
                           controller: priceTextFieldController,
                           labelText: "Prix du produit",
                           validator: (value) {
-                            return null;
-                          },
-                          onChanged: (value) {
                             return null;
                           },
                         ),

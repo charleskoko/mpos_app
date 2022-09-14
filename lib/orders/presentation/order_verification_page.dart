@@ -207,9 +207,6 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
                                             ),
                                             content: BoxInputField.text(
                                               controller: inputTextController,
-                                              onChanged: (value) {
-                                                return null;
-                                              },
                                               hintText: 'Table 1',
                                             ),
                                             actions: [

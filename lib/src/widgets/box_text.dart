@@ -46,9 +46,11 @@ class BoxText extends StatelessWidget {
           fontWeight: fontWeight,
         );
 
-  BoxText.body(this.text,
-      {Color color = kblackColor, FontWeight fontWeight = FontWeight.normal})
-      : style = bodyStyle.copyWith(
+  BoxText.body(
+    this.text, {
+    Color color = kblackColor,
+    FontWeight fontWeight = FontWeight.normal,
+  }) : style = bodyStyle.copyWith(
           color: color,
           fontWeight: fontWeight,
         );

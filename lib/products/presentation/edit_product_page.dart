@@ -75,9 +75,6 @@ buildBottomSheetForEditProduct(
                   }
                   return null;
                 },
-                onChanged: (value) {
-                  return null;
-                },
               ),
             ),
             const SizedBox(height: 16),
@@ -87,9 +84,6 @@ buildBottomSheetForEditProduct(
                 controller: priceTextFieldController,
                 labelText: "Prix du produit",
                 validator: (value) {
-                  return null;
-                },
-                onChanged: (value) {
                   return null;
                 },
               ),

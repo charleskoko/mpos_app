@@ -42,7 +42,7 @@ class BoxProduct extends StatelessWidget {
             bottom: 5,
             right: 10,
             child: BoxText.caption(
-              '${product.price} FCFA',
+              '${product.salePrice} FCFA',
               fontSize: 15,
               color: kProductInfoColor,
               fontWeight: FontWeight.bold,

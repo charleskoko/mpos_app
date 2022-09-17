@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:mpos_app/orders/core/domain/selected_order_item.dart';
 import 'package:mpos_app/orders/core/infrastructure/not_processed_order_local_service.dart';
 import 'package:mpos_app/orders/core/infrastructure/order_remote_service.dart';
+import '../../../core/domain/fresh.dart';
 import '../../../core/infrastructures/network_exception.dart';
 import '../../../core/domain/remote_response.dart';
 import '../domain/not_processed_order.dart';
@@ -13,6 +14,35 @@ class OrderRepository {
   NotProcessedOrderLocalservice _notProcessedOrderLocalservice;
   OrderRepository(
       this._orderRemoteService, this._notProcessedOrderLocalservice);
+
+  Future<Either<Fresh<List<OrderProduct>>, OrderError>>
+      indexOrderProducts() async {
+    final indexOrderProductRequestResponse =
+        await _orderRemoteService.indexOrder();
+    try {
+      if (indexOrderProductRequestResponse is ConnectionResponse) {
+        List<OrderProduct> orderProductList =
+            indexOrderProductRequestResponse.response;
+        return left(Fresh.yes(orderProductList));
+      } else if (indexOrderProductRequestResponse is NotAuthorized) {
+        return right(
+          OrderError(
+            'notAuthorized',
+          ),
+        );
+      } else {
+        return right(
+          OrderError(
+            'noConnection',
+          ),
+        );
+      }
+    } on RestApiException catch (exception) {
+      return right(
+        OrderError(exception.message ?? 'noErrorMessage'),
+      );
+    }
+  }
 
   Future<Either<OrderProduct, OrderError>> storeOrderProduct(
       {required Map<String, dynamic> orderData}) async {

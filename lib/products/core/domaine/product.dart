@@ -1,23 +1,35 @@
 class Product {
   String? id;
   String? label;
-  double? price;
+  double? salePrice;
+  double? purchasePrice;
+  bool? isDeleted;
+  int? stock;
 
   Product({
     this.id,
     this.label,
-    this.price,
+    this.salePrice,
+    this.purchasePrice,
+    this.isDeleted,
+    this.stock,
   });
 
   Product.fromJson(Map<String, dynamic>? jsonObject) {
     id = jsonObject?["id"].toString();
     label = jsonObject?["label"].toString();
-    price = double.parse(jsonObject?["price"] ?? '0');
+    salePrice = double.parse(jsonObject?["sale_price"] ?? '0');
+    purchasePrice = double.parse(jsonObject?["purchase_price"] ?? '0');
+    isDeleted = jsonObject?["is_deleted"];
+    stock = int.parse(jsonObject?["stock"]);
   }
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'label': label,
-        'price': price.toString(),
+        'sale_price': salePrice.toString(),
+        'purchase_price': purchasePrice.toString(),
+        'is_deleted': isDeleted,
+        'stock': stock
       };
 }

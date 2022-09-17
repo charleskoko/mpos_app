@@ -184,15 +184,6 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                               height: 55,
                               child: BoxInputField.text(
                                 hintText: 'Rechercher un produit',
-                                onChanged: (value) {
-                                  context
-                                      .read<FetchProductsCubit>()
-                                      .filterProductsList(
-                                        text: value,
-                                        products: products,
-                                      );
-                                  return null;
-                                },
                               )),
                         ),
                         const SizedBox(width: 5),

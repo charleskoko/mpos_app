@@ -27,29 +27,50 @@ class _MainPage extends State<MainPage> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: kScaffoldBackgroundColor,
+        backgroundColor: kPrimaryColor,
         elevation: 0,
-        unselectedItemColor: kSecondaryColor,
-        selectedItemColor: kAppBarBackgroundColor,
+        unselectedItemColor: const Color(0xFFB8B8B8),
+        selectedItemColor: Colors.white,
         currentIndex: _selectedScreenIndex,
-        selectedLabelStyle: captionStyle,
+        unselectedLabelStyle: const TextStyle(
+          fontSize: 12,
+          fontFamily: 'Poppins-Regular',
+          fontWeight: FontWeight.w400,
+        ),
+        selectedLabelStyle: const TextStyle(
+          fontSize: 12,
+          fontFamily: 'Poppins-Regular',
+          fontWeight: FontWeight.w700,
+        ),
         onTap: _selectScreen,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Ionicons.storefront_outline),
-            label: 'Boutique',
+            icon: Padding(
+              padding: EdgeInsets.only(top: 19, bottom: 12.11),
+              child: Icon(Ionicons.pie_chart_outline, size: 30),
+            ),
+            label: 'Dashboard',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Ionicons.briefcase_outline),
-            label: 'Produits',
+            icon: Padding(
+              padding: EdgeInsets.only(top: 19, bottom: 12.11),
+              child: Icon(Ionicons.reader_outline, size: 30),
+            ),
+            label: 'Commandes',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Ionicons.file_tray_full_outline),
-            label: 'Sauvegardes',
+            icon: Padding(
+              padding: EdgeInsets.only(top: 19, bottom: 12.11),
+              child: Icon(Ionicons.receipt_outline, size: 30),
+            ),
+            label: 'Articles',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Ionicons.albums_outline),
-            label: 'Reçus',
+            icon: Padding(
+              padding: EdgeInsets.only(top: 19, bottom: 12.11),
+              child: Icon(Ionicons.settings_outline, size: 30),
+            ),
+            label: 'Paramètres',
           ),
         ],
       ),

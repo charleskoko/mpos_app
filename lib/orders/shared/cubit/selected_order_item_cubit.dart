@@ -16,7 +16,7 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
       currentOrderItemsSelected.add(SelectedOrderItem(
         product,
         1,
-        product.price,
+        product.salePrice,
       ));
       emit(
         SelectedOrderItemState.orderNotCanceled(
@@ -94,7 +94,7 @@ List<SelectedOrderItem>? _addOrderItemToNotEmptyList(
     currentOrderItemsSelected.add(SelectedOrderItem(
       product,
       1,
-      product.price,
+      product.salePrice,
     ));
     return currentOrderItemsSelected;
   }

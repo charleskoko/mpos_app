@@ -44,7 +44,6 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       (authenticatedUserInfo) =>
           emit(AuthenticationValidated(authenticatedUserInfo)),
       (faillureMessage) {
-        print(faillureMessage.getMessage);
         emit(AuthenticationFailed(message: faillureMessage.getMessage));
       },
     );

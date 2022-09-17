@@ -3,12 +3,9 @@ mixin ValidationMixin {
   bool isTextfieldNotEmpty(String value) => value.isNotEmpty;
   bool isPhoneNumberValid(String phoneNumber) => phoneNumber.length >= 10;
   bool isPasswordConfirmed(String password, String passwordToConfirm) {
-    print('$password $passwordToConfirm');
     if (password.toLowerCase() == passwordToConfirm.toLowerCase()) {
-      print(true);
       return true;
     }
-    print(false);
     return false;
   }
 

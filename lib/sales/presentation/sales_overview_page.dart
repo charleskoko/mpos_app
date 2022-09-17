@@ -48,7 +48,7 @@ class _SalesOverviewPage extends State<SalesOverviewPage> {
             List<Invoice> invoices = fetchInvoiceState.invoices;
             return Column(
               children: [
-                BoxText.caption(TimeFormater().myDateFormat(DateTime.now())),
+                BoxText.caption(TimeFormater().dashboardDate(DateTime.now())),
                 const SizedBox(height: 10),
                 if (invoices.isNotEmpty)
                   Expanded(

@@ -2,7 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../authentication/infrastructures/authentication_cubit.dart';
 import '../../authentication/infrastructures/authentication_repository.dart';
-import '../../dashboard/shared/dashboard_cubit.dart';
+import '../../custom_calendar/infrastructures/calendar_cubit.dart';
+import '../../custom_calendar/infrastructures/calendar_repository_impl.dart';
+import '../../dashboard/shared/cubit/dashboard_cubit.dart';
 import '../../invoices/core/infrastructure/invoice_repository.dart';
 import '../../invoices/shared/fetch_invoice_cubit.dart';
 import '../../orders/core/infrastructure/order_repository.dart';
@@ -62,7 +64,7 @@ class BlocsProvider {
       ),
       BlocProvider<DashboardCubit>(
         create: (context) => DashboardCubit(
-          context.read<InvoiceRepository>(),
+          context.read<OrderRepository>(),
         ),
       ),
       BlocProvider<SaleDetailsCubit>(
@@ -86,6 +88,11 @@ class BlocsProvider {
       BlocProvider<DeleteNotProcessedOrderCubit>(
         create: (context) => DeleteNotProcessedOrderCubit(
           context.read<OrderRepository>(),
+        ),
+      ),
+      BlocProvider<CalendarCubit>(
+        create: (context) => CalendarCubit(
+          context.read<CalendarRepositoryImpl>(),
         ),
       ),
     ];

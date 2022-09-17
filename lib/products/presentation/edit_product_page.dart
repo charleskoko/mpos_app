@@ -17,7 +17,7 @@ buildBottomSheetForEditProduct(
   TextEditingController priceTextFieldController,
 ) {
   labelTextFieldController.text = product.label ?? '';
-  priceTextFieldController.text = product.price.toString();
+  priceTextFieldController.text = product.salePrice.toString();
   return showBottomSheet(
     context: context,
     builder: (context) => BlocListener<UpdateProductCubit, UpdateProductState>(

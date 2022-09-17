@@ -50,6 +50,12 @@ flutter:
     - family: Poppins-Regular
       fonts:
         - asset: assets/fonts/Poppins-Regular.ttf
+    - family: Barlow-Regular
+      fonts:
+        - asset: assets/fonts/Barlow-Regular.ttf
+    - family: Roboto-Regular
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
       
     
   

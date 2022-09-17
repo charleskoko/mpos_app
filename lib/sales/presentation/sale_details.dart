@@ -47,7 +47,7 @@ class _SaleDetailsState extends State<SaleDetails> {
                       padding: const EdgeInsets.only(left: 16),
                       alignment: Alignment.centerLeft,
                       child: BoxText.caption(
-                        TimeFormater().myDateAndTimeFormat(
+                        TimeFormater().dashboardDate(
                             saleDetailsState.invoice?.createdAt ??
                                 DateTime.now()),
                       ),

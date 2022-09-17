@@ -136,7 +136,7 @@ buildBottomSheetForAddNewProduct(
                                   if (formKey.currentState!.validate()) {
                                     Product product = Product(
                                       label: labelTextFieldController.text,
-                                      price: (priceTextFieldController
+                                      salePrice: (priceTextFieldController
                                               .text.isEmpty)
                                           ? 0
                                           : double.parse(

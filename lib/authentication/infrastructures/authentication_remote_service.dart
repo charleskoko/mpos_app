@@ -49,7 +49,6 @@ class AuthenticationRemoteService {
       final response =
           await _dio.postUri(registrationUri, data: credential.toJson());
       if (response.statusCode == 201) {
-        print(response);
         final User user = User.fromJson(response.data['data']['user']);
         final String? bearerToken = response.data['data']['token'];
         Map<String, dynamic> responseData = {

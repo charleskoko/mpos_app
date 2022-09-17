@@ -9,10 +9,11 @@ class DashboardCubit extends Cubit<DashboardState> {
   final OrderRepository _orderRepository;
   DashboardCubit(this._orderRepository) : super(DashboardInfoInitial());
 
-  Future<void> dashboardData() async {
+  Future<void> dashboardData({String? selectedDate}) async {
     emit(DashboardInfoLoading());
     try {
-      final dayInvoicesOrFailure = await _orderRepository.indexOrderProducts();
+      final dayInvoicesOrFailure =
+          await _orderRepository.indexOrderProducts(selectedDate: selectedDate);
       dayInvoicesOrFailure.fold(
         (fresh) {
           int numberOfSalesOfTheDay = fresh.entity.length;

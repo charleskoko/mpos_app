@@ -24,6 +24,7 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   late String _timeString;
+  late String _selectedDate;
 
   @override
   void initState() {
@@ -34,6 +35,8 @@ class _DashboardPageState extends State<DashboardPage> {
           DateTime.now().month,
           DateTime.now().year,
         );
+    _selectedDate = TimeFormater().formatDateForBackend(
+        DateTime.now().day, DateTime.now().month, DateTime.now().year);
     super.initState();
   }
 
@@ -317,358 +320,418 @@ class _DashboardPageState extends State<DashboardPage> {
                                   builder: (context) =>
                                       BlocBuilder<CalendarCubit, CalendarState>(
                                     builder: (context, calendarState) {
-                                      return Container(
-                                        padding: const EdgeInsets.only(
-                                          left: 45,
-                                          right: 45,
-                                          top: 39,
-                                        ),
-                                        height: 402,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                              topRight: Radius.circular(10),
-                                              topLeft: Radius.circular(10),
-                                            ),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 10,
-                                                color: Colors.grey.shade300,
-                                                spreadRadius: 5,
-                                              )
-                                            ]),
-                                        child: Column(children: [
-                                          Row(children: [
-                                            IconButton(
-                                              onPressed: () {
-                                                Map<String, dynamic> prevMonth =
-                                                    _getPreviousMonth(
-                                                  calendarState.month!,
-                                                  calendarState.year!,
-                                                );
-                                                context
-                                                    .read<CalendarCubit>()
-                                                    .getMonth(
-                                                      prevMonth['month']!,
-                                                      prevMonth['year'],
-                                                    );
-                                              },
-                                              icon: const Icon(
-                                                Ionicons.chevron_back_outline,
-                                                color: kPrimaryColor,
+                                      return StatefulBuilder(builder:
+                                          (BuildContext context,
+                                              StateSetter setState) {
+                                        return Container(
+                                          padding: const EdgeInsets.only(
+                                            left: 45,
+                                            right: 45,
+                                            top: 39,
+                                          ),
+                                          height: 402,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topRight: Radius.circular(10),
+                                                topLeft: Radius.circular(10),
                                               ),
-                                            ),
-                                            Expanded(
-                                              child: AnimatedContainer(
-                                                duration:
-                                                    const Duration(seconds: 10),
-                                                child: Center(
-                                                  child: Text(
-                                                    '${TimeFormater().months[calendarState.month! - 1]} ${calendarState.year}',
-                                                    style: const TextStyle(
-                                                      fontFamily:
-                                                          'Roboto-Regular',
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 10,
+                                                  color: Colors.grey.shade300,
+                                                  spreadRadius: 5,
+                                                )
+                                              ]),
+                                          child: Column(children: [
+                                            Row(children: [
+                                              IconButton(
+                                                onPressed: () {
+                                                  Map<String, dynamic>
+                                                      prevMonth =
+                                                      _getPreviousMonth(
+                                                    calendarState.month!,
+                                                    calendarState.year!,
+                                                  );
+                                                  context
+                                                      .read<CalendarCubit>()
+                                                      .getMonth(
+                                                        prevMonth['month']!,
+                                                        prevMonth['year'],
+                                                      );
+                                                },
+                                                icon: const Icon(
+                                                  Ionicons.chevron_back_outline,
+                                                  color: kPrimaryColor,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: AnimatedContainer(
+                                                  duration: const Duration(
+                                                      seconds: 10),
+                                                  child: Center(
+                                                    child: Text(
+                                                      '${TimeFormater().months[calendarState.month! - 1]} ${calendarState.year}',
+                                                      style: const TextStyle(
+                                                        fontFamily:
+                                                            'Roboto-Regular',
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () {
-                                                Map<String, int> nextMonth =
-                                                    _getNextMonth(
-                                                  calendarState.month!,
-                                                  calendarState.year!,
-                                                );
-                                                if (calendarState.month! >=
-                                                        DateTime.now().month &&
-                                                    calendarState.year! ==
-                                                        DateTime.now().year) {
-                                                } else {
-                                                  context
-                                                      .read<CalendarCubit>()
-                                                      .getMonth(
-                                                        nextMonth['month']!,
-                                                        nextMonth['year']!,
-                                                      );
-                                                }
-                                              },
-                                              icon: Icon(
-                                                (calendarState.month! >=
-                                                            DateTime.now()
-                                                                .month &&
-                                                        calendarState.year! ==
-                                                            DateTime.now().year)
-                                                    ? null
-                                                    : Ionicons
-                                                        .chevron_forward_outline,
-                                                color: kPrimaryColor,
-                                              ),
-                                            ),
-                                          ]),
-                                          const SizedBox(height: 36.55),
-                                          SizedBox(
-                                            height: 200,
-                                            width: 315,
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: const [
-                                                    Expanded(
-                                                      child: Center(
-                                                        child: Text(
-                                                          'L',
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                'Roboto-Regular',
-                                                            fontSize: 15,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Center(
-                                                        child: Text(
-                                                          'M',
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                'Roboto-Regular',
-                                                            fontSize: 15,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Center(
-                                                        child: Text(
-                                                          'M',
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                'Roboto-Regular',
-                                                            fontSize: 15,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Center(
-                                                        child: Text(
-                                                          'J',
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                'Roboto-Regular',
-                                                            fontSize: 15,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Center(
-                                                        child: Text(
-                                                          'V',
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                'Roboto-Regular',
-                                                            fontSize: 15,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Center(
-                                                        child: Text(
-                                                          'S',
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                'Roboto-Regular',
-                                                            fontSize: 15,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Center(
-                                                        child: Text(
-                                                          'D',
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                'Roboto-Regular',
-                                                            fontSize: 15,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                              IconButton(
+                                                onPressed: () {
+                                                  Map<String, int> nextMonth =
+                                                      _getNextMonth(
+                                                    calendarState.month!,
+                                                    calendarState.year!,
+                                                  );
+                                                  if (calendarState.month! >=
+                                                          DateTime.now()
+                                                              .month &&
+                                                      calendarState.year! ==
+                                                          DateTime.now().year) {
+                                                  } else {
+                                                    context
+                                                        .read<CalendarCubit>()
+                                                        .getMonth(
+                                                          nextMonth['month']!,
+                                                          nextMonth['year']!,
+                                                        );
+                                                  }
+                                                },
+                                                icon: Icon(
+                                                  (calendarState.month! >=
+                                                              DateTime.now()
+                                                                  .month &&
+                                                          calendarState.year! ==
+                                                              DateTime.now()
+                                                                  .year)
+                                                      ? null
+                                                      : Ionicons
+                                                          .chevron_forward_outline,
+                                                  color: kPrimaryColor,
                                                 ),
-                                                GridView.builder(
-                                                    physics:
-                                                        const NeverScrollableScrollPhysics(),
-                                                    shrinkWrap: true,
-                                                    gridDelegate:
-                                                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                                                      maxCrossAxisExtent: 50,
-                                                      childAspectRatio: 3 / 2,
-                                                    ),
-                                                    itemCount: calendarState
-                                                        .monthDays?.length,
-                                                    itemBuilder:
-                                                        (BuildContext context,
-                                                            index) {
-                                                      int day = calendarState
-                                                          .monthDays![index]
-                                                          .date
-                                                          .day;
-                                                      bool isThisMonth =
-                                                          calendarState
-                                                              .monthDays![index]
-                                                              .thisMonth;
-                                                      bool isToday = ((calendarState
-                                                                  .monthDays![
-                                                                      index]
-                                                                  .date
-                                                                  .day ==
-                                                              DateTime.now()
-                                                                  .day) &&
-                                                          calendarState
-                                                                  .monthDays![
-                                                                      index]
-                                                                  .date
-                                                                  .month ==
-                                                              DateTime.now()
-                                                                  .month);
-                                                      return Container(
-                                                        decoration: BoxDecoration(
-                                                            color: ((calendarState.monthDays?[index].date.day == DateTime.now().day) &&
-                                                                    (calendarState
-                                                                            .monthDays?[
-                                                                                index]
-                                                                            .date
-                                                                            .month ==
-                                                                        DateTime.now()
-                                                                            .month) &&
-                                                                    (calendarState
-                                                                            .year ==
-                                                                        DateTime.now()
-                                                                            .year))
-                                                                ? kPrimaryColor
-                                                                : null,
-                                                            shape: BoxShape
-                                                                .circle),
+                                              ),
+                                            ]),
+                                            const SizedBox(height: 36.55),
+                                            SizedBox(
+                                              height: 200,
+                                              width: 315,
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: const [
+                                                      Expanded(
                                                         child: Center(
                                                           child: Text(
-                                                            '$day',
+                                                            'L',
                                                             style: TextStyle(
                                                               fontFamily:
                                                                   'Roboto-Regular',
                                                               fontSize: 15,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: (isToday)
-                                                                  ? Colors.white
-                                                                  : (isThisMonth)
-                                                                      ? Colors
-                                                                          .black
-                                                                      : const Color(
-                                                                          0xFFBDBDBD,
-                                                                        ),
+                                                              color:
+                                                                  kPrimaryColor,
                                                             ),
                                                           ),
                                                         ),
-                                                      );
-                                                    })
-                                              ],
+                                                      ),
+                                                      Expanded(
+                                                        child: Center(
+                                                          child: Text(
+                                                            'M',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Roboto-Regular',
+                                                              fontSize: 15,
+                                                              color:
+                                                                  kPrimaryColor,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Center(
+                                                          child: Text(
+                                                            'M',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Roboto-Regular',
+                                                              fontSize: 15,
+                                                              color:
+                                                                  kPrimaryColor,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Center(
+                                                          child: Text(
+                                                            'J',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Roboto-Regular',
+                                                              fontSize: 15,
+                                                              color:
+                                                                  kPrimaryColor,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Center(
+                                                          child: Text(
+                                                            'V',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Roboto-Regular',
+                                                              fontSize: 15,
+                                                              color:
+                                                                  kPrimaryColor,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Center(
+                                                          child: Text(
+                                                            'S',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Roboto-Regular',
+                                                              fontSize: 15,
+                                                              color:
+                                                                  kPrimaryColor,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Center(
+                                                          child: Text(
+                                                            'D',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Roboto-Regular',
+                                                              fontSize: 15,
+                                                              color:
+                                                                  kPrimaryColor,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  GridView.builder(
+                                                      physics:
+                                                          const NeverScrollableScrollPhysics(),
+                                                      shrinkWrap: true,
+                                                      gridDelegate:
+                                                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                                                        maxCrossAxisExtent: 50,
+                                                        childAspectRatio: 3 / 2,
+                                                      ),
+                                                      itemCount: calendarState
+                                                          .monthDays?.length,
+                                                      itemBuilder:
+                                                          (BuildContext context,
+                                                              index) {
+                                                        int day = calendarState
+                                                            .monthDays![index]
+                                                            .date
+                                                            .day;
+                                                        bool isThisMonth =
+                                                            calendarState
+                                                                .monthDays![
+                                                                    index]
+                                                                .thisMonth;
+                                                        bool isToday = ((calendarState
+                                                                    .monthDays![
+                                                                        index]
+                                                                    .date
+                                                                    .day ==
+                                                                DateTime.now()
+                                                                    .day) &&
+                                                            (calendarState
+                                                                    .monthDays![
+                                                                        index]
+                                                                    .date
+                                                                    .month ==
+                                                                DateTime.now()
+                                                                    .month) &&
+                                                            (calendarState
+                                                                    .monthDays![
+                                                                        index]
+                                                                    .date
+                                                                    .year ==
+                                                                DateTime.now()
+                                                                    .year));
+                                                        return (calendarState
+                                                                .monthDays![
+                                                                    index]
+                                                                .thisMonth)
+                                                            ? GestureDetector(
+                                                                onTap: () {
+                                                                  setState(() {
+                                                                    _selectedDate = TimeFormater().formatDateForBackend(
+                                                                        calendarState
+                                                                            .monthDays![
+                                                                                index]
+                                                                            .date
+                                                                            .day,
+                                                                        calendarState
+                                                                            .month,
+                                                                        calendarState
+                                                                            .year);
+                                                                  });
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: ((_selectedDate ==
+                                                                            TimeFormater().formatDateForBackend(
+                                                                              calendarState.monthDays![index].date.day,
+                                                                              calendarState.month!,
+                                                                              calendarState.year!,
+                                                                            )))
+                                                                        ? kPrimaryColor
+                                                                        : null,
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                  ),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      '$day',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontFamily:
+                                                                            'Roboto-Regular',
+                                                                        fontSize:
+                                                                            15,
+                                                                        fontWeight:
+                                                                            FontWeight.bold,
+                                                                        color: (_selectedDate ==
+                                                                                TimeFormater().formatDateForBackend(
+                                                                                  calendarState.monthDays![index].date.day,
+                                                                                  calendarState.month!,
+                                                                                  calendarState.year!,
+                                                                                ))
+                                                                            ? Colors.white
+                                                                            : (isThisMonth)
+                                                                                ? Colors.black
+                                                                                : const Color(
+                                                                                    0xFFBDBDBD,
+                                                                                  ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            : Container();
+                                                      })
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(height: 26),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: const SizedBox(
-                                                    height: 40,
-                                                    width: 100,
-                                                    child: Center(
-                                                      child: Text(
-                                                        'Annuler',
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Roboto-Regular',
-                                                          fontSize: 15,
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                            const SizedBox(height: 26),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      context
+                                                          .read<CalendarCubit>()
+                                                          .getMonth(
+                                                            DateTime.now()
+                                                                .month,
+                                                            DateTime.now().year,
+                                                          );
+                                                      setState(() {
+                                                        _selectedDate = TimeFormater()
+                                                            .formatDateForBackend(
+                                                                DateTime.now()
+                                                                    .day,
+                                                                DateTime.now()
+                                                                    .month,
+                                                                DateTime.now()
+                                                                    .year);
+                                                      });
+                                                    },
+                                                    child: const SizedBox(
+                                                      height: 40,
+                                                      width: 100,
+                                                      child: Center(
+                                                        child: Text(
+                                                          'Annuler',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                'Roboto-Regular',
+                                                            fontSize: 15,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    print(
-                                                        'terminé tuer pour tuer');
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: kPrimaryColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                    ),
-                                                    height: 40,
-                                                    width: 100,
-                                                    child: const Center(
-                                                      child: Text(
-                                                        'Terminé',
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Roboto-Regular',
-                                                          fontSize: 15,
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      context
+                                                          .read<
+                                                              DashboardCubit>()
+                                                          .dashboardData(
+                                                              selectedDate:
+                                                                  _selectedDate);
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        color: kPrimaryColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                      ),
+                                                      height: 40,
+                                                      width: 100,
+                                                      child: const Center(
+                                                        child: Text(
+                                                          'Terminé',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                'Roboto-Regular',
+                                                            fontSize: 15,
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ]),
-                                      );
+                                                ],
+                                              ),
+                                            )
+                                          ]),
+                                        );
+                                      });
                                     },
                                   ),
                                 ),
@@ -691,8 +754,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                       const SizedBox(width: 9),
                                       Center(
                                         child: Text(
-                                          TimeFormater().dashboardFilterDate(
-                                              DateTime.now()),
+                                          _selectedDate,
                                           style: const TextStyle(
                                             fontFamily: 'Barlow-Regular',
                                             color: Colors.white,

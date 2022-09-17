@@ -15,10 +15,10 @@ class OrderRepository {
   OrderRepository(
       this._orderRemoteService, this._notProcessedOrderLocalservice);
 
-  Future<Either<Fresh<List<OrderProduct>>, OrderError>>
-      indexOrderProducts() async {
+  Future<Either<Fresh<List<OrderProduct>>, OrderError>> indexOrderProducts(
+      {String? selectedDate}) async {
     final indexOrderProductRequestResponse =
-        await _orderRemoteService.indexOrder();
+        await _orderRemoteService.indexOrder(selectedDate: selectedDate);
     try {
       if (indexOrderProductRequestResponse is ConnectionResponse) {
         List<OrderProduct> orderProductList =

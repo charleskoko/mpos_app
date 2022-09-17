@@ -43,4 +43,12 @@ class TimeFormater {
     'Novembre',
     'Decembre'
   ];
+
+  String formatDateForBackend(int day, int? month, int? year) {
+    String dayInString = (day <= 9) ? '0$day' : day.toString();
+    String monthInString = (month! <= 9) ? '0$month' : month.toString();
+    String yearInString = year.toString().substring(2, 4);
+
+    return '$dayInString-$monthInString-$yearInString';
+  }
 }

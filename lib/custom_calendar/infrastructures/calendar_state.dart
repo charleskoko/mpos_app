@@ -4,9 +4,6 @@ class CalendarState {
   final List<CalendarDay>? monthDays;
   final int? month;
   final int? year;
-  CalendarState({
-    this.monthDays,
-    this.month,
-    this.year,
-  });
+  final String? selectedDate;
+  CalendarState({this.monthDays, this.month, this.year, this.selectedDate});
 }

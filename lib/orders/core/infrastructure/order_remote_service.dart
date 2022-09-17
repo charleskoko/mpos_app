@@ -11,8 +11,9 @@ class OrderRemoteService {
   final Dio _dio;
   OrderRemoteService(this._dio);
 
-  Future<RemoteResponse> indexOrder() async {
-    final orderIndexUri = Environment.getUri(unencodedPath: 'api/v1/orders');
+  Future<RemoteResponse> indexOrder({String? selectedDate}) async {
+    final orderIndexUri =
+        Environment.getUri(unencodedPath: 'api/v1/orders?date=$selectedDate');
     try {
       final response = await _dio.getUri(orderIndexUri);
       if (response.statusCode == 200) {

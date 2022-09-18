@@ -1,15 +1,13 @@
-import 'package:intl/intl.dart';
-
 class TimeFormater {
   String dashboardDate(DateTime date) {
     String month = months[date.month - 1];
     int year = date.year;
 
-    return '${date.weekday} ${months[date.month - 1].substring(0, 3)} ${date.year} ';
+    return '${date.day} ${months[date.month - 1].substring(0, 3)} ${date.year} ';
   }
 
   String dashboardDay(DateTime date) {
-    return days[date.weekday];
+    return days[date.weekday - 1];
   }
 
   String dashboardFilterDate(DateTime date) {

@@ -17,13 +17,14 @@ class Environment {
     return dotenv.env['API_URL'] ?? 'www.example.com';
   }
 
-  static Uri getUri({required String unencodedPath}) {
+  static Uri getUri(
+      {required String unencodedPath, Map<String, dynamic>? queryParameters}) {
     if (kDebugMode) {
       if (Platform.isAndroid) {
-        return Uri.https(Environment.apiUrl, unencodedPath);
+        return Uri.https(Environment.apiUrl, unencodedPath, queryParameters);
       }
-      return Uri.http(Environment.apiUrl, unencodedPath);
+      return Uri.http(Environment.apiUrl, unencodedPath, queryParameters);
     }
-    return Uri.https(Environment.apiUrl, unencodedPath);
+    return Uri.https(Environment.apiUrl, unencodedPath, queryParameters);
   }
 }

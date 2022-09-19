@@ -48,18 +48,20 @@ buildBottomSheetForAddNewProduct(
       ],
       child: Container(
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(10),
-                topLeft: Radius.circular(10),
+            color: Colors.white,
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(10),
+              topLeft: Radius.circular(10),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade300,
+                blurRadius: 2,
+                spreadRadius: 2,
+                offset: const Offset(1, 2), // Shadow position
               ),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 10,
-                  color: Colors.grey.shade300,
-                  spreadRadius: 5,
-                )
-              ]),
+            ],
+          ),
           child: Column(
             children: [
               Container(

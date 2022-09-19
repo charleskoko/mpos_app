@@ -24,7 +24,7 @@ class BoxSale extends StatelessWidget {
         ),
       ),
       subtitle: BoxText.body(
-        '${invoice.total()} FCFA',
+        '100 FCFA',
         color: Colors.grey.shade700,
       ),
     );

@@ -4,6 +4,7 @@ import '../../authentication/presentation/login_page.dart';
 import '../../authentication/presentation/password_forgot_page.dart';
 import '../../authentication/presentation/register_page.dart';
 import '../../main/main_page.dart';
+import '../../orders/presentation/order_details.dart';
 import '../../orders/presentation/order_verification_page.dart';
 import '../../orders/presentation/save_order_status.dart';
 import '../../sales/presentation/sale_details.dart';
@@ -53,6 +54,14 @@ class MposRouter {
                 child: const MainPage(),
               ),
           routes: [
+            GoRoute(
+              name: 'orderDetails',
+              path: 'orderDetails',
+              pageBuilder: (context, state) => MaterialPage(
+                key: state.pageKey,
+                child: OrderDetails(),
+              ),
+            ),
             GoRoute(
               name: 'orderVerification',
               path: 'orderVerification',

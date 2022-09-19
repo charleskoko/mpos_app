@@ -64,10 +64,11 @@ class _NotProcessedOrderPageState extends State<NotProcessedOrderPage> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      blurRadius: 10,
                       color: Colors.grey.shade300,
-                      spreadRadius: 5,
-                    )
+                      blurRadius: 2,
+                      spreadRadius: 2,
+                      offset: const Offset(1, 2), // Shadow position
+                    ),
                   ],
                 ),
                 child: Column(

@@ -27,14 +27,16 @@ class DashboardCubit extends Cubit<DashboardState> {
             products: productsList,
           ));
         },
-        (invoiceError) => emit(
-          DashboardInfoLoaded(
-            incomeOftheday: 0,
-            numberOfSalesOfTheDay: 0,
-            products: [],
-            errorMessage: invoiceError.message,
-          ),
-        ),
+        (invoiceError) {
+          emit(
+            DashboardInfoLoaded(
+              incomeOftheday: 0,
+              numberOfSalesOfTheDay: 0,
+              products: [],
+              errorMessage: invoiceError.message,
+            ),
+          );
+        },
       );
     } on RestApiException catch (exception) {
       emit(

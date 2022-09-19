@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class TimeFormater {
   String dashboardDate(DateTime date) {
     String month = months[date.month - 1];
@@ -45,8 +47,16 @@ class TimeFormater {
   String formatDateForBackend(int day, int? month, int? year) {
     String dayInString = (day <= 9) ? '0$day' : day.toString();
     String monthInString = (month! <= 9) ? '0$month' : month.toString();
-    String yearInString = year.toString().substring(2, 4);
+    String yearInString = year.toString();
 
     return '$dayInString-$monthInString-$yearInString';
+  }
+
+  String formatDateForOrderDetails(DateTime? date) {
+    int? day = date?.day;
+    String? month = months[date?.month ?? -1].substring(0, 3);
+    int? year = date?.year;
+
+    return '$month $day, $year à ${DateFormat('HH:mm').format(date!)}';
   }
 }

@@ -129,10 +129,11 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                blurRadius: 10,
                                 color: Colors.grey.shade300,
-                                spreadRadius: 5,
-                              )
+                                blurRadius: 2,
+                                spreadRadius: 2,
+                                offset: const Offset(1, 2), // Shadow position
+                              ),
                             ],
                           ),
                           child: Column(
@@ -248,10 +249,12 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                                       ),
                                       boxShadow: [
                                         BoxShadow(
-                                          blurRadius: 10,
                                           color: Colors.grey.shade300,
-                                          spreadRadius: 5,
-                                        )
+                                          blurRadius: 2,
+                                          spreadRadius: 2,
+                                          offset: const Offset(
+                                              1, 2), // Shadow position
+                                        ),
                                       ],
                                     ),
                                     child: Column(

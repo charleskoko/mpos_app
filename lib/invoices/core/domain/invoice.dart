@@ -6,36 +6,36 @@ import '../../../orders/core/domain/order_line_item.dart';
 class Invoice {
   String? id;
   String? number;
-  OrderProduct? order;
+  //OrderProduct? order;
   DateTime? createdAt;
 
   Invoice({
     required this.id,
     required this.number,
-    required this.order,
+    //required this.order,
     required this.createdAt,
   });
 
   Invoice.fromJson(Map<String, dynamic> jsonObject) {
     id = jsonObject["id"].toString();
     number = jsonObject["number"].toString();
-    order = OrderProduct.fromJson(jsonObject["order"]);
+    //order = OrderProduct.fromJson(jsonObject["order"]);
     createdAt = DateTime.parse(jsonObject["created_at"].toString()).toLocal();
   }
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'number': number,
-        'createdAt': createdAt.toString(),
-        'order': order?.toJson()
+
+        // 'order': order?.toJson()
       };
 
-  String total() {
-    double total = 0;
-    List<OrderLineItem> orderItem = order?.orderLineItems ?? [];
-    for (var item in orderItem) {
-      total += item.amount * double.parse('${item.price}');
-    }
-    return '$total';
-  }
+  // String total() {
+  //   double total = 0;
+  //   List<OrderLineItem> orderItem = order?.orderLineItems ?? [];
+  //   for (var item in orderItem) {
+  //     total += item.amount * double.parse('${item.price}');
+  //   }
+  //   return '$total';
+  // }
 }

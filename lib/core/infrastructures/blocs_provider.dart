@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mpos_app/orders/shared/cubit/fetch_done_orders_cubit.dart';
+import 'package:mpos_app/orders/shared/cubit/order_details_cubit.dart';
 
 import '../../authentication/infrastructures/authentication_cubit.dart';
 import '../../authentication/infrastructures/authentication_repository.dart';
@@ -94,6 +96,14 @@ class BlocsProvider {
         create: (context) => CalendarCubit(
           context.read<CalendarRepositoryImpl>(),
         ),
+      ),
+      BlocProvider<FetchDoneOrdersCubit>(
+        create: (context) => FetchDoneOrdersCubit(
+          context.read<OrderRepository>(),
+        ),
+      ),
+      BlocProvider<OrderDetailsCubit>(
+        create: (context) => OrderDetailsCubit(),
       ),
     ];
   }

@@ -21,15 +21,15 @@ class _SaleDetailsState extends State<SaleDetails> {
       backgroundColor: Colors.grey.shade100,
       body: BlocBuilder<SaleDetailsCubit, SaleDetailsState>(
         builder: (context, saleDetailsState) {
-          List<OrderLineItem>? orderItems =
-              saleDetailsState.invoice?.order?.orderLineItems;
-          OrderProduct? order = saleDetailsState.invoice?.order;
+          // List<OrderLineItem>? orderItems =
+          //     saleDetailsState.invoice?.order?.orderLineItems;
+          // OrderProduct? order = saleDetailsState.invoice?.order;
           return NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScolled) => [
               SliverAppBar(
                 centerTitle: true,
                 title: BoxText.headingTwo(
-                  '#' + '${saleDetailsState.invoice?.number}'.padLeft(10, '0'),
+                  '#' + '122'.padLeft(10, '0'),
                   color: kThreeColor,
                 ),
                 iconTheme: const IconThemeData(
@@ -56,7 +56,7 @@ class _SaleDetailsState extends State<SaleDetails> {
                       padding: const EdgeInsets.only(left: 16, right: 16),
                       alignment: Alignment.centerRight,
                       child: BoxText.caption(
-                        'N°CMD: ${saleDetailsState.invoice?.order?.number}',
+                        'N°CMD: number}',
                       ),
                     )
                   ],
@@ -64,11 +64,11 @@ class _SaleDetailsState extends State<SaleDetails> {
                 Flexible(
                   child: ListView.builder(
                     shrinkWrap: true, // and set this
-                    itemCount: orderItems?.length,
+                    itemCount: 2,
                     itemBuilder: (BuildContext context, index) {
-                      String? label = orderItems?[index].product?.label;
-                      double? amount = orderItems?[index].amount;
-                      double? price = orderItems?[index].price;
+                      // String? label = orderItems?[index].product?.label;
+                      // double? amount = orderItems?[index].amount;
+                      // double? price = orderItems?[index].price;
                       return Container(
                         padding: const EdgeInsets.only(left: 16, right: 16),
                         child: Row(
@@ -77,7 +77,7 @@ class _SaleDetailsState extends State<SaleDetails> {
                               child: Container(
                                 alignment: Alignment.centerLeft,
                                 child: BoxText.body(
-                                  '$label',
+                                  'label',
                                 ),
                               ),
                             ),
@@ -85,7 +85,7 @@ class _SaleDetailsState extends State<SaleDetails> {
                               child: Container(
                                 alignment: Alignment.centerRight,
                                 child: BoxText.body(
-                                  '${price! * amount!}',
+                                  '122',
                                 ),
                               ),
                             ),
@@ -93,7 +93,7 @@ class _SaleDetailsState extends State<SaleDetails> {
                               alignment: Alignment.centerRight,
                               width: 50,
                               child: BoxText.body(
-                                '$amount',
+                                '2',
                               ),
                             ),
                           ],
@@ -117,7 +117,7 @@ class _SaleDetailsState extends State<SaleDetails> {
                       ),
                       Container(
                         child: BoxText.body(
-                          '${order?.getOrderTotalFromListOrderLineItems}',
+                          'getOrderTotalFromListOrderLineItems',
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -141,7 +141,7 @@ class _SaleDetailsState extends State<SaleDetails> {
                         ),
                       ),
                       BoxText.body(
-                        '-${order?.getOrderTotalFromListOrderLineItems}',
+                        'getOrderTotalFromListOrderLineItems',
                         fontWeight: FontWeight.bold,
                       ),
                       const SizedBox(
@@ -156,7 +156,7 @@ class _SaleDetailsState extends State<SaleDetails> {
                   padding: const EdgeInsets.all(20),
                   child: Center(
                     child: BoxText.subheading(
-                        'FCFA ${order?.getOrderTotalFromListOrderLineItems}'),
+                        'getOrderTotalFromListOrderLineItems'),
                   ),
                 )
               ],

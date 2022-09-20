@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mpos_app/src/shared/styles.dart';
 import '../../src/shared/app_colors.dart';
 import '../dashboard/presentation/dashboard_page.dart';
-import '../orders/presentation/not_processed_order_page.dart';
 import '../orders/presentation/orders_overview_page.dart';
 import '../products/presentation/products_overview_page.dart';
 import '../sales/presentation/sales_overview_page.dart';
@@ -78,7 +76,7 @@ class _MainPage extends State<MainPage> {
       body: [
         const DashboardPage(),
         const OrdersOverviewPage(),
-        const NotProcessedOrderPage(),
+        const ProductsOverviewPage(),
         const SalesOverviewPage(),
       ].elementAt(_selectedScreenIndex),
     );

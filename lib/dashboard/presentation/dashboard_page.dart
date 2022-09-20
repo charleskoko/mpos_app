@@ -13,6 +13,7 @@ import '../../core/shared/time_formater.dart';
 import '../../invoices/shared/fetch_invoice_cubit.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_loading.dart';
+import '../../src/widgets/box_message.dart';
 import '../shared/cubit/dashboard_cubit.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -845,103 +846,114 @@ class _DashboardPageState extends State<DashboardPage> {
                             child: ListView(
                               children: [
                                 FittedBox(
-                                  child: DataTable(
-                                    columns: const [
-                                      DataColumn(
-                                        label: Text(
-                                          'Article',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontFamily: 'Poppins-Regular',
-                                          ),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        numeric: true,
-                                        label: Text(
-                                          'Cmd',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontFamily: 'Poppins-Regular',
-                                          ),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        numeric: true,
-                                        label: Text(
-                                          'PU',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontFamily: 'Poppins-Regular',
-                                          ),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        numeric: true,
-                                        label: Text(
-                                          'Recette',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 14,
-                                            fontFamily: 'Poppins-Regular',
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                    rows: dashboardState.products!
-                                        .map(
-                                          (product) => DataRow(
-                                            cells: <DataCell>[
-                                              DataCell(
-                                                Text(
-                                                  product.product!.label!,
-                                                  style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily:
-                                                        'Poppins-Regular',
-                                                  ),
-                                                ),
-                                              ), //Extracting from Map element the value
-                                              DataCell(
-                                                Text(
-                                                  product.numberOfOrder
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14,
-                                                    fontFamily:
-                                                        'Poppins-Regular',
-                                                  ),
+                                  child: (dashboardState.products!.isNotEmpty)
+                                      ? DataTable(
+                                          columns: const [
+                                            DataColumn(
+                                              label: Text(
+                                                'Article',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontFamily: 'Poppins-Regular',
                                                 ),
                                               ),
-                                              DataCell(
-                                                Text(
-                                                  'XOF ${product.product!.purchasePrice}'
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily:
-                                                        'Poppins-Regular',
-                                                  ),
+                                            ),
+                                            DataColumn(
+                                              numeric: true,
+                                              label: Text(
+                                                'Cmd',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontFamily: 'Poppins-Regular',
                                                 ),
                                               ),
-                                              DataCell(
-                                                Text(
-                                                  'XOF ${product.product!.purchasePrice! * product.numberOfOrder!}'
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14,
-                                                    fontFamily:
-                                                        'Poppins-Regular',
-                                                  ),
+                                            ),
+                                            DataColumn(
+                                              numeric: true,
+                                              label: Text(
+                                                'PU',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontFamily: 'Poppins-Regular',
                                                 ),
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                            DataColumn(
+                                              numeric: true,
+                                              label: Text(
+                                                'Recette',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontFamily: 'Poppins-Regular',
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                          rows: dashboardState.products!
+                                              .map(
+                                                (product) => DataRow(
+                                                  cells: <DataCell>[
+                                                    DataCell(
+                                                      Text(
+                                                        product.product!.label!,
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              'Poppins-Regular',
+                                                        ),
+                                                      ),
+                                                    ), //Extracting from Map element the value
+                                                    DataCell(
+                                                      Text(
+                                                        product.numberOfOrder
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              'Poppins-Regular',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    DataCell(
+                                                      Text(
+                                                        'XOF ${product.product!.purchasePrice}'
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              'Poppins-Regular',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    DataCell(
+                                                      Text(
+                                                        'XOF ${product.product!.purchasePrice! * product.numberOfOrder!}'
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              'Poppins-Regular',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                              .toList(),
                                         )
-                                        .toList(),
-                                  ),
+                                      : Container(
+                                          margin:
+                                              const EdgeInsets.only(top: 50),
+                                          padding: const EdgeInsets.all(20),
+                                          child: const BoxMessage(
+                                            message:
+                                                "Vous n'avez pas venté enregistré pour ce jour",
+                                          ),
+                                        ),
                                 )
                               ],
                             ),

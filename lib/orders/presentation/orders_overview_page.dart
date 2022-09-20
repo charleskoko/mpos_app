@@ -135,18 +135,18 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                     return Container(
                                       margin: const EdgeInsets.only(bottom: 10),
                                       decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.shade300,
-                                              blurRadius: 2,
-                                              spreadRadius: 2,
-                                              offset: const Offset(
-                                                  1, 2), // Shadow position
-                                            ),
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.shade300,
+                                            blurRadius: 2,
+                                            spreadRadius: 2,
+                                            offset: const Offset(
+                                                1, 2), // Shadow position
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
                                       width: MediaQuery.of(context).size.width,
                                       height: 116,
                                       child: Stack(

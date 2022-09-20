@@ -41,66 +41,19 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.grey.shade100,
         elevation: 0,
-        title: BoxText.headingTwo(
-          'Produits'.toUpperCase(),
-          color: kThreeColor,
+        backgroundColor: const Color(0xFFF5F5F5),
+        title: const Text(
+          'ARTICLES',
+          style: TextStyle(
+            fontSize: 24,
+            fontFamily: 'Poppins-Regular',
+            color: kPrimaryColor,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        actions: [
-          Stack(children: [
-            IconButton(
-              icon: const Icon(
-                Ionicons.basket_outline,
-                color: kThreeColor,
-              ),
-              onPressed: () {
-                final selectedOrderItemState =
-                    context.read<SelectedOrderItemCubit>().state;
-                if (selectedOrderItemState.selectedOrderItem?.isNotEmpty ??
-                    false) {
-                  context.goNamed('orderVerification');
-                }
-                if (selectedOrderItemState.selectedOrderItem?.isEmpty ?? true) {
-                  buidSnackbar(
-                    context: context,
-                    backgroundColor: kSecondaryColor,
-                    text: 'Votre panier d\'achat est vide',
-                  );
-                }
-              },
-            ),
-            BlocBuilder<SelectedOrderItemCubit, SelectedOrderItemState>(
-              builder: (context, selectOrderItemState) {
-                if (selectOrderItemState.selectedOrderItem?.isNotEmpty ??
-                    false) {
-                  return Positioned(
-                    top: 6,
-                    left: 5,
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      decoration: const BoxDecoration(
-                        color: kThreeColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: BoxText.caption(
-                            selectOrderItemState.selectedOrderItem!.length
-                                .toString(),
-                            color: Colors.white),
-                      ),
-                    ),
-                  );
-                }
-                return Container();
-              },
-            )
-          ])
-        ],
       ),
       body: BlocBuilder<FetchProductsCubit, FetchProductsState>(
         builder: (context, fetchProductState) {
@@ -172,164 +125,118 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
               ],
               child: Column(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      top: 10,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                              height: 55,
-                              child: BoxInputField.text(
-                                hintText: 'Rechercher un produit',
-                              )),
-                        ),
-                        const SizedBox(width: 5),
-                        SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: kPrimaryColor,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Center(
-                                child: IconButton(
-                                  onPressed: () =>
-                                      buildBottomSheetForAddNewProduct(
-                                    context,
-                                    formKey,
-                                    labelTextFieldController,
-                                    priceTextFieldController,
-                                  ),
-                                  icon: Icon(
-                                    Ionicons.add_outline,
-                                    size: 30,
-                                    color: Colors.grey.shade300,
-                                  ),
-                                ),
-                              ),
-                            ))
-                      ],
-                    ),
-                  ),
                   if (products.isNotEmpty)
                     Expanded(
                       child: Container(
-                          padding: const EdgeInsets.only(
-                            left: 16,
-                            right: 16,
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                        ),
+                        child: GridView.builder(
+                          itemCount: products.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 20,
+                            crossAxisCount:
+                                MediaQuery.of(context).size.shortestSide < 600
+                                    ? 2
+                                    : 4,
                           ),
-                          child: GridView.builder(
-                            itemCount: products.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisSpacing: 1,
-                              crossAxisSpacing: 1,
-                              crossAxisCount:
-                                  MediaQuery.of(context).size.shortestSide < 600
-                                      ? 2
-                                      : 4,
-                            ),
-                            itemBuilder: (context, index) => InkWell(
-                              onLongPress: () {
-                                showBottomSheet(
-                                  context: context,
-                                  builder: (context) => Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 150,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(10),
-                                        topLeft: Radius.circular(10),
+                          itemBuilder: (context, index) => InkWell(
+                            onTap: () {
+                              context
+                                  .read<SelectedOrderItemCubit>()
+                                  .selectOrderItem(
+                                    products[index],
+                                  );
+                            },
+                            child: BlocBuilder<SelectedOrderItemCubit,
+                                SelectedOrderItemState>(
+                              builder: (context, selectedOrderItemState) {
+                                bool? isProductSelected = selectedOrderItemState
+                                    .selectedOrderItem
+                                    ?.where((element) =>
+                                        element.product!.id ==
+                                        products[index].id)
+                                    .isNotEmpty;
+                                return Container(
+                                  padding: const EdgeInsets.all(11),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.shade300,
+                                        blurRadius: 2,
+                                        spreadRadius: 2,
+                                        offset: const Offset(
+                                            1, 2), // Shadow position
                                       ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.shade300,
-                                          blurRadius: 2,
-                                          spreadRadius: 2,
-                                          offset: const Offset(
-                                              1, 2), // Shadow position
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          margin: const EdgeInsets.only(top: 5),
-                                          width: 100,
-                                          height: 5,
-                                        ),
-                                        Expanded(
-                                            child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            TextButton.icon(
-                                              icon: Icon(
-                                                Ionicons.trash_outline,
-                                                color: Colors.green.shade100,
-                                              ),
-                                              label: BoxText.subheading(
-                                                  'Supprimer'),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                                buildAlertDialogeForDeleteProduct(
-                                                  context,
-                                                  products[index],
-                                                );
-                                              },
-                                            ),
-                                            const Divider(),
-                                            TextButton.icon(
-                                              icon: Icon(
-                                                Ionicons.pencil_outline,
-                                                color: Colors.green.shade100,
-                                              ),
-                                              label: BoxText.subheading(
-                                                  'Modifier'),
-                                              onPressed: () {
-                                                buildBottomSheetForEditProduct(
-                                                  context,
-                                                  formKey,
-                                                  products[index],
-                                                  labelTextFieldController,
-                                                  priceTextFieldController,
-                                                );
-                                              },
-                                            )
-                                          ],
-                                        ))
-                                      ],
-                                    ),
+                                    ],
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: (isProductSelected ?? false)
+                                        ? Border.all(color: kPrimaryColor)
+                                        : null,
                                   ),
+                                  child: Stack(children: [
+                                    Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            '${products[index].label}',
+                                            style: const TextStyle(
+                                              fontFamily: 'Poppins-Bold',
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          const SizedBox(height: 13),
+                                          Text(
+                                            'XOF ${products[index].purchasePrice}',
+                                            style: const TextStyle(
+                                              fontFamily: 'Poppins-Light',
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    if ((isProductSelected ?? false))
+                                      Positioned(
+                                        bottom: 5,
+                                        right: 5,
+                                        child: Container(
+                                          height: 30,
+                                          width: 30,
+                                          decoration: const BoxDecoration(
+                                            color: kPrimaryColor,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: const Center(
+                                            child: Icon(
+                                              Ionicons.checkmark,
+                                              color: Colors.white,
+                                              size: 20,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                  ]),
                                 );
                               },
-                              onTap: () {
-                                context
-                                    .read<SelectedOrderItemCubit>()
-                                    .selectOrderItem(
-                                      products[index],
-                                    );
-                              },
-                              child: BoxProduct(
-                                product: products[index],
-                              ),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                     ),
                   if (products.isEmpty)
                     const Expanded(
                       child: BoxMessage(
-                          message: 'Ajouter vos produits en cliquant sur "+"'),
+                          message: "Vous n'avez pas enregistré d'article"),
                     )
                 ],
               ),
@@ -342,6 +249,85 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
             );
           }
           return const BoxMessage(message: '');
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton:
+          BlocBuilder<SelectedOrderItemCubit, SelectedOrderItemState>(
+        builder: (context, selectedOrderItemState) {
+          double sum = 0;
+          if (selectedOrderItemState.selectedOrderItem?.isNotEmpty ?? false) {
+            selectedOrderItemState.selectedOrderItem!.forEach((element) {
+              sum = sum + (element.price! * element.amount!);
+            });
+            return GestureDetector(
+              onTap: () {
+                context.goNamed('orderVerification');
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF262262),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          'XOF $sum',
+                          style: const TextStyle(
+                            fontFamily: 'Poppins-Bold',
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.only(right: 20),
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: const [
+                            Center(
+                              child: Text(
+                                'Checkout',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins-Light',
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Center(
+                              child: Icon(
+                                Ionicons.chevron_forward_outline,
+                                size: 25,
+                                color: Colors.white,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          }
+          return Container();
         },
       ),
     );

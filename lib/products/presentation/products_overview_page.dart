@@ -2,22 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mpos_app/products/presentation/delete_product.dart';
-import 'package:mpos_app/products/presentation/edit_product_page.dart';
-import '../../core/presentation/snack_bar.dart';
 import '../../core/shared/error_message.dart';
-import '../../orders/shared/cubit/fetch_not_processed_order_cubit.dart';
 import '../../orders/shared/cubit/selected_order_item_cubit.dart';
 import '../../orders/shared/cubit/store_order_cubit.dart';
 import '../../src/shared/app_colors.dart';
-import '../../src/widgets/box_input_field.dart';
 import '../../src/widgets/box_loading.dart';
 import '../../src/widgets/box_message.dart';
-import '../../src/widgets/box_product.dart';
 import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
 import '../shared/cubit/fetch_product/fetch_products_cubit.dart';
-import 'add_product_page.dart';
 
 class ProductsOverviewPage extends StatefulWidget {
   const ProductsOverviewPage({Key? key}) : super(key: key);
@@ -41,10 +34,10 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFFF5F5F5),
+        backgroundColor: Colors.white,
         title: const Text(
           'ARTICLES',
           style: TextStyle(
@@ -205,26 +198,31 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                                         ],
                                       ),
                                     ),
-                                    if ((isProductSelected ?? false))
-                                      Positioned(
-                                        bottom: 5,
-                                        right: 5,
-                                        child: Container(
-                                          height: 30,
-                                          width: 30,
-                                          decoration: const BoxDecoration(
-                                            color: kPrimaryColor,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: const Center(
-                                            child: Icon(
-                                              Ionicons.checkmark,
-                                              color: Colors.white,
-                                              size: 20,
-                                            ),
-                                          ),
-                                        ),
-                                      )
+                                    Positioned(
+                                      bottom: 5,
+                                      right: 5,
+                                      child: AnimatedSwitcher(
+                                          duration: const Duration(
+                                              milliseconds: 9000),
+                                          child: (isProductSelected ?? false)
+                                              ? Container(
+                                                  height: 30,
+                                                  width: 30,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: kPrimaryColor,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: const Center(
+                                                    child: Icon(
+                                                      Ionicons.checkmark,
+                                                      color: Colors.white,
+                                                      size: 20,
+                                                    ),
+                                                  ),
+                                                )
+                                              : Container()),
+                                    )
                                   ]),
                                 );
                               },
@@ -298,7 +296,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                           children: const [
                             Center(
                               child: Text(
-                                'Checkout',
+                                'Caisse',
                                 style: TextStyle(
                                   fontFamily: 'Poppins-Light',
                                   color: Colors.white,

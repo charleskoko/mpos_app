@@ -246,6 +246,8 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                       if (fetchDoneOrdersState is FetchDoneOrdersLoaded) {
                         List<OrderProduct> orders =
                             fetchDoneOrdersState.fresh.entity;
+                        orders.sort(
+                            (a, b) => b.createdAt!.compareTo(a.createdAt!));
                         return (fetchDoneOrdersState.fresh.entity.isEmpty)
                             ? const BoxMessage(
                                 message: "Vous n'avez pas de commande payé",

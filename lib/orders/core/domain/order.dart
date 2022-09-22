@@ -14,7 +14,7 @@ class OrderProduct {
   OrderProduct.fromJson(Map<String, dynamic> jsonObject) {
     id = jsonObject["id"].toString();
     number = jsonObject["number"].toString();
-    createdAt = DateTime.parse(jsonObject["created_at"]);
+    createdAt = DateTime.parse(jsonObject["created_at"]).toLocal();
     orderLineItems =
         OrderLineItem.orderLineItemList(jsonObject['order_line_items']);
     invoice = Invoice.fromJson(jsonObject['invoice']);

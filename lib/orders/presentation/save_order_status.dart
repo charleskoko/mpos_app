@@ -50,6 +50,7 @@ class _SaveOrderStatusState extends State<SaveOrderStatus> {
             );
           }
           if (storeOrderState is StoreOrderLoaded) {
+            Navigator.pop(context);
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

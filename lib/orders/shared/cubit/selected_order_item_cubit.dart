@@ -40,13 +40,9 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
 
   Future<void> cancelCurrentSelection({bool isOrderCanceled = false}) async {
     if (isOrderCanceled) {
-      emit(
-        const SelectedOrderItemState.orderCanceled(),
-      );
+      emit(const SelectedOrderItemState.orderCanceled());
     } else {
-      emit(
-        const SelectedOrderItemState.orderNotCanceled(),
-      );
+      emit(const SelectedOrderItemState.orderNotCanceled());
     }
   }
 

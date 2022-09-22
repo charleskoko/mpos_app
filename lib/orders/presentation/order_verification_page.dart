@@ -35,7 +35,7 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
         elevation: 0,
         backgroundColor: Colors.white,
         title: const Text(
-          'ARTICLES',
+          'CAISSE',
           style: TextStyle(
             fontSize: 24,
             fontFamily: 'Poppins-Regular',
@@ -124,8 +124,50 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
           BlocListener<StoreOrderCubit, StoreOrderState>(
             listener: (context, storeOrderState) {
               if (storeOrderState is StoreOrderLoaded) {
-                context.goNamed('saveOrderStatus');
+                Navigator.pop(context);
                 context.read<SelectedOrderItemCubit>().cancelCurrentSelection();
+                showGeneralDialog(
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    transitionBuilder: (context, a1, a2, widget) {
+                      return Transform.scale(
+                        scale: a1.value,
+                        child: Opacity(
+                          opacity: a1.value,
+                          child: AlertDialog(
+                            contentPadding: EdgeInsets.zero,
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.0)),
+                            content: SizedBox(
+                                width: 325,
+                                height: 313,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 100,
+                                      width: 100,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: kPrimaryColor),
+                                      child: const Center(
+                                        child: Icon(
+                                          Ionicons.checkmark,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                )),
+                          ),
+                        ),
+                      );
+                    },
+                    transitionDuration: const Duration(milliseconds: 200),
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    context: context,
+                    pageBuilder: (context, animation1, animation2) {
+                      return Container();
+                    });
               }
             },
           ),
@@ -453,115 +495,6 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
                                 ),
                               )),
                     ),
-                    // Container(
-                    //   padding: const EdgeInsets.all(16),
-                    //   color: Colors.white,
-                    //   child: Column(
-                    //     children: [
-                    //       Container(
-                    //         alignment: Alignment.centerLeft,
-                    //         child: Row(
-                    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //           children: [
-                    //             const BoxText.headingThree('Total'),
-                    //             BoxText.headingThree(
-                    //                 'FCFA ${OrderProduct.getOrderTotalFromMapList(orderItems)}')
-                    //           ],
-                    //         ),
-                    //       ),
-                    //       const SizedBox(height: 10),
-                    //       Row(children: [
-                    //         Expanded(
-                    //           child: BoxButton.changedColor(
-                    //             onTap: () {
-                    //               if (selectedOrderItemState
-                    //                   .isNotProcessedOrder) {
-                    //                 selectedOrderItemState.notProcessedOrder
-                    //                     ?.selectedOrderItem = orderItems;
-                    //                 context
-                    //                     .read<UpdateNotProcessedOrderCubit>()
-                    //                     .updateNotProcessedOrder(
-                    //                       selectedOrderItemState
-                    //                           .notProcessedOrder!,
-                    //                     );
-                    //               }
-                    //               if (!selectedOrderItemState
-                    //                   .isNotProcessedOrder) {
-                    //                 showDialog(
-                    //                   context: context,
-                    //                   builder: (context) => AlertDialog(
-                    //                       title: BoxText.headingTwo(
-                    //                         'Intitulé',
-                    //                         color: kPrimaryColor,
-                    //                       ),
-                    //                       content: BoxInputField.text(
-                    //                         controller: inputTextController,
-                    //                         hintText: 'Table 1',
-                    //                       ),
-                    //                       actions: [
-                    //                         TextButton(
-                    //                           child: BoxText.body(
-                    //                             'Annuler',
-                    //                             color: Colors.grey.shade500,
-                    //                           ),
-                    //                           onPressed: () {
-                    //                             Navigator.pop(context);
-                    //                           },
-                    //                         ),
-                    //                         TextButton(
-                    //                           child:
-                    //                               BoxText.body('Enregistrer'),
-                    //                           onPressed: () {
-                    //                             context
-                    //                                 .read<
-                    //                                     StoreNotProcessedOrderCubit>()
-                    //                                 .store(
-                    //                                   label: inputTextController
-                    //                                       .text,
-                    //                                   orderItems: orderItems,
-                    //                                 );
-                    //                           },
-                    //                         )
-                    //                       ]),
-                    //                 );
-                    //               }
-                    //             },
-                    //             title:
-                    //                 (selectedOrderItemState.isNotProcessedOrder)
-                    //                     ? 'Actualiser'
-                    //                     : 'Sauvegarder',
-                    //           ),
-                    //         ),
-                    //         const SizedBox(width: 10),
-                    //         Expanded(
-                    //           child:
-                    //               BlocBuilder<StoreOrderCubit, StoreOrderState>(
-                    //             builder: (context, storeOrderState) {
-                    //               return BoxButton.normal(
-                    //                 title: 'Encaisser',
-                    //                 isBusy:
-                    //                     (storeOrderState is StoreOrderLoading)
-                    //                         ? true
-                    //                         : false,
-                    //                 onTap: () {
-                    //                   context.read<StoreOrderCubit>().store(
-                    //                         orderItems,
-                    //                         isNotProcessedOrder:
-                    //                             selectedOrderItemState
-                    //                                 .isNotProcessedOrder,
-                    //                         notProcessedOrder:
-                    //                             selectedOrderItemState
-                    //                                 .notProcessedOrder,
-                    //                       );
-                    //                 },
-                    //               );
-                    //             },
-                    //           ),
-                    //         )
-                    //       ])
-                    //     ],
-                    //   ),
-                    // )
                   ],
                 );
               }
@@ -580,7 +513,96 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
               sum = sum + (element.price! * element.amount!);
             });
             return GestureDetector(
-              onTap: () {},
+              onTap: () {
+                showGeneralDialog(
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    transitionBuilder: (context, a1, a2, widget) {
+                      return Transform.scale(
+                        scale: a1.value,
+                        child: Opacity(
+                          opacity: a1.value,
+                          child: AlertDialog(
+                            contentPadding: EdgeInsets.zero,
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.0)),
+                            content: SizedBox(
+                              width: 325,
+                              height: 313,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      print('Sauvegarder en cours');
+                                    },
+                                    child: Container(
+                                      width: 262,
+                                      height: 54,
+                                      decoration: BoxDecoration(
+                                        border:
+                                            Border.all(color: kPrimaryColor),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          'Sauvegarder en cours',
+                                          style: TextStyle(
+                                            color: kPrimaryColor,
+                                            fontFamily: 'Poppins-bold',
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 22),
+                                  GestureDetector(
+                                    onTap: () {
+                                      context.read<StoreOrderCubit>().store(
+                                            selectedOrderItemState
+                                                .selectedOrderItem!,
+                                            isNotProcessedOrder:
+                                                selectedOrderItemState
+                                                    .isNotProcessedOrder,
+                                            notProcessedOrder:
+                                                selectedOrderItemState
+                                                    .notProcessedOrder,
+                                          );
+                                    },
+                                    child: Container(
+                                      width: 262,
+                                      height: 54,
+                                      decoration: BoxDecoration(
+                                        color: kPrimaryColor,
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          'Encaisser',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Poppins-bold',
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    transitionDuration: Duration(milliseconds: 200),
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    context: context,
+                    pageBuilder: (context, animation1, animation2) {
+                      return Container();
+                    });
+              },
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 height: 60,

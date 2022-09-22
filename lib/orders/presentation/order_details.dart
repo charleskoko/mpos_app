@@ -79,6 +79,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   itemCount: orderItems!.length,
                   itemBuilder: (BuildContext context, index) {
                     return Container(
+                      margin: const EdgeInsets.only(bottom: 14),
                       padding: const EdgeInsets.symmetric(
                         horizontal: 17,
                         vertical: 18,

@@ -60,27 +60,21 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                 BlocListener<StoreOrderCubit, StoreOrderState>(
                   listener: (context, storeOrderState) {
                     if (storeOrderState is StoreOrderLoaded) {
+                      Navigator.pop(context);
                       context
                           .read<SelectedOrderItemCubit>()
                           .cancelCurrentSelection(isOrderCanceled: false);
                       showBottomSheet(
                         context: context,
                         builder: (context) => Container(
-                          height: 500,
+                          height: 200,
                           decoration: BoxDecoration(
                             color: Colors.white,
+                            border: Border.all(color: kPrimaryColor),
                             borderRadius: const BorderRadius.only(
                               topRight: Radius.circular(10),
                               topLeft: Radius.circular(10),
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.shade300,
-                                blurRadius: 2,
-                                spreadRadius: 2,
-                                offset: const Offset(1, 2), // Shadow position
-                              ),
-                            ],
                           ),
                           child: Column(
                             children: [
@@ -95,15 +89,21 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                               Expanded(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Center(
+                                  children: const [
+                                    Center(
                                       child: Icon(
                                         Ionicons.checkmark_circle,
-                                        color: Colors.green,
+                                        size: 100,
+                                        color: kPrimaryColor,
                                       ),
                                     ),
-                                    BoxText.caption(
-                                      "Achat enregistré avec succès",
+                                    Text(
+                                      "Paiement réussi",
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins-Bold',
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     )
                                   ],
                                 ),

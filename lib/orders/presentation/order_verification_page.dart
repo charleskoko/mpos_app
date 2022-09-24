@@ -7,15 +7,16 @@ import 'package:mpos_app/src/widgets/box_input_field.dart';
 import 'package:mpos_app/src/widgets/box_text.dart';
 import '../../core/presentation/snack_bar.dart';
 import '../../core/shared/error_message.dart';
+import '../../core/shared/mixin_validation.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_order_item.dart';
 import '../core/domain/order.dart';
 import '../core/domain/selected_order_item.dart';
-import '../shared/cubit/fetch_not_processed_order_cubit.dart';
+import '../../not_processed_order/shared/cubit/fetch_not_processed_order_cubit.dart';
 import '../shared/cubit/selected_order_item_cubit.dart';
-import '../shared/cubit/store_not_processed_order_cubit.dart';
+import '../../not_processed_order/shared/cubit/store_not_processed_order_cubit.dart';
 import '../shared/cubit/store_order_cubit.dart';
-import '../shared/cubit/update_not_processed_order_cubit.dart';
+import '../../not_processed_order/shared/cubit/update_not_processed_order_cubit.dart';
 
 class OrderVerificationPage extends StatefulWidget {
   const OrderVerificationPage({Key? key}) : super(key: key);
@@ -24,8 +25,10 @@ class OrderVerificationPage extends StatefulWidget {
   State<OrderVerificationPage> createState() => _OrderVerificationPageState();
 }
 
-class _OrderVerificationPageState extends State<OrderVerificationPage> {
+class _OrderVerificationPageState extends State<OrderVerificationPage>
+    with ValidationMixin {
   TextEditingController inputTextController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -112,12 +115,9 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
             listener: (context, storeNotProcessedOrderStateate) {
               if (storeNotProcessedOrderStateate
                   is StoreNotProcessedOrderLoaded) {
+                // retouner a la page des commande en cours
                 context.goNamed('main');
                 context.read<SelectedOrderItemCubit>().cancelCurrentSelection();
-                buidSnackbar(
-                    context: context,
-                    backgroundColor: Colors.green.shade100,
-                    text: 'La commande a été sauvegardée avec succès');
               }
             },
           ),
@@ -533,7 +533,131 @@ class _OrderVerificationPageState extends State<OrderVerificationPage> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      print('Sauvegarder en cours');
+                                      Navigator.pop(context);
+                                      showGeneralDialog(
+                                          barrierColor:
+                                              Colors.black.withOpacity(0.5),
+                                          transitionBuilder:
+                                              (context, a1, a2, widget) {
+                                            return Transform.scale(
+                                              scale: a1.value,
+                                              child: Opacity(
+                                                opacity: a1.value,
+                                                child: AlertDialog(
+                                                  title: const Center(
+                                                    child: Text(
+                                                      'Entrez un nom',
+                                                      style: TextStyle(
+                                                        color: kPrimaryColor,
+                                                        fontFamily:
+                                                            'Poppins-bold',
+                                                        fontSize: 16,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  contentPadding:
+                                                      EdgeInsets.zero,
+                                                  shape: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.0),
+                                                  ),
+                                                  content: SizedBox(
+                                                    width: 325,
+                                                    height: 200,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Form(
+                                                          key: formKey,
+                                                          child: Container(
+                                                            margin:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        32),
+                                                            child: BoxInputField
+                                                                .text(
+                                                              controller:
+                                                                  inputTextController,
+                                                              hintText:
+                                                                  'Nommez la Cmd',
+                                                              validator:
+                                                                  (text) {
+                                                                if (text
+                                                                    .isEmpty) {
+                                                                  return 'Veuillez entrer un nom valide';
+                                                                }
+                                                                return null;
+                                                              },
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 17),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            if (formKey
+                                                                .currentState!
+                                                                .validate()) {
+                                                              context
+                                                                  .read<
+                                                                      StoreNotProcessedOrderCubit>()
+                                                                  .store(
+                                                                    label:
+                                                                        inputTextController
+                                                                            .text,
+                                                                    orderItems:
+                                                                        selectedOrderItemState
+                                                                            .selectedOrderItem!,
+                                                                  );
+                                                            }
+                                                          },
+                                                          child: Container(
+                                                            width: 262,
+                                                            height: 54,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  kPrimaryColor,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          15),
+                                                            ),
+                                                            child: const Center(
+                                                              child: Text(
+                                                                'sauvegarder',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontFamily:
+                                                                      'Poppins-bold',
+                                                                  fontSize: 18,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          transitionDuration:
+                                              Duration(milliseconds: 200),
+                                          barrierDismissible: true,
+                                          barrierLabel: '',
+                                          context: context,
+                                          pageBuilder: (context, animation1,
+                                              animation2) {
+                                            return Container();
+                                          });
                                     },
                                     child: Container(
                                       width: 262,

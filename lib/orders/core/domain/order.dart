@@ -7,6 +7,7 @@ class OrderProduct {
   String? number;
   List<OrderLineItem>? orderLineItems;
   DateTime? createdAt;
+
   Invoice? invoice;
 
   OrderProduct({this.id, this.number, this.orderLineItems, this.createdAt});

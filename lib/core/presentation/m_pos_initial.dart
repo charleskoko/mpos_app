@@ -8,7 +8,7 @@ import '../../authentication/infrastructures/authentication_remote_service.dart'
 import '../../custom_calendar/infrastructures/calendar_service.dart';
 import '../../invoices/core/infrastructure/invoice_local_service.dart';
 import '../../invoices/core/infrastructure/invoice_remote_service.dart';
-import '../../orders/core/infrastructure/not_processed_order_local_service.dart';
+import '../../not_processed_order/core/infrastructure/not_processed_order_local_service.dart';
 import '../../orders/core/infrastructure/order_remote_service.dart';
 import '../../products/core/infrastructure/product_local_service.dart';
 import '../../products/core/infrastructure/product_remote_service.dart';

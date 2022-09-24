@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import '../../core/domain/not_processed_order.dart';
+import '../../../not_processed_order/core/domain/not_processed_order.dart';
 import '../../core/domain/order.dart';
 import '../../core/domain/selected_order_item.dart';
 import '../../core/infrastructure/order_repository.dart';
@@ -21,13 +21,16 @@ class StoreOrderCubit extends Cubit<StoreOrderState> {
     final storedOrderOrFailure =
         await _ordeRepository.storeOrderProduct(orderData: rangedOrderData);
     storedOrderOrFailure.fold(
-      (orderProduct) => emit(
-        StoreOrderLoaded(
-          orderProduct,
-          isNotProcessedOrder: isNotProcessedOrder,
-          notProcessedOrder: notProcessedOrder,
-        ),
-      ),
+      (orderProduct) {
+        print('new order stored: ${orderProduct.number}');
+        emit(
+          StoreOrderLoaded(
+            orderProduct,
+            isNotProcessedOrder: isNotProcessedOrder,
+            notProcessedOrder: notProcessedOrder,
+          ),
+        );
+      },
       (orderError) => emit(
         StoreOrderError(orderError.message),
       ),

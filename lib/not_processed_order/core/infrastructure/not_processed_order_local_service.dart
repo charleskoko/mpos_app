@@ -1,8 +1,8 @@
-import 'package:mpos_app/orders/core/domain/not_processed_order.dart';
+import 'package:mpos_app/not_processed_order/core/domain/not_processed_order.dart';
 import 'package:sembast/sembast.dart';
 import 'package:uuid/uuid.dart';
 import '../../../core/infrastructures/sembast_database.dart';
-import '../domain/selected_order_item.dart';
+import '../../../orders/core/domain/selected_order_item.dart';
 
 class NotProcessedOrderLocalservice {
   final SembastDatabase _sembastDatabase;

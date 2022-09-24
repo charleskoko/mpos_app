@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../core/domain/selected_order_item.dart';
-import '../../core/infrastructure/order_repository.dart';
+import '../../../orders/core/domain/selected_order_item.dart';
+import '../../../orders/core/infrastructure/order_repository.dart';
 
 part 'store_not_processed_order_state.dart';
 

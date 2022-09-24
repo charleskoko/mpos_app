@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:mpos_app/orders/core/domain/selected_order_item.dart';
-import 'package:mpos_app/orders/core/infrastructure/not_processed_order_local_service.dart';
+import 'package:mpos_app/not_processed_order/core/infrastructure/not_processed_order_local_service.dart';
 import 'package:mpos_app/orders/core/infrastructure/order_remote_service.dart';
 import '../../../core/domain/fresh.dart';
 import '../../../core/infrastructures/network_exception.dart';
 import '../../../core/domain/remote_response.dart';
-import '../domain/not_processed_order.dart';
+import '../../../not_processed_order/core/domain/not_processed_order.dart';
 import '../domain/order_error.dart';
 import '../domain/order.dart';
 

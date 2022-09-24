@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import '../../../products/core/domaine/product.dart';
-import '../../core/domain/not_processed_order.dart';
+import '../../../not_processed_order/core/domain/not_processed_order.dart';
 import '../../core/domain/selected_order_item.dart';
 part 'selected_order_item_state.dart';
 

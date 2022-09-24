@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import '../../orders/shared/cubit/fetch_not_processed_order_cubit.dart';
+import '../../not_processed_order/shared/cubit/fetch_not_processed_order_cubit.dart';
+import '../../not_processed_order/shared/cubit/show_not_processed_order_cubit.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_loading.dart';
 import '../../src/widgets/box_message.dart';
-import '../core/domain/not_processed_order.dart';
+import '../../not_processed_order/core/domain/not_processed_order.dart';
 import '../core/domain/order.dart';
 import '../shared/cubit/fetch_done_orders_cubit.dart';
 import '../shared/cubit/order_details_cubit.dart';
@@ -132,101 +133,114 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                   itemCount: notProcessedOrders.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return Container(
-                                      margin: const EdgeInsets.only(bottom: 10),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.shade300,
-                                            blurRadius: 2,
-                                            spreadRadius: 2,
-                                            offset: const Offset(
-                                                1, 2), // Shadow position
-                                          ),
-                                        ],
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 116,
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            top: 20,
-                                            left: 10,
-                                            child: Text(
-                                              '${notProcessedOrders[index].label}',
-                                              style: const TextStyle(
-                                                fontFamily: 'Poppins-Regular',
-                                                color: kPrimaryColor,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w900,
-                                              ),
+                                    return GestureDetector(
+                                      onTap: () {
+                                        context
+                                            .read<ShowNotProcessedOrderCubit>()
+                                            .show(notProcessedOrders[index]);
+                                        context.goNamed(
+                                            'notProcessedOrderDetails');
+                                      },
+                                      child: Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 10),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.shade300,
+                                              blurRadius: 2,
+                                              spreadRadius: 2,
+                                              offset: const Offset(
+                                                  1, 2), // Shadow position
                                             ),
-                                          ),
-                                          Positioned(
-                                            top: 20,
-                                            right: 10,
-                                            child: Text(
-                                              DateFormat('HH:mm').format(
-                                                  notProcessedOrders[index]
-                                                      .createdAt!),
-                                              style: const TextStyle(
-                                                fontFamily: 'Poppins-Regular',
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            top: 65,
-                                            left: 10,
-                                            child: Text(
-                                              "Nombre d'article ${notProcessedOrders[index].selectedOrderItem!.length}",
-                                              style: const TextStyle(
-                                                fontFamily: 'Poppins-Regular',
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ),
-                                          const Positioned(
-                                            top: 65,
-                                            left: 196,
-                                            child: Text(
-                                              "XOF 0000",
-                                              style: TextStyle(
-                                                fontFamily: 'Poppins-Regular',
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            top: 65,
-                                            right: 10,
-                                            child: Container(
-                                                width: 70,
-                                                height: 28,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 116,
+                                        child: Stack(
+                                          children: [
+                                            Positioned(
+                                              top: 20,
+                                              left: 10,
+                                              child: Text(
+                                                '${notProcessedOrders[index].label}',
+                                                style: const TextStyle(
+                                                  fontFamily: 'Poppins-Regular',
                                                   color: kPrimaryColor,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w900,
                                                 ),
-                                                child: const Center(
-                                                  child: Text(
-                                                    'En cours',
-                                                    style: TextStyle(
-                                                      fontFamily:
-                                                          'Poppins-Regular',
-                                                      fontSize: 12,
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                    ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: 20,
+                                              right: 10,
+                                              child: Text(
+                                                DateFormat('HH:mm').format(
+                                                    notProcessedOrders[index]
+                                                        .createdAt!),
+                                                style: const TextStyle(
+                                                  fontFamily: 'Poppins-Regular',
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: 65,
+                                              left: 10,
+                                              child: Text(
+                                                "Nombre d'article ${notProcessedOrders[index].selectedOrderItem!.length}",
+                                                style: const TextStyle(
+                                                  fontFamily: 'Poppins-Regular',
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: 65,
+                                              left: 160,
+                                              child: Text(
+                                                "XOF ${OrderProduct.getOrderTotalFromMapList(notProcessedOrders[index].selectedOrderItem!)}",
+                                                style: const TextStyle(
+                                                  fontFamily: 'Poppins-Regular',
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: 59,
+                                              right: 10,
+                                              child: Container(
+                                                  width: 70,
+                                                  height: 28,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    color: kPrimaryColor,
                                                   ),
-                                                )),
-                                          )
-                                        ],
+                                                  child: const Center(
+                                                    child: Text(
+                                                      'En cours',
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            'Poppins-Regular',
+                                                        fontSize: 12,
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                    ),
+                                                  )),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     );
                                   },
@@ -294,7 +308,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                               top: 20,
                                               left: 10,
                                               child: Text(
-                                                'Cmd #${orders[index].number}',
+                                                '#${orders[index].number}',
                                                 style: const TextStyle(
                                                   fontFamily: 'Poppins-Regular',
                                                   color: kPrimaryColor,
@@ -329,7 +343,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                             ),
                                             Positioned(
                                               top: 65,
-                                              left: 196,
+                                              left: 160,
                                               child: Text(
                                                 "XOF ${orders[index].getOrderTotalFromListOrderLineItems}",
                                                 style: const TextStyle(
@@ -340,7 +354,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                               ),
                                             ),
                                             Positioned(
-                                              top: 65,
+                                              top: 59,
                                               right: 10,
                                               child: Container(
                                                   width: 68,

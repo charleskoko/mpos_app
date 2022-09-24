@@ -4,6 +4,7 @@ import '../../authentication/presentation/login_page.dart';
 import '../../authentication/presentation/password_forgot_page.dart';
 import '../../authentication/presentation/register_page.dart';
 import '../../main/main_page.dart';
+import '../../not_processed_order/presentation/show_not_processed_order_page.dart';
 import '../../orders/presentation/order_details.dart';
 import '../../orders/presentation/order_verification_page.dart';
 import '../../orders/presentation/save_order_status.dart';
@@ -84,6 +85,14 @@ class MposRouter {
               pageBuilder: (context, state) => MaterialPage(
                 key: state.pageKey,
                 child: const SaleDetails(),
+              ),
+            ),
+            GoRoute(
+              name: 'notProcessedOrderDetails',
+              path: 'notProcessedOrderDetails',
+              pageBuilder: (context, state) => MaterialPage(
+                key: state.pageKey,
+                child: const ShowNotProcessedOrderPage(),
               ),
             ),
           ]),

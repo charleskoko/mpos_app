@@ -9,13 +9,14 @@ import '../../custom_calendar/infrastructures/calendar_repository_impl.dart';
 import '../../dashboard/shared/cubit/dashboard_cubit.dart';
 import '../../invoices/core/infrastructure/invoice_repository.dart';
 import '../../invoices/shared/fetch_invoice_cubit.dart';
+import '../../not_processed_order/shared/cubit/show_not_processed_order_cubit.dart';
 import '../../orders/core/infrastructure/order_repository.dart';
-import '../../orders/shared/cubit/delete_not_processed_order_cubit.dart';
-import '../../orders/shared/cubit/fetch_not_processed_order_cubit.dart';
+import '../../not_processed_order/shared/cubit/delete_not_processed_order_cubit.dart';
+import '../../not_processed_order/shared/cubit/fetch_not_processed_order_cubit.dart';
 import '../../orders/shared/cubit/selected_order_item_cubit.dart';
-import '../../orders/shared/cubit/store_not_processed_order_cubit.dart';
+import '../../not_processed_order/shared/cubit/store_not_processed_order_cubit.dart';
 import '../../orders/shared/cubit/store_order_cubit.dart';
-import '../../orders/shared/cubit/update_not_processed_order_cubit.dart';
+import '../../not_processed_order/shared/cubit/update_not_processed_order_cubit.dart';
 import '../../products/core/infrastructure/product_repository.dart';
 import '../../products/shared/cubit/delete_product/delete_product_cubit.dart';
 import '../../products/shared/cubit/fetch_product/fetch_products_cubit.dart';
@@ -104,6 +105,9 @@ class BlocsProvider {
       ),
       BlocProvider<OrderDetailsCubit>(
         create: (context) => OrderDetailsCubit(),
+      ),
+      BlocProvider<ShowNotProcessedOrderCubit>(
+        create: (context) => ShowNotProcessedOrderCubit(),
       ),
     ];
   }

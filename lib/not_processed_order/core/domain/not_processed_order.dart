@@ -26,8 +26,8 @@ class NotProcessedOrder {
         'label': label,
         'selectedOrderItem':
             selectedOrderItem?.map((element) => element.toJson()).toList(),
-        'createdAt':
-            DateFormat('yyyy-MM-dd').format(createdAt ?? DateTime.now()),
+        'createdAt': DateFormat('yyyy-MM-dd HH:mm:ss')
+            .format(createdAt ?? DateTime.now()),
       };
 
   static List<SelectedOrderItem>? orderLineItemList(List<dynamic> dynamicList) {

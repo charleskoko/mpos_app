@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mpos_app/orders/core/domain/not_processed_order.dart';
+import 'package:mpos_app/not_processed_order/core/domain/not_processed_order.dart';
 import 'package:mpos_app/orders/shared/cubit/selected_order_item_cubit.dart';
 
 import '../../src/shared/app_colors.dart';
@@ -12,7 +12,7 @@ import '../../src/widgets/box_message.dart';
 import '../../src/widgets/box_text.dart';
 import '../shared/cubit/delete_not_processed_order_cubit.dart';
 import '../shared/cubit/fetch_not_processed_order_cubit.dart';
-import '../shared/cubit/store_order_cubit.dart';
+import '../../orders/shared/cubit/store_order_cubit.dart';
 
 class NotProcessedOrderPage extends StatefulWidget {
   const NotProcessedOrderPage({Key? key}) : super(key: key);

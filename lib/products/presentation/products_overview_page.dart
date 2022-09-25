@@ -260,7 +260,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
             });
             return GestureDetector(
               onTap: () {
-                context.goNamed('orderVerification');
+                context.goNamed('orderVerification', params: {'tab': '2'});
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),

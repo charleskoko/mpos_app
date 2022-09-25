@@ -20,20 +20,18 @@ class StoreOrderCubit extends Cubit<StoreOrderState> {
         OrderProduct.rangeOrderData(orderItems);
     final storedOrderOrFailure =
         await _ordeRepository.storeOrderProduct(orderData: rangedOrderData);
-    storedOrderOrFailure.fold(
-      (orderProduct) {
-        print('new order stored: ${orderProduct.number}');
-        emit(
-          StoreOrderLoaded(
-            orderProduct,
-            isNotProcessedOrder: isNotProcessedOrder,
-            notProcessedOrder: notProcessedOrder,
-          ),
-        );
-      },
-      (orderError) => emit(
+    storedOrderOrFailure.fold((orderProduct) {
+      emit(
+        StoreOrderLoaded(
+          orderProduct,
+          isNotProcessedOrder: isNotProcessedOrder,
+          notProcessedOrder: notProcessedOrder,
+        ),
+      );
+    }, (orderError) {
+      emit(
         StoreOrderError(orderError.message),
-      ),
-    );
+      );
+    });
   }
 }

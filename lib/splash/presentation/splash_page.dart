@@ -24,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
         listener: (context, authenticationState) {
           if (authenticationState is AuthenticationLoading) {}
           if (authenticationState is AuthenticationValidated) {
-            context.goNamed('main');
+            context.goNamed('main', params: {'tab': '0'});
           }
           if (authenticationState is AuthenticationNotValidated) {
             context.goNamed('login');

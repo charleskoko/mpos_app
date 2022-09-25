@@ -61,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage>
         body: BlocListener<AuthenticationCubit, AuthenticationState>(
           listener: (context, authenticationState) {
             if (authenticationState is AuthenticationValidated) {
-              context.goNamed('main');
+              context.goNamed('main', params: {'tab': '0'});
             }
             if (authenticationState is AuthenticationNotValidated) {}
           },

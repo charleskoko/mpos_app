@@ -49,11 +49,14 @@ class MposRouter {
           ]),
       GoRoute(
           name: 'main',
-          path: '/main',
-          pageBuilder: (context, state) => MaterialPage(
-                key: state.pageKey,
-                child: const MainPage(),
-              ),
+          path: '/main/:tab',
+          pageBuilder: (context, state) {
+            final int tab = int.parse(state.params['tab']!);
+            return MaterialPage(
+              key: state.pageKey,
+              child: MainPage(tab: tab),
+            );
+          },
           routes: [
             GoRoute(
               name: 'orderDetails',

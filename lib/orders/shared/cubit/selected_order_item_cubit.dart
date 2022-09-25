@@ -58,14 +58,19 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
     );
   }
 
-  void removeItemFromList(
-      {required SelectedOrderItem itemToDelete,
-      required List<SelectedOrderItem> selectedItemList}) {
+  void removeItemFromList({
+    required SelectedOrderItem itemToDelete,
+    required List<SelectedOrderItem> selectedItemList,
+    bool? isNotProcessedOrder,
+    NotProcessedOrder? notProcessedOrder,
+  }) {
     selectedItemList
         .removeWhere((item) => item.product?.id == itemToDelete.product?.id);
     emit(
       SelectedOrderItemState.orderNotCanceled(
         selectedOrderItem: selectedItemList,
+        isNotProcessedOrder: isNotProcessedOrder ?? false,
+        notProcessedOrder: notProcessedOrder,
       ),
     );
   }

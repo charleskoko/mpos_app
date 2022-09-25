@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import '../../src/shared/app_colors.dart';
 import '../dashboard/presentation/dashboard_page.dart';
@@ -7,30 +8,32 @@ import '../products/presentation/products_overview_page.dart';
 import '../sales/presentation/sales_overview_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  final int tab;
+  const MainPage({Key? key, this.tab = 0}) : super(key: key);
 
   @override
   State<MainPage> createState() => _MainPage();
 }
 
 class _MainPage extends State<MainPage> {
-  int _selectedScreenIndex = 0;
-  void _selectScreen(int index) {
-    setState(() {
-      _selectedScreenIndex = index;
-    });
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        onTap: (selectedMenuItem) {
+          context.goNamed('main', params: {'tab': '$selectedMenuItem'});
+        },
         type: BottomNavigationBarType.fixed,
         backgroundColor: kPrimaryColor,
         elevation: 0,
         unselectedItemColor: const Color(0xFFB8B8B8),
         selectedItemColor: Colors.white,
-        currentIndex: _selectedScreenIndex,
+        currentIndex: widget.tab,
         unselectedLabelStyle: const TextStyle(
           fontSize: 12,
           fontFamily: 'Poppins-Regular',
@@ -41,34 +44,31 @@ class _MainPage extends State<MainPage> {
           fontFamily: 'Poppins-Regular',
           fontWeight: FontWeight.w700,
         ),
-        onTap: _selectScreen,
-        items: const [
+        items: [
           BottomNavigationBarItem(
             icon: Padding(
-              padding: EdgeInsets.only(top: 19, bottom: 12.11),
-              child: Icon(Ionicons.pie_chart_outline, size: 30),
+              padding: const EdgeInsets.only(top: 19, bottom: 12.11),
+              child: const Icon(Ionicons.pie_chart_outline, size: 30),
             ),
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
             icon: Padding(
-              padding: EdgeInsets.only(top: 19, bottom: 12.11),
-              child: Icon(Ionicons.reader_outline, size: 30),
+              padding: const EdgeInsets.only(top: 19, bottom: 12.11),
+              child: const Icon(Ionicons.reader_outline, size: 30),
             ),
             label: 'Commandes',
           ),
           BottomNavigationBarItem(
             icon: Padding(
-              padding: EdgeInsets.only(top: 19, bottom: 12.11),
-              child: Icon(Ionicons.receipt_outline, size: 30),
-            ),
+                padding: const EdgeInsets.only(top: 19, bottom: 12.11),
+                child: const Icon(Ionicons.receipt_outline, size: 30)),
             label: 'Articles',
           ),
           BottomNavigationBarItem(
             icon: Padding(
-              padding: EdgeInsets.only(top: 19, bottom: 12.11),
-              child: Icon(Ionicons.settings_outline, size: 30),
-            ),
+                padding: const EdgeInsets.only(top: 19, bottom: 12.11),
+                child: const Icon(Ionicons.settings_outline, size: 30)),
             label: 'Paramètres',
           ),
         ],
@@ -78,7 +78,7 @@ class _MainPage extends State<MainPage> {
         const OrdersOverviewPage(),
         const ProductsOverviewPage(),
         const SalesOverviewPage(),
-      ].elementAt(_selectedScreenIndex),
+      ].elementAt(widget.tab),
     );
   }
 }

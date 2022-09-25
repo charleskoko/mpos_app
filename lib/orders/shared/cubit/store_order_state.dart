@@ -9,8 +9,8 @@ class StoreOrderLoading extends StoreOrderState {}
 
 class StoreOrderLoaded extends StoreOrderState {
   final OrderProduct order;
-  bool isNotProcessedOrder;
-  NotProcessedOrder? notProcessedOrder;
+  final bool isNotProcessedOrder;
+  final NotProcessedOrder? notProcessedOrder;
   StoreOrderLoaded(
     this.order, {
     this.isNotProcessedOrder = false,

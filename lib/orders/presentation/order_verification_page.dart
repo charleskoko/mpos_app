@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mpos_app/src/widgets/box_button.dart';
-import 'package:mpos_app/src/widgets/box_input_field.dart';
-import 'package:mpos_app/src/widgets/box_text.dart';
 import '../../core/presentation/snack_bar.dart';
 import '../../core/shared/error_message.dart';
 import '../../core/shared/mixin_validation.dart';
+import '../../not_processed_order/shared/cubit/delete_not_processed_order_cubit.dart';
 import '../../src/shared/app_colors.dart';
-import '../../src/widgets/box_order_item.dart';
-import '../core/domain/order.dart';
+import '../../src/widgets/box_input_field.dart';
 import '../core/domain/selected_order_item.dart';
 import '../../not_processed_order/shared/cubit/fetch_not_processed_order_cubit.dart';
 import '../shared/cubit/selected_order_item_cubit.dart';
@@ -35,6 +33,7 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
         title: const Text(
@@ -48,7 +47,10 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
         ),
         leadingWidth: 80,
         leading: Container(
-          margin: const EdgeInsets.only(left: 21),
+          margin: const EdgeInsets.only(
+            left: 21,
+            top: 10,
+          ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(11),
             border: Border.all(color: const Color(0xFFEAEAEA)),
@@ -69,17 +71,24 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
         actions: [
           BlocListener<SelectedOrderItemCubit, SelectedOrderItemState>(
             listener: (context, selectedOrderItemState) {
-              print(selectedOrderItemState.isNotProcessedOrder);
               if (selectedOrderItemState.isOrderCanceled) {
                 Navigator.pop(context);
-                buidSnackbar(
-                  context: context,
-                  backgroundColor: Colors.green,
-                  text: 'La commande encours a été annulée avec succès',
+                Fluttertoast.showToast(
+                  gravity: ToastGravity.TOP,
+                  backgroundColor: kPrimaryColor,
+                  msg: 'La commande encours a été annulée avec succès',
                 );
               }
               if (!selectedOrderItemState.isOrderCanceled) {
                 Navigator.pop(context);
+                Fluttertoast.showToast(
+                  gravity: ToastGravity.TOP,
+                  backgroundColor: kPrimaryColor,
+                  msg: "l'action a été éffectué avec succès",
+                );
+                if (selectedOrderItemState.selectedOrderItem!.isEmpty) {
+                  context.goNamed('main', params: {'tab': '2'});
+                }
               }
             },
             child: IconButton(
@@ -738,6 +747,22 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
                                                 selectedOrderItemState
                                                     .notProcessedOrder,
                                           );
+                                      if (selectedOrderItemState
+                                          .isNotProcessedOrder) {
+                                        context
+                                            .read<
+                                                DeleteNotProcessedOrderCubit>()
+                                            .delete(selectedOrderItemState
+                                                .notProcessedOrder!);
+                                        context
+                                            .read<FetchNotProcessedOrderCubit>()
+                                            .index(
+                                              id: selectedOrderItemState
+                                                  .notProcessedOrder!.id!,
+                                            );
+                                        return;
+                                      }
+                                      return;
                                     },
                                     child: Container(
                                       width: 262,

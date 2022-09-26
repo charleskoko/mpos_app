@@ -20,6 +20,7 @@ class _OrderDetailsState extends State<OrderDetails> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
@@ -33,7 +34,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         ),
         leadingWidth: 80,
         leading: Container(
-          margin: const EdgeInsets.only(left: 21),
+          margin: const EdgeInsets.only(left: 21, top: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(11),
             border: Border.all(color: Color(0xFFEAEAEA)),

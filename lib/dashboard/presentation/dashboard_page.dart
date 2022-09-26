@@ -28,12 +28,6 @@ class _DashboardPageState extends State<DashboardPage> {
   late String _selectedDate;
 
   @override
-  void didChangeDependencies() {
-    precacheImage(const AssetImage("assets/images/charly_logo.png"), context);
-    super.didChangeDependencies();
-  }
-
-  @override
   void initState() {
     _timeString = _formatDateTime(DateTime.now());
     Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());

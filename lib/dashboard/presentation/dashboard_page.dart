@@ -133,23 +133,18 @@ class _DashboardPageState extends State<DashboardPage> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
+                      const Padding(
+                        padding: EdgeInsets.only(
                           right: 17,
                           top: 15,
                         ),
-                        child: GestureDetector(
-                          onTap: () {
-                            context.read<AuthenticationCubit>().logout();
-                          },
-                          child: const CircleAvatar(
-                            backgroundColor: kPrimaryColor,
-                            radius: 25,
-                            child: Icon(
-                              Ionicons.person_circle_outline,
-                              color: Colors.white,
-                              size: 45,
-                            ),
+                        child: CircleAvatar(
+                          backgroundColor: kPrimaryColor,
+                          radius: 25,
+                          child: Icon(
+                            Ionicons.person_circle_outline,
+                            color: Colors.white,
+                            size: 45,
                           ),
                         ),
                       )

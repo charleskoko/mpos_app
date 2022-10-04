@@ -12,19 +12,19 @@ class FetchInvoiceCubit extends Cubit<FetchInvoiceState> {
   FetchInvoiceCubit(this._invoiceRepository) : super(FetchInvoiceInitial());
 
   Future<void> fetchInvoice() async {
-    emit(FetchInvoiceLoading());
-    try {
-      final fetchTodayInvoiceList = await _invoiceRepository.fetchInvoiceList();
-      fetchTodayInvoiceList.fold(
-        (fresh) {
-          emit(FetchInvoiceLoaded(fresh.entity));
-        },
-        (invoiceError) => emit(FetchInvoiceError(invoiceError.message)),
-      );
-    } on RestApiException catch (exception) {
-      emit(
-        FetchInvoiceError(exception.message),
-      );
-    }
+    // emit(FetchInvoiceLoading());
+    // try {
+    //   final fetchTodayInvoiceList = await _invoiceRepository.fetchInvoiceList();
+    //   fetchTodayInvoiceList.fold(
+    //     (fresh) {
+    //       emit(FetchInvoiceLoaded(fresh.entity));
+    //     },
+    //     (invoiceError) => emit(FetchInvoiceError(invoiceError.message)),
+    //   );
+    // } on RestApiException catch (exception) {
+    //   emit(
+    //     FetchInvoiceError(exception.message),
+    //   );
+    // }
   }
 }

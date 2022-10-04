@@ -38,8 +38,9 @@ class ProductRepository {
   }
 
   Future<Either<Product, ProductError>> storeNewProduct(
-      {required String label, required price}) async {
-    Product newProduct = Product(label: label, salePrice: price);
+      {required String label, required price, required purchasePrice}) async {
+    Product newProduct =
+        Product(label: label, salePrice: price, purchasePrice: purchasePrice);
 
     try {
       final storeNewProductRequestresponse =

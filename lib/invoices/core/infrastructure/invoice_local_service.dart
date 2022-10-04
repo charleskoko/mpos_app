@@ -22,17 +22,17 @@ class InvoiceLocalService {
         );
   }
 
-  Future<List<Invoice>> getInvoices() async {
-    const sembastPage = _page - 1;
+  // Future<List<Invoice>> getInvoices() async {
+  //   const sembastPage = _page - 1;
 
-    final records = await _store.find(
-      _sembastDatabase.instance,
-      finder: Finder(
-        limit: _itemsPerPage,
-        offset: _itemsPerPage * sembastPage,
-      ),
-    );
+  //   final records = await _store.find(
+  //     _sembastDatabase.instance,
+  //     finder: Finder(
+  //       limit: _itemsPerPage,
+  //       offset: _itemsPerPage * sembastPage,
+  //     ),
+  //   );
 
-    return records.map((e) => Invoice.fromJson(e.value)).toList();
-  }
+  //   return records.map((e) => Invoice.fromJson(e.value)).toList();
+  // }
 }

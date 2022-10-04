@@ -8,7 +8,9 @@ import '../../not_processed_order/presentation/show_not_processed_order_page.dar
 import '../../orders/presentation/order_details.dart';
 import '../../orders/presentation/order_verification_page.dart';
 import '../../orders/presentation/save_order_status.dart';
-import '../../sales/presentation/sale_details.dart';
+import '../../products/presentation/add_product_page.dart';
+import '../../products/presentation/edit_product_page.dart';
+import '../../products/presentation/manage_product_page.dart';
 import '../../splash/presentation/splash_page.dart';
 
 class MposRouter {
@@ -83,14 +85,6 @@ class MposRouter {
               ),
             ),
             GoRoute(
-              name: 'salesDetails',
-              path: 'salesDetails',
-              pageBuilder: (context, state) => MaterialPage(
-                key: state.pageKey,
-                child: const SaleDetails(),
-              ),
-            ),
-            GoRoute(
               name: 'notProcessedOrderDetails',
               path: 'notProcessedOrderDetails',
               pageBuilder: (context, state) => MaterialPage(
@@ -98,6 +92,31 @@ class MposRouter {
                 child: const ShowNotProcessedOrderPage(),
               ),
             ),
+            GoRoute(
+                name: 'manageItems',
+                path: 'manageItems',
+                pageBuilder: (context, state) => MaterialPage(
+                      key: state.pageKey,
+                      child: const ManageItemsPage(),
+                    ),
+                routes: [
+                  GoRoute(
+                    name: 'addProduct',
+                    path: 'addProduct',
+                    pageBuilder: (context, state) => MaterialPage(
+                      key: state.pageKey,
+                      child: const AddProductPage(),
+                    ),
+                  ),
+                  GoRoute(
+                    name: 'updateProduct',
+                    path: 'updateProduct',
+                    pageBuilder: (context, state) => MaterialPage(
+                      key: state.pageKey,
+                      child: UpdateProductPage(),
+                    ),
+                  )
+                ]),
           ]),
     ],
   );

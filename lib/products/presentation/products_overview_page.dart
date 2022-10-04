@@ -8,7 +8,6 @@ import '../../orders/shared/cubit/store_order_cubit.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_loading.dart';
 import '../../src/widgets/box_message.dart';
-import '../../src/widgets/box_text.dart';
 import '../core/domaine/product.dart';
 import '../shared/cubit/fetch_product/fetch_products_cubit.dart';
 

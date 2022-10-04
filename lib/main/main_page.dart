@@ -5,7 +5,7 @@ import '../../src/shared/app_colors.dart';
 import '../dashboard/presentation/dashboard_page.dart';
 import '../orders/presentation/orders_overview_page.dart';
 import '../products/presentation/products_overview_page.dart';
-import '../sales/presentation/sales_overview_page.dart';
+import '../settings/presentation/settings_page.dart';
 
 class MainPage extends StatefulWidget {
   final int tab;
@@ -44,31 +44,31 @@ class _MainPage extends State<MainPage> {
           fontFamily: 'Poppins-Regular',
           fontWeight: FontWeight.w700,
         ),
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Padding(
-              padding: const EdgeInsets.only(top: 19, bottom: 12.11),
-              child: const Icon(Ionicons.pie_chart_outline, size: 30),
+              padding: EdgeInsets.only(top: 19, bottom: 12.11),
+              child: Icon(Ionicons.pie_chart_outline, size: 30),
             ),
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
             icon: Padding(
-              padding: const EdgeInsets.only(top: 19, bottom: 12.11),
-              child: const Icon(Ionicons.reader_outline, size: 30),
+              padding: EdgeInsets.only(top: 19, bottom: 12.11),
+              child: Icon(Ionicons.reader_outline, size: 30),
             ),
             label: 'Commandes',
           ),
           BottomNavigationBarItem(
             icon: Padding(
-                padding: const EdgeInsets.only(top: 19, bottom: 12.11),
-                child: const Icon(Ionicons.receipt_outline, size: 30)),
+                padding: EdgeInsets.only(top: 19, bottom: 12.11),
+                child: Icon(Ionicons.receipt_outline, size: 30)),
             label: 'Articles',
           ),
           BottomNavigationBarItem(
             icon: Padding(
-                padding: const EdgeInsets.only(top: 19, bottom: 12.11),
-                child: const Icon(Ionicons.settings_outline, size: 30)),
+                padding: EdgeInsets.only(top: 19, bottom: 12.11),
+                child: Icon(Ionicons.settings_outline, size: 30)),
             label: 'Paramètres',
           ),
         ],
@@ -77,7 +77,7 @@ class _MainPage extends State<MainPage> {
         const DashboardPage(),
         const OrdersOverviewPage(),
         const ProductsOverviewPage(),
-        const SalesOverviewPage(),
+        const SettingsPage(),
       ].elementAt(widget.tab),
     );
   }

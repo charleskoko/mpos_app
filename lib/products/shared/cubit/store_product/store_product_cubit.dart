@@ -15,8 +15,8 @@ class StoreProductCubit extends Cubit<StoreProductState> {
       final storeProductOrFailure = await _productRepository.storeNewProduct(
         label: product.label ?? '',
         price: product.salePrice,
+        purchasePrice: product.purchasePrice,
       );
-
       storeProductOrFailure.fold(
         (product) => emit(StoreProductStored(product)),
         (productError) => emit(StoreProductError(productError.message)),

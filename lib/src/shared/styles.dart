@@ -36,7 +36,7 @@ const TextStyle headlineStyle = TextStyle(
 );
 
 const TextStyle subheadingStyle = TextStyle(
-  fontSize: 20,
+  fontSize: 14,
   fontFamily: 'Poppins-Regular',
 );
 

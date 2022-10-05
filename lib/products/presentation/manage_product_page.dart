@@ -10,6 +10,7 @@ import '../../src/widgets/box_message.dart';
 import '../core/domaine/product.dart';
 import '../shared/cubit/delete_product/delete_product_cubit.dart';
 import '../shared/cubit/fetch_product/fetch_products_cubit.dart';
+import '../shared/cubit/show_product/show_product_cubit.dart';
 
 class ManageItemsPage extends StatefulWidget {
   const ManageItemsPage({Key? key}) : super(key: key);
@@ -176,6 +177,9 @@ class ManageItemsPageState extends State<ManageItemsPage> {
                                 top: 24,
                                 child: InkWell(
                                   onTap: () {
+                                    context
+                                        .read<ShowProductCubit>()
+                                        .showProduct(products[index]);
                                     context.goNamed('updateProduct',
                                         params: {'tab': '3'});
                                   },

@@ -64,7 +64,8 @@ class ProductRepository {
       {required String label,
       required double price,
       required String productId}) async {
-    Product newProduct = Product(label: label, salePrice: price);
+    Product newProduct =
+        Product(label: label, salePrice: price, purchasePrice: price);
 
     try {
       final updateProductrequestResponse =

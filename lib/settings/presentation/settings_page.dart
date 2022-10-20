@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../authentication/infrastructures/authentication_cubit.dart';
 import '../../invoices/shared/fetch_invoice_cubit.dart';
 import '../../src/shared/app_colors.dart';
@@ -175,6 +176,53 @@ class _SettingsPage extends State<SettingsPage> {
               //     )
               //   ]),
               // ),
+              GestureDetector(
+                onTap: () async {
+                  final Uri url = Uri.parse(
+                      'http://mpos-backend-app.herokuapp.com/privacy-policy');
+
+                  await launchUrl(url);
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 15),
+                  width: MediaQuery.of(context).size.width,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade300,
+                        blurRadius: 2,
+                        spreadRadius: 2,
+                        offset: const Offset(1, 2), // Shadow position
+                      ),
+                    ],
+                  ),
+                  child: Row(children: [
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.only(left: 16),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Conditions générales d'utilisation",
+                          style: TextStyle(
+                            fontFamily: 'Poppins-Regular',
+                            color: Color(0xFF010118),
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.only(right: 14),
+                      width: 50,
+                      child: const Icon(Ionicons.chevron_forward_outline),
+                    )
+                  ]),
+                ),
+              ),
               GestureDetector(
                 onTap: () {
                   context.read<AuthenticationCubit>().logout();

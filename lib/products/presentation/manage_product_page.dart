@@ -125,6 +125,7 @@ class ManageItemsPageState extends State<ManageItemsPage> {
                   }
                   if (fetchProductState is FetchProductsLoaded) {
                     List<Product> products = fetchProductState.fresh.entity;
+                    products.sort((a, b) => a.label!.compareTo(b.label!));
                     return ListView.builder(
                       itemCount: fetchProductState.fresh.entity.length,
                       itemBuilder: (context, index) {

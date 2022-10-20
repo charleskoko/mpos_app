@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
+import '../../not_processed_order/shared/cubit/delete_not_processed_order_cubit.dart';
 import '../../not_processed_order/shared/cubit/fetch_not_processed_order_cubit.dart';
 import '../../not_processed_order/shared/cubit/show_not_processed_order_cubit.dart';
 import '../../src/shared/app_colors.dart';
@@ -59,18 +60,35 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
             ),
           ),
         ),
-        body: BlocListener<StoreOrderCubit, StoreOrderState>(
-          listener: (context, state) {
-            if (state is StoreOrderLoaded) {
-              if (state.isNotProcessedOrder) {
+        body: MultiBlocListener(
+          listeners: [
+            BlocListener<StoreOrderCubit, StoreOrderState>(
+                listener: (context, state) {
+              if (state is StoreOrderLoaded) {
+                if (state.isNotProcessedOrder) {
+                  Fluttertoast.showToast(
+                    gravity: ToastGravity.TOP,
+                    backgroundColor: kPrimaryColor,
+                    msg: 'la commande a été clôturée avec succès',
+                  );
+                }
+              }
+            }),
+            BlocListener<DeleteNotProcessedOrderCubit,
+                    DeleteNotProcessedOrderState>(
+                listener: (context, deleteNotProcessedOrderState) {
+              if (deleteNotProcessedOrderState
+                  is DeleteNotProcessedOrderLoaded) {
+                Navigator.pop(context);
                 Fluttertoast.showToast(
                   gravity: ToastGravity.TOP,
                   backgroundColor: kPrimaryColor,
-                  msg: 'la commande a été clôturée avec succès',
+                  msg: 'la commande a été suprimée avec succès',
                 );
+                context.read<FetchNotProcessedOrderCubit>().index();
               }
-            }
-          },
+            })
+          ],
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -268,6 +286,154 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                                           ),
                                                         ),
                                                       )),
+                                                ),
+                                                Positioned(
+                                                  bottom: 5,
+                                                  right: 10,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      showGeneralDialog(
+                                                          barrierColor: Colors
+                                                              .black
+                                                              .withOpacity(0.5),
+                                                          transitionBuilder:
+                                                              (context, a1, a2,
+                                                                  widget) {
+                                                            return Transform
+                                                                .scale(
+                                                              scale: a1.value,
+                                                              child: Opacity(
+                                                                opacity:
+                                                                    a1.value,
+                                                                child:
+                                                                    AlertDialog(
+                                                                  contentPadding:
+                                                                      EdgeInsets
+                                                                          .zero,
+                                                                  shape: OutlineInputBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              15.0)),
+                                                                  content:
+                                                                      Container(
+                                                                    width: 325,
+                                                                    height: 313,
+                                                                    child:
+                                                                        Stack(
+                                                                      children: [
+                                                                        Positioned(
+                                                                            top:
+                                                                                5,
+                                                                            left:
+                                                                                5,
+                                                                            child: IconButton(
+                                                                                onPressed: () {
+                                                                                  Navigator.pop(context);
+                                                                                },
+                                                                                icon: const Icon(
+                                                                                  Ionicons.close,
+                                                                                  size: 30,
+                                                                                ))),
+                                                                        Container(
+                                                                          margin:
+                                                                              const EdgeInsets.only(top: 35),
+                                                                          width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width,
+                                                                          child:
+                                                                              const Icon(
+                                                                            Ionicons.trash_outline,
+                                                                            color:
+                                                                                Color(
+                                                                              0xFFEC5D5D,
+                                                                            ),
+                                                                            size:
+                                                                                60,
+                                                                          ),
+                                                                        ),
+                                                                        Container(
+                                                                          margin: const EdgeInsets.only(
+                                                                              left: 10,
+                                                                              right: 10),
+                                                                          width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width,
+                                                                          child:
+                                                                              const Center(
+                                                                            child:
+                                                                                Text(
+                                                                              'Êtes-vous sûr de vouloir supprimer cette comannde?',
+                                                                              style: TextStyle(
+                                                                                color: kPrimaryColor,
+                                                                                fontFamily: 'Poppins-bold',
+                                                                                fontSize: 18,
+                                                                              ),
+                                                                              textAlign: TextAlign.center,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Positioned(
+                                                                          bottom:
+                                                                              33,
+                                                                          left:
+                                                                              49,
+                                                                          child:
+                                                                              GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              context.read<DeleteNotProcessedOrderCubit>().delete(notProcessedOrders[index]);
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 227,
+                                                                              height: 54,
+                                                                              decoration: BoxDecoration(
+                                                                                color: kPrimaryColor,
+                                                                                borderRadius: BorderRadius.circular(15),
+                                                                              ),
+                                                                              child: const Center(
+                                                                                child: Text(
+                                                                                  'Confirmer',
+                                                                                  style: TextStyle(
+                                                                                    color: Colors.white,
+                                                                                    fontFamily: 'Poppins-bold',
+                                                                                    fontSize: 18,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                          transitionDuration:
+                                                              Duration(
+                                                                  milliseconds:
+                                                                      200),
+                                                          barrierDismissible:
+                                                              true,
+                                                          barrierLabel: '',
+                                                          context: context,
+                                                          pageBuilder: (context,
+                                                              animation1,
+                                                              animation2) {
+                                                            return Container();
+                                                          });
+                                                    },
+                                                    child: const SizedBox(
+                                                      height: 20,
+                                                      width: 20,
+                                                      child: Center(
+                                                        child: Icon(Ionicons
+                                                            .close_circle_outline),
+                                                      ),
+                                                    ),
+                                                  ),
                                                 )
                                               ],
                                             ),

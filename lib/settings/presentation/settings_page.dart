@@ -267,6 +267,20 @@ class _SettingsPage extends State<SettingsPage> {
                   ]),
                 ),
               ),
+              Expanded(
+                child: Container(),
+              ),
+              Container(
+                child: const Center(
+                  child: Text(
+                    'Version 1.0.1 - beta',
+                    style: TextStyle(
+                      fontFamily: 'Poppins-Regular',
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),

@@ -86,7 +86,7 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
                   backgroundColor: kPrimaryColor,
                   msg: "l'action a été éffectué avec succès",
                 );
-                if (selectedOrderItemState.selectedOrderItem!.isEmpty) {
+                if (selectedOrderItemState.selectedOrderItem?.isEmpty ?? true) {
                   context.goNamed('main', params: {'tab': '2'});
                 }
               }

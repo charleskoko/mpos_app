@@ -46,8 +46,8 @@ android {
         applicationId "io.mpos.mpos_app"
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 3
-        versionName '2.1.0'
+        versionCode 4
+        versionName '2.1.1'
     }
 
     buildTypes {

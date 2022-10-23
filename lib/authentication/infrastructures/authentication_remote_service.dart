@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:mpos_app/authentication/domain/reset_password_data.dart';
 import 'package:mpos_app/core/shared/dio_extension.dart';
 import '../../core/Environment/environement.dart';
 import '../../core/domain/user.dart';
@@ -57,6 +58,57 @@ class AuthenticationRemoteService {
         };
 
         return ConnectionResponse<Map<String, dynamic>>(responseData);
+      }
+      throw RestApiException(response.statusCode, response.statusMessage);
+    } on DioError catch (error) {
+      if (error.isNoConnectionError) {
+        return NoConnection();
+      }
+      if (error.response?.statusCode != null) {
+        throw RestApiException(
+          error.response?.statusCode,
+          error.response?.data['message'],
+        );
+      }
+      rethrow;
+    }
+  }
+
+  Future<RemoteResponse> generateResetPasswordCode(
+      {required Credential credential}) async {
+    final generateResetPasswordCodeUri =
+        Environment.getUri(unencodedPath: '/api/v1/password/email');
+    try {
+      final response = await _dio.postUri(generateResetPasswordCodeUri,
+          data: credential.toJson());
+      if (response.statusCode == 200) {
+        return ConnectionResponse<String>(
+            'password.code_generated_sucessfully');
+      }
+      throw RestApiException(response.statusCode, response.statusMessage);
+    } on DioError catch (error) {
+      if (error.isNoConnectionError) {
+        return NoConnection();
+      }
+      if (error.response?.statusCode != null) {
+        throw RestApiException(
+          error.response?.statusCode,
+          error.response?.data['message'],
+        );
+      }
+      rethrow;
+    }
+  }
+
+  Future<RemoteResponse> resetPassword(
+      {required ResetPasswordData resetPassword}) async {
+    final resetPasswordUri =
+        Environment.getUri(unencodedPath: '/api/v1/password/code/check');
+    try {
+      final response =
+          await _dio.postUri(resetPasswordUri, data: resetPassword.toJson());
+      if (response.statusCode == 200) {
+        return ConnectionResponse<String>('password.reset_sucessfully');
       }
       throw RestApiException(response.statusCode, response.statusMessage);
     } on DioError catch (error) {

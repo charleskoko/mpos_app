@@ -5,6 +5,8 @@ import 'package:mpos_app/products/shared/cubit/show_product/show_product_cubit.d
 
 import '../../authentication/infrastructures/authentication_cubit.dart';
 import '../../authentication/infrastructures/authentication_repository.dart';
+import '../../authentication/infrastructures/generate_reset_password_code_cubit.dart';
+import '../../authentication/infrastructures/reset_password_cubit.dart';
 import '../../custom_calendar/infrastructures/calendar_cubit.dart';
 import '../../custom_calendar/infrastructures/calendar_repository_impl.dart';
 import '../../dashboard/shared/cubit/dashboard_cubit.dart';
@@ -111,6 +113,14 @@ class BlocsProvider {
       ),
       BlocProvider<ShowProductCubit>(
         create: (context) => ShowProductCubit(),
+      ),
+      BlocProvider<GenerateResetPasswordCodeCubit>(
+        create: (context) => GenerateResetPasswordCodeCubit(
+            context.read<AuthenticationRepository>()),
+      ),
+      BlocProvider<ResetPasswordCubit>(
+        create: (context) =>
+            ResetPasswordCubit(context.read<AuthenticationRepository>()),
       ),
     ];
   }

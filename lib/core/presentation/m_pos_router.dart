@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../authentication/presentation/login_page.dart';
 import '../../authentication/presentation/password_forgot_page.dart';
+import '../../authentication/presentation/password_reset_page.dart';
 import '../../authentication/presentation/register_page.dart';
 import '../../main/main_page.dart';
 import '../../not_processed_order/presentation/show_not_processed_order_page.dart';
@@ -46,6 +47,14 @@ class MposRouter {
               pageBuilder: (context, state) => MaterialPage(
                 key: state.pageKey,
                 child: const PasswordForgotPage(),
+              ),
+            ),
+            GoRoute(
+              name: 'passwordReset',
+              path: 'passwordReset',
+              pageBuilder: (context, state) => MaterialPage(
+                key: state.pageKey,
+                child: const PasswordResetPage(),
               ),
             ),
           ]),

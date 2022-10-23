@@ -7,6 +7,7 @@ import '../../core/domain/user.dart';
 import '../../core/infrastructures/network_exception.dart';
 import '../../core/domain/remote_response.dart';
 import '../domain/authentication_error.dart';
+import '../domain/reset_password_data.dart';
 
 class AuthenticationRepository {
   final AuthenticationLocalService _authenticationLocalService;
@@ -59,6 +60,45 @@ class AuthenticationRepository {
 
         return left(authUser);
       } else if (registerRequestResponse is NotAuthorized) {
+        return right(AuthenticationError('notAuthorized'));
+      } else {
+        return right(AuthenticationError('noConnection'));
+      }
+    } on RestApiException catch (exception) {
+      return right(
+        AuthenticationError(exception.message ?? 'noErrorMessage'),
+      );
+    }
+  }
+
+  Future<Either<String, AuthenticationError>> generateResetPasswordCode(
+      {required Credential credential}) async {
+    try {
+      final generateResetPasswordCodeRequest =
+          await _authenticationRemoteService.generateResetPasswordCode(
+              credential: credential);
+      if (generateResetPasswordCodeRequest is ConnectionResponse) {
+        return left(generateResetPasswordCodeRequest.response);
+      } else if (generateResetPasswordCodeRequest is NotAuthorized) {
+        return right(AuthenticationError('notAuthorized'));
+      } else {
+        return right(AuthenticationError('noConnection'));
+      }
+    } on RestApiException catch (exception) {
+      return right(
+        AuthenticationError(exception.message ?? 'noErrorMessage'),
+      );
+    }
+  }
+
+  Future<Either<String, AuthenticationError>> resetPassword(
+      {required ResetPasswordData resetPassword}) async {
+    try {
+      final resetPasswordRequest = await _authenticationRemoteService
+          .resetPassword(resetPassword: resetPassword);
+      if (resetPasswordRequest is ConnectionResponse) {
+        return left(resetPasswordRequest.response);
+      } else if (resetPasswordRequest is NotAuthorized) {
         return right(AuthenticationError('notAuthorized'));
       } else {
         return right(AuthenticationError('noConnection'));

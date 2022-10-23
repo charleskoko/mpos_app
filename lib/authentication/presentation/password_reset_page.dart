@@ -10,9 +10,7 @@ import '../../core/shared/mixin_scaffold.dart';
 import '../../core/shared/mixin_validation.dart';
 import '../../src/widgets/box_button.dart';
 import '../../src/widgets/box_input_field.dart';
-import '../domain/credential.dart';
 import '../domain/reset_password_data.dart';
-import '../infrastructures/authentication_cubit.dart';
 import '../infrastructures/generate_reset_password_code_cubit.dart';
 
 class PasswordResetPage extends StatefulWidget {

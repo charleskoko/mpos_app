@@ -8,7 +8,6 @@ import 'package:mpos_app/src/shared/app_colors.dart';
 import '../../src/widgets/box_button.dart';
 import '../../src/widgets/box_input_field.dart';
 import '../domain/credential.dart';
-import '../infrastructures/authentication_cubit.dart';
 import '../infrastructures/generate_reset_password_code_cubit.dart';
 
 class PasswordForgotPage extends StatefulWidget {

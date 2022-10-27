@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/src/shared/app_colors.dart';
 
+import '../../core/shared/error_messages.dart';
 import '../../src/widgets/box_button.dart';
 import '../../src/widgets/box_input_field.dart';
 import '../domain/credential.dart';
@@ -38,11 +39,10 @@ class _PasswordForgotPageState extends State<PasswordForgotPage> {
           if (generateResetPasswordCodeState
               is GenerateResetPasswordCodeError) {
             Fluttertoast.showToast(
-              gravity: ToastGravity.TOP,
-              backgroundColor: Colors.red,
-              msg:
-                  generateResetPasswordCodeState.authenticationError.getMessage,
-            );
+                gravity: ToastGravity.TOP,
+                backgroundColor: Colors.red,
+                msg: ErrorMessages.errorMessages(generateResetPasswordCodeState
+                    .authenticationError.getMessage));
           }
         },
         child: ListView(

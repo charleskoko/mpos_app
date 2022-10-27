@@ -249,7 +249,7 @@ class _SettingsPage extends State<SettingsPage> {
                         padding: const EdgeInsets.only(left: 16),
                         alignment: Alignment.centerLeft,
                         child: const Text(
-                          'Deconnection',
+                          'Déconnection',
                           style: TextStyle(
                             fontFamily: 'Poppins-Regular',
                             color: Color(0xFF010118),

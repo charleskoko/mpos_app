@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/core/shared/mixin_scaffold.dart';
 import '../../core/presentation/snack_bar.dart';
-import '../../core/shared/error_message.dart';
+import '../../core/shared/error_messages.dart';
 import '../../core/shared/mixin_validation.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_button.dart';
@@ -61,14 +61,11 @@ class _LoginPageState extends State<LoginPage>
             }
             if (authenticationState is AuthenticationNotValidated) {}
             if (authenticationState is AuthenticationFailed) {
-              String errorKey =
-                  ErrorMessage.determineMessageKey(authenticationState.message);
               buidSnackbar(
-                context: context,
-                backgroundColor: Colors.red,
-                text: ErrorMessage.errorMessages[errorKey] ??
-                    'Une erreur a eu lieu. Veuillez réessayer',
-              );
+                  context: context,
+                  backgroundColor: Colors.red,
+                  text:
+                      ErrorMessages.errorMessages(authenticationState.message));
             }
           },
           child: ListView(

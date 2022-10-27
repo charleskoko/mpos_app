@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ionicons/ionicons.dart';
 import '../../core/presentation/snack_bar.dart';
-import '../../core/shared/error_message.dart';
+import '../../core/shared/error_messages.dart';
 import '../../core/shared/mixin_scaffold.dart';
 import '../../core/shared/mixin_validation.dart';
 import '../../src/shared/app_colors.dart';
@@ -34,14 +34,11 @@ class _AddProductPageState extends State<AddProductPage>
         BlocListener<StoreProductCubit, StoreProductState>(
           listener: (context, storeProductState) {
             if (storeProductState is StoreProductError) {
-              print('${storeProductState.message}');
-              String errorKey = ErrorMessage.determineMessageKey(
-                  storeProductState.message ?? '');
+              ;
               Fluttertoast.showToast(
                 gravity: ToastGravity.TOP,
                 backgroundColor: Colors.red,
-                msg: ErrorMessage.errorMessages[errorKey] ??
-                    'Une erreur a eu lieu. Veuillez réessayer',
+                msg: ErrorMessages.errorMessages(storeProductState.message!),
               );
             }
             if (storeProductState is StoreProductStored) {

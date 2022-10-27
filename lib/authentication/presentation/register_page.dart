@@ -3,9 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/authentication/domain/credential.dart';
-
 import '../../core/presentation/snack_bar.dart';
-import '../../core/shared/error_message.dart';
+import '../../core/shared/error_messages.dart';
 import '../../core/shared/mixin_scaffold.dart';
 import '../../core/shared/mixin_validation.dart';
 import '../../src/shared/app_colors.dart';
@@ -64,6 +63,13 @@ class _RegisterPageState extends State<RegisterPage>
               context.goNamed('main', params: {'tab': '0'});
             }
             if (authenticationState is AuthenticationNotValidated) {}
+            if (authenticationState is AuthenticationFailed) {
+              buidSnackbar(
+                  context: context,
+                  backgroundColor: Colors.red,
+                  text:
+                      ErrorMessages.errorMessages(authenticationState.message));
+            }
           },
           child: ListView(
             shrinkWrap: true,
@@ -131,7 +137,7 @@ class _RegisterPageState extends State<RegisterPage>
                           BoxInputField.text(
                             icon: Ionicons.person_outline,
                             controller: nameTextFieldController,
-                            labelText: 'Nom du maquis',
+                            labelText: "Nom de l'établissement",
                             validator: (text) {
                               return isTextfieldNotEmpty(text)
                                   ? null

@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import '../../core/presentation/snack_bar.dart';
-import '../../core/shared/error_message.dart';
+import '../../core/shared/error_messages.dart';
 import '../../core/shared/mixin_validation.dart';
 import '../../not_processed_order/shared/cubit/delete_not_processed_order_cubit.dart';
 import '../../src/shared/app_colors.dart';
@@ -187,11 +187,9 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
           listener: (context, storeOrderState) {
             if (storeOrderState is StoreOrderError) {
               buidSnackbar(
-                context: context,
-                backgroundColor: Colors.red,
-                text: ErrorMessage.errorMessages[storeOrderState.message] ??
-                    'Une erreur a eu lieu. Veuillez réessayer',
-              );
+                  context: context,
+                  backgroundColor: Colors.red,
+                  text: ErrorMessages.errorMessages(storeOrderState.message!));
             }
           },
           child: BlocBuilder<SelectedOrderItemCubit, SelectedOrderItemState>(

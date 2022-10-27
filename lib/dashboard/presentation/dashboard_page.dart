@@ -8,7 +8,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/custom_calendar/infrastructures/calendar_cubit.dart';
 import '../../authentication/infrastructures/authentication_cubit.dart';
 import '../../core/presentation/snack_bar.dart';
-import '../../core/shared/error_message.dart';
+import '../../core/shared/error_messages.dart';
 import '../../core/shared/time_formater.dart';
 import '../../invoices/shared/fetch_invoice_cubit.dart';
 import '../../src/shared/app_colors.dart';
@@ -87,9 +87,8 @@ class _DashboardPageState extends State<DashboardPage> {
                     buidSnackbar(
                       context: context,
                       backgroundColor: Colors.red,
-                      text: ErrorMessage
-                              .errorMessages[fetchInvoiceState.message] ??
-                          '',
+                      text: ErrorMessages.errorMessages(
+                          fetchInvoiceState.message!),
                     );
                   }
                 },

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/authentication/infrastructures/reset_password_cubit.dart';
 import 'package:mpos_app/src/shared/app_colors.dart';
-
+import '../../core/shared/error_messages.dart';
 import '../../core/shared/mixin_scaffold.dart';
 import '../../core/shared/mixin_validation.dart';
 import '../../src/widgets/box_button.dart';
@@ -64,10 +63,10 @@ class _PasswordResetPageState extends State<PasswordResetPage>
           }
           if (resetPasswordState is ResetPasswordError) {
             Fluttertoast.showToast(
-              gravity: ToastGravity.TOP,
-              backgroundColor: Colors.red,
-              msg: resetPasswordState.authenticationError.getMessage,
-            );
+                gravity: ToastGravity.TOP,
+                backgroundColor: Colors.red,
+                msg: ErrorMessages.errorMessages(
+                    resetPasswordState.authenticationError.getMessage));
           }
         },
         child: ListView(

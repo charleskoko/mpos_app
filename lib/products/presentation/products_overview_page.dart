@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
-import '../../core/shared/error_message.dart';
 import '../../orders/shared/cubit/selected_order_item_cubit.dart';
 import '../../orders/shared/cubit/store_order_cubit.dart';
 import '../../src/shared/app_colors.dart';
@@ -242,8 +241,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           }
           if (fetchProductState is FetchProductsError) {
             return BoxMessage(
-              message:
-                  '${ErrorMessage.errorMessages['${fetchProductState.message}']}',
+              message: '${fetchProductState.message}}',
             );
           }
           return const BoxMessage(message: '');

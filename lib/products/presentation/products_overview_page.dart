@@ -66,7 +66,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                       showBottomSheet(
                         context: context,
                         builder: (context) => Container(
-                          height: 200,
+                          height: MediaQuery.of(context).size.height,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             border: Border.all(color: kPrimaryColor),

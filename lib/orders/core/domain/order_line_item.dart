@@ -18,7 +18,7 @@ class OrderLineItem {
     id = jsonObject["id"].toString();
     product = Product.fromJson(jsonObject['product']);
     price = double.parse(jsonObject["price"].toString());
-    amount = double.parse(jsonObject['amount']);
+    amount = double.parse(jsonObject['amount'].toString());
     total = price * amount;
   }
 

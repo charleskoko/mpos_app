@@ -10,7 +10,7 @@ class Environment {
     //   }
     //   return ".env.development";
     // }
-    return ".env.production";
+    return ".env.development";
   }
 
   static String get apiUrl {

@@ -1,6 +1,7 @@
 class ErrorMessages {
   static String errorMessages(String key) {
     var stuff = Map.from({
+      "Unauthenticated.": "Votre cession a expiré, veuillez vous reconnecter.",
       "name_required": "Le nom de l'établissement est obligatoire",
       "name_string": "Veuillez réesayer avec un nom approprié",
       "name_max":

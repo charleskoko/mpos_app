@@ -12,6 +12,7 @@ class BoxInputField extends StatelessWidget {
   final IconButton? showPassword;
   final String? Function(String value)? validator;
   final bool isPasswordTextField;
+  final bool? autofocus;
   final TextInputType? textInputType;
 
   BoxInputField.text({
@@ -22,6 +23,7 @@ class BoxInputField extends StatelessWidget {
     this.hintText,
     this.validator,
   })  : isPasswordTextField = false,
+        autofocus = false,
         textInputType = TextInputType.text;
 
   BoxInputField.password({
@@ -32,7 +34,8 @@ class BoxInputField extends StatelessWidget {
     this.isPasswordTextField = true,
     this.hintText,
     this.validator,
-  }) : textInputType = TextInputType.text;
+  })  : textInputType = TextInputType.text,
+        autofocus = false;
 
   BoxInputField.email({
     this.controller,
@@ -41,6 +44,7 @@ class BoxInputField extends StatelessWidget {
     this.showPassword,
     this.hintText,
     this.validator,
+    this.autofocus,
   })  : isPasswordTextField = false,
         textInputType = TextInputType.emailAddress;
 
@@ -50,6 +54,7 @@ class BoxInputField extends StatelessWidget {
     this.icon,
     this.showPassword,
     this.hintText,
+    this.autofocus,
     this.validator,
   })  : isPasswordTextField = false,
         textInputType = TextInputType.number;
@@ -57,6 +62,7 @@ class BoxInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: autofocus ?? false,
       textAlignVertical: TextAlignVertical.center,
       cursorColor: kPrimaryColor,
       controller: controller,

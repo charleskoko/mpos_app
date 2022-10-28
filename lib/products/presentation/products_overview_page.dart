@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
+import '../../core/shared/error_messages.dart';
 import '../../orders/shared/cubit/selected_order_item_cubit.dart';
 import '../../orders/shared/cubit/store_order_cubit.dart';
 import '../../src/shared/app_colors.dart';
@@ -66,47 +67,113 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                       showBottomSheet(
                         context: context,
                         builder: (context) => Container(
-                          height: MediaQuery.of(context).size.height,
-                          decoration: BoxDecoration(
+                          height:
+                              MediaQuery.of(context).copyWith().size.height *
+                                  0.75,
+                          decoration: const BoxDecoration(
                             color: Colors.white,
-                            border: Border.all(color: kPrimaryColor),
-                            borderRadius: const BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                               topRight: Radius.circular(10),
                               topLeft: Radius.circular(10),
                             ),
                           ),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.circular(10)),
-                                margin: const EdgeInsets.only(top: 5),
-                                width: 100,
-                                height: 5,
+                              // Container(
+                              //   decoration: BoxDecoration(
+                              //       color: Colors.grey,
+                              //       borderRadius: BorderRadius.circular(10)),
+                              //   margin: const EdgeInsets.only(top: 5),
+                              //   width: 100,
+                              //   height: 5,
+                              // ),
+                              const Text(
+                                'Comment souhaitez-vous recevoir votre reçu?',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins-light',
+                                  fontSize: 26,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Center(
-                                      child: Icon(
-                                        Ionicons.checkmark_circle,
-                                        size: 100,
-                                        color: kPrimaryColor,
-                                      ),
-                                    ),
-                                    Text(
-                                      "Paiement réussi",
+                              const SizedBox(height: 20),
+                              GestureDetector(
+                                onTap: () {
+                                  context.goNamed('sendReceiptByEmail',
+                                      params: {
+                                        'tab': '2',
+                                        'orderId': storeOrderState.order.id!
+                                      });
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 16),
+                                  height: 60,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF262262),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      'E-mail',
                                       style: TextStyle(
                                         fontFamily: 'Poppins-Bold',
-                                        fontSize: 18,
+                                        color: Colors.white,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                    )
-                                  ],
+                                    ),
+                                  ),
                                 ),
-                              )
+                              ),
+                              const SizedBox(height: 20),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 16),
+                                  height: 60,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF262262),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      'Aucun reçu',
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins-Bold',
+                                        color: Colors.white,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              // Column(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   children: const [
+                              //     Center(
+                              //       child: Icon(
+                              //         Ionicons.checkmark_circle,
+                              //         size: 100,
+                              //         color: kPrimaryColor,
+                              //       ),
+                              //     ),
+                              //     Text(
+                              //       "Paiement réussi",
+                              //       style: TextStyle(
+                              //         fontFamily: 'Poppins-Bold',
+                              //         fontSize: 18,
+                              //         fontWeight: FontWeight.bold,
+                              //       ),
+                              //     )
+                              //   ],
+                              // )
                             ],
                           ),
                         ),
@@ -241,8 +308,8 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           }
           if (fetchProductState is FetchProductsError) {
             return BoxMessage(
-              message: '${fetchProductState.message}}',
-            );
+                message:
+                    ErrorMessages.errorMessages(fetchProductState.message!));
           }
           return const BoxMessage(message: '');
         },

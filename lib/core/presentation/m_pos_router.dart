@@ -9,6 +9,7 @@ import '../../not_processed_order/presentation/show_not_processed_order_page.dar
 import '../../orders/presentation/order_details.dart';
 import '../../orders/presentation/order_verification_page.dart';
 import '../../orders/presentation/save_order_status.dart';
+import '../../orders/presentation/send_receipt_by_email_page.dart';
 import '../../products/presentation/add_product_page.dart';
 import '../../products/presentation/edit_product_page.dart';
 import '../../products/presentation/manage_product_page.dart';
@@ -100,6 +101,17 @@ class MposRouter {
                 key: state.pageKey,
                 child: const ShowNotProcessedOrderPage(),
               ),
+            ),
+            GoRoute(
+              name: 'sendReceiptByEmail',
+              path: 'sendReceiptByEmail/:orderId',
+              pageBuilder: (context, state) {
+                return MaterialPage(
+                  key: state.pageKey,
+                  child:
+                      SendReceiptByEmailPage(orderId: state.params['orderId']!),
+                );
+              },
             ),
             GoRoute(
                 name: 'manageItems',

@@ -12,6 +12,7 @@ import '../../not_processed_order/core/infrastructure/not_processed_order_local_
 import '../../orders/core/infrastructure/order_remote_service.dart';
 import '../../products/core/infrastructure/product_local_service.dart';
 import '../../products/core/infrastructure/product_remote_service.dart';
+import '../../receipt/send_receipt_by_email/infrastructure/send_receipt_by_email_remote_service.dart';
 import '../infrastructures/blocs_provider.dart';
 import '../infrastructures/repositories_provider.dart';
 import '../infrastructures/sembast_database.dart';
@@ -40,6 +41,7 @@ class _MposState extends State<Mpos> {
   late InvoiceLocalService _invoiceLocalService;
   late NotProcessedOrderLocalservice _notProcessedOrderLocalservice;
   late CalendarService _calendarService;
+  late SendReceiptByEmailRemoteService _sendReceiptByEmailService;
 
   @override
   void initState() {
@@ -59,6 +61,7 @@ class _MposState extends State<Mpos> {
     _notProcessedOrderLocalservice =
         NotProcessedOrderLocalservice(widget.sembastDatabase);
     _calendarService = CalendarService();
+    _sendReceiptByEmailService = SendReceiptByEmailRemoteService(_dio);
     super.initState();
   }
 
@@ -67,17 +70,17 @@ class _MposState extends State<Mpos> {
     return MultiRepositoryProvider(
       providers: [
         ...RepositoriesProvider.init(
-          context: context,
-          authenticationRemoteService: _authenticationRemoteService,
-          authenticationLocalService: _authenticationLocalService,
-          productRemoteService: _productRemoteService,
-          productLocalService: _productLocalService,
-          orderRemoteService: _orderRemoteService,
-          invoiceRemoteService: _invoiceRemoteService,
-          invoiceLocalservice: _invoiceLocalService,
-          notProcessedOrderLocalservice: _notProcessedOrderLocalservice,
-          calendarService: _calendarService,
-        )
+            context: context,
+            authenticationRemoteService: _authenticationRemoteService,
+            authenticationLocalService: _authenticationLocalService,
+            productRemoteService: _productRemoteService,
+            productLocalService: _productLocalService,
+            orderRemoteService: _orderRemoteService,
+            invoiceRemoteService: _invoiceRemoteService,
+            invoiceLocalservice: _invoiceLocalService,
+            notProcessedOrderLocalservice: _notProcessedOrderLocalservice,
+            calendarService: _calendarService,
+            sendReceiptByEmailService: _sendReceiptByEmailService)
       ],
       child: MultiBlocProvider(
         providers: [...BlocsProvider.init()],

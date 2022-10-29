@@ -60,124 +60,13 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                 BlocListener<StoreOrderCubit, StoreOrderState>(
                   listener: (context, storeOrderState) {
                     if (storeOrderState is StoreOrderLoaded) {
-                      Navigator.pop(context);
+                      // context.pushNamed('receiptOptions', params: {
+                      //   'tab': '2',
+                      //   'orderId': storeOrderState.order.id!
+                      // });
                       context
                           .read<SelectedOrderItemCubit>()
                           .cancelCurrentSelection(isOrderCanceled: false);
-                      showBottomSheet(
-                        context: context,
-                        builder: (context) => Container(
-                          height:
-                              MediaQuery.of(context).copyWith().size.height *
-                                  0.75,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10),
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Container(
-                              //   decoration: BoxDecoration(
-                              //       color: Colors.grey,
-                              //       borderRadius: BorderRadius.circular(10)),
-                              //   margin: const EdgeInsets.only(top: 5),
-                              //   width: 100,
-                              //   height: 5,
-                              // ),
-                              const Text(
-                                'Comment souhaitez-vous recevoir votre reçu?',
-                                style: TextStyle(
-                                  fontFamily: 'Poppins-light',
-                                  fontSize: 26,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 20),
-                              GestureDetector(
-                                onTap: () {
-                                  context.goNamed('sendReceiptByEmail',
-                                      params: {
-                                        'tab': '2',
-                                        'orderId': storeOrderState.order.id!
-                                      });
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 16),
-                                  height: 60,
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF262262),
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'E-mail',
-                                      style: TextStyle(
-                                        fontFamily: 'Poppins-Bold',
-                                        color: Colors.white,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 16),
-                                  height: 60,
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF262262),
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'Aucun reçu',
-                                      style: TextStyle(
-                                        fontFamily: 'Poppins-Bold',
-                                        color: Colors.white,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              // Column(
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   children: const [
-                              //     Center(
-                              //       child: Icon(
-                              //         Ionicons.checkmark_circle,
-                              //         size: 100,
-                              //         color: kPrimaryColor,
-                              //       ),
-                              //     ),
-                              //     Text(
-                              //       "Paiement réussi",
-                              //       style: TextStyle(
-                              //         fontFamily: 'Poppins-Bold',
-                              //         fontSize: 18,
-                              //         fontWeight: FontWeight.bold,
-                              //       ),
-                              //     )
-                              //   ],
-                              // )
-                            ],
-                          ),
-                        ),
-                      );
                     }
                   },
                 ),

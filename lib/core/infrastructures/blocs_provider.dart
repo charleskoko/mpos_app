@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mpos_app/orders/shared/cubit/fetch_done_orders_cubit.dart';
 import 'package:mpos_app/orders/shared/cubit/order_details_cubit.dart';
 import 'package:mpos_app/products/shared/cubit/show_product/show_product_cubit.dart';
-
 import '../../authentication/infrastructures/authentication_cubit.dart';
 import '../../authentication/infrastructures/authentication_repository.dart';
 import '../../authentication/infrastructures/generate_reset_password_code_cubit.dart';
@@ -25,6 +24,8 @@ import '../../products/shared/cubit/delete_product/delete_product_cubit.dart';
 import '../../products/shared/cubit/fetch_product/fetch_products_cubit.dart';
 import '../../products/shared/cubit/store_product/store_product_cubit.dart';
 import '../../products/shared/cubit/update_product/update_product_cubit.dart';
+import '../../receipt/send_receipt_by_email/infrastructure/send_receipt_by_email_repository_impl.dart';
+import '../../receipt/send_receipt_by_email/infrastructure/send_receipt_cubit.dart';
 
 class BlocsProvider {
   static List init() {
@@ -121,6 +122,10 @@ class BlocsProvider {
       BlocProvider<ResetPasswordCubit>(
         create: (context) =>
             ResetPasswordCubit(context.read<AuthenticationRepository>()),
+      ),
+      BlocProvider<SendReceiptCubit>(
+        create: (context) =>
+            SendReceiptCubit(context.read<SendReceiptByEmailRepositoryImpl>()),
       ),
     ];
   }

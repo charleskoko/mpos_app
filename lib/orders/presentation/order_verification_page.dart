@@ -87,7 +87,12 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
                   msg: "l'action a été éffectué avec succès",
                 );
                 if (selectedOrderItemState.selectedOrderItem?.isEmpty ?? true) {
-                  context.goNamed('main', params: {'tab': '2'});
+                  var state = context.read<StoreOrderCubit>().state;
+                  if (state is StoreOrderLoaded) {
+                    String orderId = state.order.id!;
+                    context.goNamed('receiptOptions',
+                        params: {'tab': '2', 'orderId': orderId});
+                  }
                 }
               }
             },

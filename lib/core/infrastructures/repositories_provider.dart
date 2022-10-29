@@ -15,6 +15,8 @@ import '../../orders/core/infrastructure/order_repository.dart';
 import '../../products/core/infrastructure/product_local_service.dart';
 import '../../products/core/infrastructure/product_remote_service.dart';
 import '../../products/core/infrastructure/product_repository.dart';
+import '../../receipt/send_receipt_by_email/infrastructure/send_receipt_by_email_remote_service.dart';
+import '../../receipt/send_receipt_by_email/infrastructure/send_receipt_by_email_repository_impl.dart';
 
 class RepositoriesProvider {
   static List init({
@@ -28,6 +30,7 @@ class RepositoriesProvider {
     required InvoiceLocalService invoiceLocalservice,
     required NotProcessedOrderLocalservice notProcessedOrderLocalservice,
     required CalendarService calendarService,
+    required SendReceiptByEmailRemoteService sendReceiptByEmailService,
   }) {
     return [
       RepositoryProvider<SembastDatabase>(
@@ -60,6 +63,11 @@ class RepositoriesProvider {
       RepositoryProvider<CalendarRepositoryImpl>(
         create: (context) => CalendarRepositoryImpl(
           calendarService,
+        ),
+      ),
+      RepositoryProvider<SendReceiptByEmailRepositoryImpl>(
+        create: (context) => SendReceiptByEmailRepositoryImpl(
+          sendReceiptByEmailService,
         ),
       ),
     ];

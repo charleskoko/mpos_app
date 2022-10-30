@@ -3,7 +3,7 @@ class Product {
   String? label;
   double? salePrice;
   double? purchasePrice;
-  int? isDeleted;
+  bool? isDeleted;
 
   Product({
     this.id,

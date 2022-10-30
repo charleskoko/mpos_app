@@ -98,7 +98,7 @@ class ManageItemsPageState extends State<ManageItemsPage> {
                     return ListView.builder(
                       itemCount: fetchProductState.fresh.entity.length,
                       itemBuilder: (context, index) {
-                        return (products[index].isDeleted == 0)
+                        return (products[index].isDeleted == false)
                             ? Container(
                                 margin: const EdgeInsets.only(top: 15),
                                 height: 87,

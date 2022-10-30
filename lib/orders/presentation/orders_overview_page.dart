@@ -52,7 +52,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
           elevation: 0,
           backgroundColor: const Color(0xFFF5F5F5),
           title: const Text(
-            'COMMANDES',
+            'Transactions',
             style: TextStyle(
               fontSize: 24,
               fontFamily: 'Poppins-Regular',
@@ -97,6 +97,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                 Container(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 26,
+                    vertical: 10,
                   ),
                   padding: const EdgeInsets.all(
                     3,
@@ -163,7 +164,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                               child: (notProcessedOrders.isEmpty)
                                   ? const BoxMessage(
                                       message:
-                                          "Vous n'avez pas de commande en cours",
+                                          "Vous n'avez pas ticket sauvegardés",
                                     )
                                   : ListView.builder(
                                       itemCount: notProcessedOrders.length,
@@ -203,7 +204,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                             width: MediaQuery.of(context)
                                                 .size
                                                 .width,
-                                            height: 116,
+                                            height: 90,
                                             child: Stack(
                                               children: [
                                                 Positioned(
@@ -225,10 +226,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                                   top: 20,
                                                   right: 10,
                                                   child: Text(
-                                                    DateFormat('HH:mm').format(
-                                                        notProcessedOrders[
-                                                                index]
-                                                            .createdAt!),
+                                                    '${DateFormat('dd-mm-yyyy').format(notProcessedOrders[index].createdAt!)} à ${DateFormat('HH:mm').format(notProcessedOrders[index].createdAt!)}',
                                                     style: const TextStyle(
                                                       fontFamily:
                                                           'Poppins-Regular',
@@ -240,7 +238,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                                   top: 65,
                                                   left: 10,
                                                   child: Text(
-                                                    "Nombre d'article ${notProcessedOrders[index].selectedOrderItem!.length}",
+                                                    "${notProcessedOrders[index].selectedOrderItem!.length} article(s) ",
                                                     style: const TextStyle(
                                                       fontFamily:
                                                           'Poppins-Regular',
@@ -251,47 +249,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                                   ),
                                                 ),
                                                 Positioned(
-                                                  top: 65,
-                                                  left: 160,
-                                                  child: Text(
-                                                    "${OrderProduct.getOrderTotalFromMapList(notProcessedOrders[index].selectedOrderItem!)} FCFA",
-                                                    style: const TextStyle(
-                                                      fontFamily:
-                                                          'Poppins-Regular',
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Positioned(
                                                   top: 59,
-                                                  right: 10,
-                                                  child: Container(
-                                                      width: 70,
-                                                      height: 28,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(30),
-                                                        color: kPrimaryColor,
-                                                      ),
-                                                      child: const Center(
-                                                        child: Text(
-                                                          'En cours',
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                'Poppins-Regular',
-                                                            fontSize: 12,
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                          ),
-                                                        ),
-                                                      )),
-                                                ),
-                                                Positioned(
-                                                  bottom: 5,
                                                   right: 10,
                                                   child: GestureDetector(
                                                     onTap: () {
@@ -437,7 +395,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                                       ),
                                                     ),
                                                   ),
-                                                )
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -463,7 +421,8 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                 (a, b) => b.createdAt!.compareTo(a.createdAt!));
                             return (fetchDoneOrdersState.fresh.entity.isEmpty)
                                 ? const BoxMessage(
-                                    message: "Vous n'avez pas de commande payé",
+                                    message:
+                                        "Vous n'avez pas de ventes enregistrées",
                                   )
                                 : Container(
                                     margin: const EdgeInsets.only(
@@ -481,7 +440,12 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                                 .orderDetails(orders[index]);
                                             context.goNamed(
                                               'orderDetails',
-                                              params: {'tab': '1'},
+                                              params: {
+                                                'tab': '1',
+                                                'total': orders[index]
+                                                    .getOrderTotalFromListOrderLineItems
+                                                    .toString()
+                                              },
                                             );
                                           },
                                           child: Container(
@@ -503,7 +467,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                             width: MediaQuery.of(context)
                                                 .size
                                                 .width,
-                                            height: 116,
+                                            height: 90,
                                             child: Stack(
                                               children: [
                                                 Positioned(
@@ -525,9 +489,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                                   top: 20,
                                                   right: 10,
                                                   child: Text(
-                                                    DateFormat('HH:mm').format(
-                                                        orders[index]
-                                                            .createdAt!),
+                                                    '${DateFormat('dd-mm-yyyy').format(orders[index].createdAt!)} à ${DateFormat('HH:mm').format(orders[index].createdAt!)}',
                                                     style: const TextStyle(
                                                       fontFamily:
                                                           'Poppins-Regular',
@@ -536,7 +498,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                                   ),
                                                 ),
                                                 Positioned(
-                                                  top: 65,
+                                                  top: 50,
                                                   left: 10,
                                                   child: Text(
                                                     "Nombre d'article ${orders[index].orderLineItems!.length}",
@@ -550,46 +512,19 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                                   ),
                                                 ),
                                                 Positioned(
-                                                  top: 65,
-                                                  left: 160,
+                                                  top: 50,
+                                                  right: 10,
                                                   child: Text(
                                                     "${orders[index].getOrderTotalFromListOrderLineItems} FCFA",
                                                     style: const TextStyle(
                                                       fontFamily:
                                                           'Poppins-Regular',
-                                                      fontSize: 12,
+                                                      fontSize: 18,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
                                                   ),
                                                 ),
-                                                Positioned(
-                                                  top: 59,
-                                                  right: 10,
-                                                  child: Container(
-                                                      width: 68,
-                                                      height: 28,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(30),
-                                                        color: const Color(
-                                                            0xFF41D61C),
-                                                      ),
-                                                      child: const Center(
-                                                        child: Text(
-                                                          'Payé',
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                'Poppins-Regular',
-                                                            fontSize: 12,
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                          ),
-                                                        ),
-                                                      )),
-                                                )
                                               ],
                                             ),
                                           ),

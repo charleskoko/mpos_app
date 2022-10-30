@@ -57,13 +57,13 @@ class _MainPage extends State<MainPage> {
               padding: EdgeInsets.only(top: 19, bottom: 12.11),
               child: Icon(Ionicons.reader_outline, size: 30),
             ),
-            label: 'Commandes',
+            label: 'Transactions',
           ),
           BottomNavigationBarItem(
             icon: Padding(
                 padding: EdgeInsets.only(top: 19, bottom: 12.11),
                 child: Icon(Ionicons.receipt_outline, size: 30)),
-            label: 'Articles',
+            label: 'Caisse',
           ),
           BottomNavigationBarItem(
             icon: Padding(

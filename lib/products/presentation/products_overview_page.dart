@@ -41,7 +41,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
         elevation: 0,
         backgroundColor: Colors.white,
         title: const Text(
-          'ARTICLES',
+          'Caisse',
           style: TextStyle(
             fontSize: 24,
             fontFamily: 'Poppins-Regular',
@@ -252,7 +252,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                           children: const [
                             Center(
                               child: Text(
-                                'Caisse',
+                                'Continuer',
                                 style: TextStyle(
                                   fontFamily: 'Poppins-Light',
                                   color: Colors.white,

@@ -30,9 +30,9 @@ class _SettingsPage extends State<SettingsPage> {
         elevation: 0,
         backgroundColor: const Color(0xFFF5F5F5),
         title: const Text(
-          'PARAMÈTRES',
+          'Paramètres',
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 22,
             fontFamily: 'Poppins-Regular',
             color: kPrimaryColor,
             fontWeight: FontWeight.bold,
@@ -273,7 +273,7 @@ class _SettingsPage extends State<SettingsPage> {
               Container(
                 child: const Center(
                   child: Text(
-                    'Version 1.0.1 - beta',
+                    'Version 2.0.0 - beta',
                     style: TextStyle(
                       fontFamily: 'Poppins-Regular',
                       fontSize: 13,

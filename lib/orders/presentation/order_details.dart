@@ -8,7 +8,8 @@ import '../../src/shared/app_colors.dart';
 import '../shared/cubit/order_details_cubit.dart';
 
 class OrderDetails extends StatefulWidget {
-  const OrderDetails({Key? key}) : super(key: key);
+  final double total;
+  const OrderDetails({Key? key, required this.total}) : super(key: key);
 
   @override
   State<OrderDetails> createState() => _OrderDetailsState();
@@ -20,39 +21,19 @@ class _OrderDetailsState extends State<OrderDetails> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'DETAILS CMD',
-          style: TextStyle(
-            fontSize: 24,
-            fontFamily: 'Poppins-Regular',
-            color: kPrimaryColor,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        leadingWidth: 80,
-        leading: Container(
-          margin: const EdgeInsets.only(left: 21, top: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(11),
-            border: Border.all(color: Color(0xFFEAEAEA)),
-          ),
-          height: 41,
-          child: Center(
-            child: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                Ionicons.chevron_back,
-                color: kPrimaryColor,
-              ),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: Text(
+            'Vente de ${widget.total} FCFA',
+            style: const TextStyle(
+              fontSize: 22,
+              fontFamily: 'Poppins-Regular',
+              color: kPrimaryColor,
+              fontWeight: FontWeight.bold,
             ),
           ),
-        ),
-      ),
+          leading: const BackButton(color: kPrimaryColor)),
       body: BlocBuilder<OrderDetailsCubit, OrderDetailsState>(
         builder: (context, orderDetailsState) {
           List<OrderLineItem>? orderItems =
@@ -65,7 +46,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   left: 21,
                 ),
                 child: const Text(
-                  'Commande',
+                  'Articles',
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'Poppins-Regular',
@@ -75,75 +56,74 @@ class _OrderDetailsState extends State<OrderDetails> {
               ),
               Container(
                 margin: const EdgeInsets.only(left: 16, right: 16, top: 10),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: orderItems!.length,
-                  itemBuilder: (BuildContext context, index) {
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 14),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 17,
-                        vertical: 18,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade300,
-                            blurRadius: 2,
-                            spreadRadius: 2,
-                            offset: const Offset(1, 2), // Shadow position
-                          ),
-                        ],
-                      ),
-                      width: MediaQuery.of(context).size.width,
-                      height: 78,
-                      child: Column(
-                        children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              '${orderItems[index].product?.label}',
-                              style: const TextStyle(
-                                fontFamily: 'Poppins-Regular',
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
+                child: Wrap(
+                  children: [
+                    for (OrderLineItem orderLineItem in orderItems!)
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 14),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 17,
+                          vertical: 18,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade300,
+                              blurRadius: 2,
+                              spreadRadius: 2,
+                              offset: const Offset(1, 2), // Shadow position
+                            ),
+                          ],
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        height: 78,
+                        child: Column(
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                '${orderLineItem.product?.label}',
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins-Regular',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    '(${orderItems[index].amount}) x ${orderItems[index].price} FCFA',
-                                    style: const TextStyle(
-                                      fontSize: 12,
+                            const SizedBox(height: 5),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '(${orderLineItem.amount}) x ${orderLineItem.price} FCFA',
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    '${orderItems[index].amount * orderItems[index].price} FCFA',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
+                                Expanded(
+                                  child: Container(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      '${orderLineItem.amount * orderLineItem.price} FCFA',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    );
-                  },
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                  ],
                 ),
               ),
               Container(

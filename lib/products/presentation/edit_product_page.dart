@@ -71,26 +71,12 @@ class _UpdateProductPageState extends State<UpdateProductPage>
           appBar: AppBar(
             centerTitle: true,
             elevation: 0,
-            leading: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                margin: const EdgeInsets.only(left: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey.shade300),
-                ),
-                child: const Center(
-                  child: Icon(Ionicons.chevron_back, color: kPrimaryColor),
-                ),
-              ),
-            ),
+            leading: const BackButton(color: kPrimaryColor),
             backgroundColor: const Color(0xFFF5F5F5),
             title: Text(
               '${showProductState.product?.label!}',
               style: const TextStyle(
-                fontSize: 24,
+                fontSize: 22,
                 fontFamily: 'Poppins-Regular',
                 color: kPrimaryColor,
                 fontWeight: FontWeight.bold,

@@ -76,11 +76,14 @@ class MposRouter {
           routes: [
             GoRoute(
               name: 'orderDetails',
-              path: 'orderDetails',
-              pageBuilder: (context, state) => MaterialPage(
-                key: state.pageKey,
-                child: OrderDetails(),
-              ),
+              path: 'orderDetails/:total',
+              pageBuilder: (context, state) {
+                final double? total = double.tryParse(state.params['total']!);
+                return MaterialPage(
+                  key: state.pageKey,
+                  child: OrderDetails(total: total!),
+                );
+              },
             ),
             GoRoute(
               name: 'orderVerification',

@@ -31,9 +31,9 @@ class _SaveNewTicketPageState extends State<SaveNewTicketPage>
         elevation: 0,
         backgroundColor: Colors.white,
         title: const Text(
-          'NOUVEAU TICKET',
+          'Nouveau ticket',
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 22,
             fontFamily: 'Poppins-Regular',
             color: kPrimaryColor,
             fontWeight: FontWeight.bold,

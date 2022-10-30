@@ -239,7 +239,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                         left: 9,
                                         bottom: 15,
                                         child: Text(
-                                          'Commandes',
+                                          'Transactions',
                                           style: TextStyle(
                                             fontFamily: 'Poppins-Regular',
                                             fontSize: 12,

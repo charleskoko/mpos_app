@@ -37,37 +37,15 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
         elevation: 0,
         backgroundColor: Colors.white,
         title: const Text(
-          'CAISSE',
+          'Vente en cours',
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 22,
             fontFamily: 'Poppins-Regular',
             color: kPrimaryColor,
             fontWeight: FontWeight.bold,
           ),
         ),
-        leadingWidth: 80,
-        leading: Container(
-          margin: const EdgeInsets.only(
-            left: 21,
-            top: 10,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(11),
-            border: Border.all(color: const Color(0xFFEAEAEA)),
-          ),
-          height: 41,
-          child: Center(
-            child: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                Ionicons.chevron_back,
-                color: kPrimaryColor,
-              ),
-            ),
-          ),
-        ),
+        leading: const BackButton(color: kPrimaryColor),
         actions: [
           BlocListener<SelectedOrderItemCubit, SelectedOrderItemState>(
             listener: (context, selectedOrderItemState) {
@@ -407,6 +385,11 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
                                                                       .circular(
                                                                           15.0)),
                                                           content: Container(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 20,
+                                                                    right: 20),
                                                             width: 325,
                                                             height: 313,
                                                             child: Stack(
@@ -428,7 +411,15 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
                                                                 Container(
                                                                   margin: const EdgeInsets
                                                                           .only(
-                                                                      top: 35),
+                                                                      left: 21,
+                                                                      right:
+                                                                          21),
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      top: 35,
+                                                                      left: 21,
+                                                                      right:
+                                                                          21),
                                                                   width: MediaQuery.of(
                                                                           context)
                                                                       .size

@@ -14,6 +14,7 @@ import '../../not_processed_order/core/domain/not_processed_order.dart';
 import '../core/domain/order.dart';
 import '../shared/cubit/fetch_done_orders_cubit.dart';
 import '../shared/cubit/order_details_cubit.dart';
+import '../shared/cubit/selected_order_item_cubit.dart';
 import '../shared/cubit/store_order_cubit.dart';
 
 class OrdersOverviewPage extends StatefulWidget {
@@ -171,14 +172,16 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                         return GestureDetector(
                                           onTap: () {
                                             context
-                                                .read<
-                                                    ShowNotProcessedOrderCubit>()
-                                                .show(
-                                                    notProcessedOrders[index]);
-                                            context.goNamed(
-                                              'notProcessedOrderDetails',
-                                              params: {'tab': '1'},
-                                            );
+                                                .read<SelectedOrderItemCubit>()
+                                                .updateSelectedItemState(
+                                                  notProcessedOrders[index]
+                                                      .selectedOrderItem!,
+                                                  isNotProcessedOrder: true,
+                                                  notProcessedOrder:
+                                                      notProcessedOrders[index],
+                                                );
+                                            context.goNamed('main',
+                                                params: {'tab': '2'});
                                           },
                                           child: Container(
                                             margin: const EdgeInsets.only(
@@ -251,7 +254,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                                   top: 65,
                                                   left: 160,
                                                   child: Text(
-                                                    "XOF ${OrderProduct.getOrderTotalFromMapList(notProcessedOrders[index].selectedOrderItem!)}",
+                                                    "${OrderProduct.getOrderTotalFromMapList(notProcessedOrders[index].selectedOrderItem!)} FCFA",
                                                     style: const TextStyle(
                                                       fontFamily:
                                                           'Poppins-Regular',
@@ -362,7 +365,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                                                               const Center(
                                                                             child:
                                                                                 Text(
-                                                                              'Êtes-vous sûr de vouloir supprimer cette comannde?',
+                                                                              'Êtes-vous sûr de vouloir supprimer ce ticket?',
                                                                               style: TextStyle(
                                                                                 color: kPrimaryColor,
                                                                                 fontFamily: 'Poppins-bold',
@@ -550,7 +553,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                                   top: 65,
                                                   left: 160,
                                                   child: Text(
-                                                    "XOF ${orders[index].getOrderTotalFromListOrderLineItems}",
+                                                    "${orders[index].getOrderTotalFromListOrderLineItems} FCFA",
                                                     style: const TextStyle(
                                                       fontFamily:
                                                           'Poppins-Regular',

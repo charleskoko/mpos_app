@@ -5,17 +5,33 @@ import '../../src/shared/app_colors.dart';
 
 class ReceiptOptionPage extends StatefulWidget {
   final String orderId;
-  const ReceiptOptionPage({Key? key, required this.orderId}) : super(key: key);
+  final String sum;
+  final String cash;
+  const ReceiptOptionPage(
+      {Key? key, required this.orderId, required this.sum, required this.cash})
+      : super(key: key);
 
   @override
   State<ReceiptOptionPage> createState() => _ReceiptOptionPageState();
 }
 
 class _ReceiptOptionPageState extends State<ReceiptOptionPage> {
+  double? total;
+  double? cashPayed;
+
   @override
   void initState() {
-    print('here the page');
+    total = double.tryParse(widget.sum);
+    cashPayed = double.tryParse(widget.cash);
     super.initState();
+  }
+
+  String change() {
+    double? change = cashPayed! - total!;
+    if (change == 0) {
+      return 'Pas de monnaie';
+    }
+    return 'Rendre $change FCFA';
   }
 
   @override
@@ -51,22 +67,23 @@ class _ReceiptOptionPageState extends State<ReceiptOptionPage> {
                 },
               ),
             ),
+            const SizedBox(height: 5),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Pas de monnaie',
-                    style: TextStyle(
+                    change(),
+                    style: const TextStyle(
                       fontFamily: 'Poppins-bold',
                       fontSize: 28,
                     ),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 5),
                   Text(
-                    'sur 1599 FCFA',
-                    style: TextStyle(
+                    'sur $cashPayed FCFA',
+                    style: const TextStyle(
                       fontFamily: 'Poppins-light',
                       fontSize: 16,
                     ),
@@ -89,8 +106,7 @@ class _ReceiptOptionPageState extends State<ReceiptOptionPage> {
             const SizedBox(height: 20),
             GestureDetector(
               onTap: () {
-                Navigator.pop(context);
-                context.goNamed('sendReceiptByEmail',
+                context.pushNamed('sendReceiptByEmail',
                     params: {'tab': '2', 'orderId': widget.orderId});
               },
               child: Container(

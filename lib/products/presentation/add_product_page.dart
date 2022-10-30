@@ -49,7 +49,6 @@ class _AddProductPageState extends State<AddProductPage>
               );
               context.read<FetchProductsCubit>().fetchProductList();
               Navigator.pop(context);
-              print('product save and list updated');
               // Navigator.pop(context);
               // context.read<FetchProductsCubit>().fetchProductList();
               // labelTextFieldController.text = '';
@@ -89,10 +88,6 @@ class _AddProductPageState extends State<AddProductPage>
                         ),
                       );
                       context.read<StoreProductCubit>().storeProduct(product);
-                      // print({
-                      //   'label': productLabelController.text,
-                      //   'prix': int.tryParse(salePriceController.text)
-                      // });
                     }
                   }),
             );

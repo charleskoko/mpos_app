@@ -23,7 +23,6 @@ class _SaveOrderStatusState extends State<SaveOrderStatus> {
       body: BlocConsumer<StoreOrderCubit, StoreOrderState>(
         listener: (context, storeOrderState) {
           if (storeOrderState is StoreOrderLoaded) {
-            print('ici encore on est l,a');
             context.read<SelectedOrderItemCubit>().cancelCurrentSelection();
             Navigator.pop(context);
           }

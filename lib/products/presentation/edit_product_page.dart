@@ -108,9 +108,7 @@ class _UpdateProductPageState extends State<UpdateProductPage>
                   msg: "L'article a été modifié avec succès",
                 );
               }
-              if (updateProductState is UpdateProductError) {
-                print(updateProductState.message);
-              }
+              if (updateProductState is UpdateProductError) {}
             },
             child: ListView(
               shrinkWrap: true,

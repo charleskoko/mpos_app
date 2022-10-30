@@ -74,8 +74,7 @@ class _ShowNotProcessedOrderPageState extends State<ShowNotProcessedOrderPage> {
                 context
                     .read<FetchNotProcessedOrderCubit>()
                     .index(id: storeOrderState.notProcessedOrder!.id!);
-                // TODO: Ajouter l'élément crée a la
-                //liste d'order afin d'éviter de fetcher la liste a nouveau.
+
                 context.read<FetchDoneOrdersCubit>().fetchDoneOrders();
                 context.goNamed('main', params: {'tab': '1'});
               }

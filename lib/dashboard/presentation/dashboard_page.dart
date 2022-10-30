@@ -181,7 +181,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                         left: 15,
                                         top: 55,
                                         child: Text(
-                                          'XOF ${dashboardState.incomeOftheday}',
+                                          '${dashboardState.incomeOftheday} FCFA',
                                           style: const TextStyle(
                                             fontFamily: 'Poppins-Regular',
                                             fontSize: 16,
@@ -906,7 +906,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                                     ),
                                                     DataCell(
                                                       Text(
-                                                        'XOF ${product.product!.purchasePrice}'
+                                                        '${product.product!.purchasePrice} FCFA'
                                                             .toString(),
                                                         style: const TextStyle(
                                                           fontSize: 14,
@@ -917,7 +917,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                                     ),
                                                     DataCell(
                                                       Text(
-                                                        'XOF ${product.product!.purchasePrice! * product.numberOfOrder!}'
+                                                        '${product.product!.purchasePrice! * product.numberOfOrder!} FCFA'
                                                             .toString(),
                                                         style: const TextStyle(
                                                           fontWeight:

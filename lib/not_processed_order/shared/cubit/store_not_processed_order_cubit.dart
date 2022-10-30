@@ -14,7 +14,8 @@ class StoreNotProcessedOrderCubit extends Cubit<StoreNotProcessedOrderState> {
   Future<void> store(
       {required String label,
       required List<SelectedOrderItem> orderItems}) async {
-    emit(StoreNotProcessedOrderLoading());
+    print('here');
+    // emit(StoreNotProcessedOrderLoading());
     final saveOrFailure =
         await orderRepository.saveNotProcessedOrder(orderItems, label: label);
     saveOrFailure.fold(

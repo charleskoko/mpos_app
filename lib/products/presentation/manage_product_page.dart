@@ -164,7 +164,7 @@ class ManageItemsPageState extends State<ManageItemsPage> {
                                 left: 20,
                                 top: 56,
                                 child: Text(
-                                  'XOF ${products[index].purchasePrice!}',
+                                  '${products[index].purchasePrice!} FCFA',
                                   style: const TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'Poppins-light',

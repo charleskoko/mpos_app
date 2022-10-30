@@ -8,7 +8,10 @@ import '../../main/main_page.dart';
 import '../../not_processed_order/presentation/show_not_processed_order_page.dart';
 import '../../orders/presentation/order_details.dart';
 import '../../orders/presentation/order_verification_page.dart';
+import '../../orders/presentation/save_new_ticket.dart';
 import '../../orders/presentation/save_order_status.dart';
+import '../../payment/presentation/cash_payment_page.dart';
+import '../../payment/presentation/payment_options.dart';
 import '../../receipt/presentation/receipt_option_page.dart';
 import '../../receipt/send_receipt_by_email/presentation/send_receipt_by_email_page.dart';
 import '../../products/presentation/add_product_page.dart';
@@ -104,12 +107,55 @@ class MposRouter {
               ),
             ),
             GoRoute(
+              name: 'saveNewTicket',
+              path: 'saveNewTicket',
+              pageBuilder: (context, state) => MaterialPage(
+                key: state.pageKey,
+                child: const SaveNewTicketPage(),
+              ),
+            ),
+            GoRoute(
               name: 'receiptOptions',
-              path: 'receiptOptions/:orderId',
+              path: 'receiptOptions/:orderId/:sum/:cash',
               pageBuilder: (context, state) {
                 return MaterialPage(
                   key: state.pageKey,
-                  child: ReceiptOptionPage(orderId: state.params['orderId']!),
+                  child: ReceiptOptionPage(
+                      orderId: state.params['orderId']!,
+                      sum: state.params['sum']!,
+                      cash: state.params['cash']!),
+                );
+              },
+            ),
+            GoRoute(
+              name: 'paymentOption',
+              path: 'paymentOption/:total/:isNotProcessedOrder',
+              pageBuilder: (context, state) {
+                double? total = double.tryParse(state.params['total']!);
+                String isNotProcessedOrder =
+                    state.params['isNotProcessedOrder']!;
+                return MaterialPage(
+                  key: state.pageKey,
+                  child: PaymentOptionsPage(
+                    sum: total ?? 0,
+                    isNotProcessedOrder: isNotProcessedOrder,
+                  ),
+                );
+              },
+            ),
+            GoRoute(
+              name: 'cashPayment',
+              path: 'cashPayment/:total/:isNotProcessedOrder',
+              pageBuilder: (context, state) {
+                double? total = double.tryParse(state.params['total']!);
+                String isNotProcessedOrder =
+                    state.params['isNotProcessedOrder']!;
+                return MaterialPage(
+                  key: state.pageKey,
+                  child: CashPaymentPage(
+                    sum: total ?? 0,
+                    isNotProcessedOrder: isNotProcessedOrder,
+                  ),
                 );
               },
             ),

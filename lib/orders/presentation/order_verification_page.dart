@@ -72,28 +72,11 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
           BlocListener<SelectedOrderItemCubit, SelectedOrderItemState>(
             listener: (context, selectedOrderItemState) {
               if (selectedOrderItemState.isOrderCanceled) {
-                Navigator.pop(context);
                 Fluttertoast.showToast(
                   gravity: ToastGravity.TOP,
                   backgroundColor: kPrimaryColor,
                   msg: 'La commande encours a été annulée avec succès',
                 );
-              }
-              if (!selectedOrderItemState.isOrderCanceled) {
-                Navigator.pop(context);
-                Fluttertoast.showToast(
-                  gravity: ToastGravity.TOP,
-                  backgroundColor: kPrimaryColor,
-                  msg: "l'action a été éffectué avec succès",
-                );
-                if (selectedOrderItemState.selectedOrderItem?.isEmpty ?? true) {
-                  var state = context.read<StoreOrderCubit>().state;
-                  if (state is StoreOrderLoaded) {
-                    String orderId = state.order.id!;
-                    context.goNamed('receiptOptions',
-                        params: {'tab': '2', 'orderId': orderId});
-                  }
-                }
               }
             },
             child: IconButton(
@@ -104,6 +87,7 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
               ),
               onPressed: () {
                 context.read<SelectedOrderItemCubit>().cancelCurrentSelection();
+                context.goNamed('main', params: {'tab': '2'});
               },
             ),
           ),
@@ -119,10 +103,6 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
                 context.read<FetchNotProcessedOrderCubit>().index();
                 context.read<SelectedOrderItemCubit>().cancelCurrentSelection();
                 context.goNamed('main', params: {'tab': '1'});
-                // buidSnackbar(
-                //     context: context,
-                //     backgroundColor: Colors.green.shade100,
-                //     text: 'La commande a été modifée avec succès');
               }
             },
           ),
@@ -131,59 +111,8 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
             listener: (context, storeNotProcessedOrderStateate) {
               if (storeNotProcessedOrderStateate
                   is StoreNotProcessedOrderLoaded) {
-                // retouner a la page des commande en cours
-                context.goNamed('main', params: {'tab': '1'});
+                context.pop();
                 context.read<SelectedOrderItemCubit>().cancelCurrentSelection();
-              }
-            },
-          ),
-          BlocListener<StoreOrderCubit, StoreOrderState>(
-            listener: (context, storeOrderState) {
-              if (storeOrderState is StoreOrderLoaded) {
-                Navigator.pop(context);
-                context.read<SelectedOrderItemCubit>().cancelCurrentSelection();
-                showGeneralDialog(
-                    barrierColor: Colors.black.withOpacity(0.5),
-                    transitionBuilder: (context, a1, a2, widget) {
-                      return Transform.scale(
-                        scale: a1.value,
-                        child: Opacity(
-                          opacity: a1.value,
-                          child: AlertDialog(
-                            contentPadding: EdgeInsets.zero,
-                            shape: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15.0)),
-                            content: SizedBox(
-                                width: 325,
-                                height: 313,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height: 100,
-                                      width: 100,
-                                      decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: kPrimaryColor),
-                                      child: const Center(
-                                        child: Icon(
-                                          Ionicons.checkmark,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                )),
-                          ),
-                        ),
-                      );
-                    },
-                    transitionDuration: const Duration(milliseconds: 200),
-                    barrierDismissible: true,
-                    barrierLabel: '',
-                    context: context,
-                    pageBuilder: (context, animation1, animation2) {
-                      return Container();
-                    });
               }
             },
           ),
@@ -204,6 +133,116 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
               if (orderItems.isNotEmpty) {
                 return Column(
                   children: [
+                    const SizedBox(height: 20),
+                    BlocBuilder<SelectedOrderItemCubit, SelectedOrderItemState>(
+                      builder: (context, selectedOrderItemState) {
+                        double sum = 0;
+                        if (selectedOrderItemState
+                                .selectedOrderItem?.isNotEmpty ??
+                            false) {
+                          selectedOrderItemState.selectedOrderItem!
+                              .forEach((element) {
+                            sum = sum + (element.price! * element.amount!);
+                          });
+                          return Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            height: 90,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF262262),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        if (!selectedOrderItemState
+                                            .isNotProcessedOrder) {
+                                          context.pushNamed('saveNewTicket',
+                                              params: {'tab': '2'});
+                                        } else {
+                                          context
+                                              .read<
+                                                  UpdateNotProcessedOrderCubit>()
+                                              .updateNotProcessedOrder(
+                                                  selectedOrderItemState
+                                                      .notProcessedOrder!);
+                                        }
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text(
+                                            'Enregister',
+                                            style: TextStyle(
+                                              fontFamily: 'Poppins-bold',
+                                              color: Colors.white,
+                                              fontSize: 25,
+                                            ),
+                                          ),
+                                          Text(
+                                            '${orderItems.length} article(s)',
+                                            style: const TextStyle(
+                                              fontFamily: 'Poppins-light',
+                                              color: Colors.white,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                                Container(
+                                  width: 2,
+                                  color: Colors.white,
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        context.pushNamed('paymentOption',
+                                            params: {
+                                              'tab': '2',
+                                              'total': '$sum',
+                                              'isNotProcessedOrder':
+                                                  selectedOrderItemState
+                                                      .isNotProcessedOrder
+                                                      .toString()
+                                            });
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text(
+                                            'Encaisser',
+                                            style: TextStyle(
+                                              fontFamily: 'Poppins-bold',
+                                              color: Colors.white,
+                                              fontSize: 25,
+                                            ),
+                                          ),
+                                          Text(
+                                            '$sum FCFA',
+                                            style: const TextStyle(
+                                              fontFamily: 'Poppins-light',
+                                              color: Colors.white,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
                     Expanded(
                       child: ListView.builder(
                           itemCount:
@@ -257,7 +296,7 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
                                                 right: 10, top: 20),
                                             alignment: Alignment.centerRight,
                                             child: Text(
-                                              'XOF ${orderItems[index].amount! * orderItems[index].price!}',
+                                              '${orderItems[index].amount! * orderItems[index].price!} FCFA',
                                               style: const TextStyle(
                                                 fontFamily: 'Poppins-bold',
                                                 fontSize: 14,
@@ -488,8 +527,9 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
                                                       ),
                                                     );
                                                   },
-                                                  transitionDuration: Duration(
-                                                      milliseconds: 200),
+                                                  transitionDuration:
+                                                      const Duration(
+                                                          milliseconds: 200),
                                                   barrierDismissible: true,
                                                   barrierLabel: '',
                                                   context: context,
@@ -524,345 +564,6 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
             },
           ),
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton:
-          BlocBuilder<SelectedOrderItemCubit, SelectedOrderItemState>(
-        builder: (context, selectedOrderItemState) {
-          double sum = 0;
-          if (selectedOrderItemState.selectedOrderItem?.isNotEmpty ?? false) {
-            selectedOrderItemState.selectedOrderItem!.forEach((element) {
-              sum = sum + (element.price! * element.amount!);
-            });
-            return GestureDetector(
-              onTap: () {
-                showGeneralDialog(
-                    barrierColor: Colors.black.withOpacity(0.5),
-                    transitionBuilder: (context, a1, a2, widget) {
-                      return Transform.scale(
-                        scale: a1.value,
-                        child: Opacity(
-                          opacity: a1.value,
-                          child: AlertDialog(
-                            contentPadding: EdgeInsets.zero,
-                            shape: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15.0)),
-                            content: SizedBox(
-                              width: 325,
-                              height: 313,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  if (!selectedOrderItemState
-                                      .isNotProcessedOrder)
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                        showGeneralDialog(
-                                            barrierColor:
-                                                Colors.black.withOpacity(0.5),
-                                            transitionBuilder:
-                                                (context, a1, a2, widget) {
-                                              return Transform.scale(
-                                                scale: a1.value,
-                                                child: Opacity(
-                                                  opacity: a1.value,
-                                                  child: AlertDialog(
-                                                    title: const Center(
-                                                      child: Text(
-                                                        'Entrez un nom',
-                                                        style: TextStyle(
-                                                          color: kPrimaryColor,
-                                                          fontFamily:
-                                                              'Poppins-bold',
-                                                          fontSize: 16,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    contentPadding:
-                                                        EdgeInsets.zero,
-                                                    shape: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15.0),
-                                                    ),
-                                                    content: SizedBox(
-                                                      width: 325,
-                                                      height: 200,
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Form(
-                                                            key: formKey,
-                                                            child: Container(
-                                                              margin: const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal:
-                                                                      32),
-                                                              child:
-                                                                  BoxInputField
-                                                                      .text(
-                                                                controller:
-                                                                    inputTextController,
-                                                                hintText:
-                                                                    'Nommez la Cmd',
-                                                                validator:
-                                                                    (text) {
-                                                                  if (text
-                                                                      .isEmpty) {
-                                                                    return 'Veuillez entrer un nom valide';
-                                                                  }
-                                                                  return null;
-                                                                },
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 17),
-                                                          GestureDetector(
-                                                            onTap: () {
-                                                              if (formKey
-                                                                  .currentState!
-                                                                  .validate()) {
-                                                                context
-                                                                    .read<
-                                                                        StoreNotProcessedOrderCubit>()
-                                                                    .store(
-                                                                      label: inputTextController
-                                                                          .text,
-                                                                      orderItems:
-                                                                          selectedOrderItemState
-                                                                              .selectedOrderItem!,
-                                                                    );
-                                                              }
-                                                            },
-                                                            child: Container(
-                                                              width: 262,
-                                                              height: 54,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color:
-                                                                    kPrimaryColor,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            15),
-                                                              ),
-                                                              child:
-                                                                  const Center(
-                                                                child: Text(
-                                                                  'sauvegarder',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontFamily:
-                                                                        'Poppins-bold',
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            transitionDuration: const Duration(
-                                                milliseconds: 200),
-                                            barrierDismissible: true,
-                                            barrierLabel: '',
-                                            context: context,
-                                            pageBuilder: (context, animation1,
-                                                animation2) {
-                                              return Container();
-                                            });
-                                      },
-                                      child: Container(
-                                        width: 262,
-                                        height: 54,
-                                        decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: kPrimaryColor),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            'Sauvegarder en cours',
-                                            style: TextStyle(
-                                              color: kPrimaryColor,
-                                              fontFamily: 'Poppins-bold',
-                                              fontSize: 18,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  if (selectedOrderItemState
-                                      .isNotProcessedOrder)
-                                    GestureDetector(
-                                      onTap: () {
-                                        context
-                                            .read<
-                                                UpdateNotProcessedOrderCubit>()
-                                            .updateNotProcessedOrder(
-                                                selectedOrderItemState
-                                                    .notProcessedOrder!);
-                                      },
-                                      child: Container(
-                                        width: 262,
-                                        height: 54,
-                                        decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: kPrimaryColor),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            'Actualiser la commande',
-                                            style: TextStyle(
-                                              color: kPrimaryColor,
-                                              fontFamily: 'Poppins-bold',
-                                              fontSize: 18,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  const SizedBox(height: 22),
-                                  GestureDetector(
-                                    onTap: () {
-                                      context.read<StoreOrderCubit>().store(
-                                            selectedOrderItemState
-                                                .selectedOrderItem!,
-                                            isNotProcessedOrder:
-                                                selectedOrderItemState
-                                                    .isNotProcessedOrder,
-                                            notProcessedOrder:
-                                                selectedOrderItemState
-                                                    .notProcessedOrder,
-                                          );
-                                      if (selectedOrderItemState
-                                          .isNotProcessedOrder) {
-                                        context
-                                            .read<
-                                                DeleteNotProcessedOrderCubit>()
-                                            .delete(selectedOrderItemState
-                                                .notProcessedOrder!);
-                                        context
-                                            .read<FetchNotProcessedOrderCubit>()
-                                            .index(
-                                              id: selectedOrderItemState
-                                                  .notProcessedOrder!.id!,
-                                            );
-                                        return;
-                                      }
-                                      return;
-                                    },
-                                    child: Container(
-                                      width: 262,
-                                      height: 54,
-                                      decoration: BoxDecoration(
-                                        color: kPrimaryColor,
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      child: const Center(
-                                        child: Text(
-                                          'Encaisser',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'Poppins-bold',
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    transitionDuration: Duration(milliseconds: 200),
-                    barrierDismissible: true,
-                    barrierLabel: '',
-                    context: context,
-                    pageBuilder: (context, animation1, animation2) {
-                      return Container();
-                    });
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF262262),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Text(
-                          'XOF $sum',
-                          style: const TextStyle(
-                            fontFamily: 'Poppins-Bold',
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.only(right: 20),
-                        alignment: Alignment.centerRight,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
-                            Center(
-                              child: Text(
-                                'Continuer',
-                                style: TextStyle(
-                                  fontFamily: 'Poppins-Light',
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.right,
-                              ),
-                            ),
-                            Center(
-                              child: Icon(
-                                Ionicons.chevron_forward_outline,
-                                size: 25,
-                                color: Colors.white,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            );
-          }
-          return Container();
-        },
       ),
     );
   }

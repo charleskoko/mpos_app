@@ -8,7 +8,7 @@ import '../../src/shared/app_colors.dart';
 import '../shared/cubit/order_details_cubit.dart';
 
 class OrderDetails extends StatefulWidget {
-  OrderDetails({Key? key}) : super(key: key);
+  const OrderDetails({Key? key}) : super(key: key);
 
   @override
   State<OrderDetails> createState() => _OrderDetailsState();
@@ -119,7 +119,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 child: Container(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    '(${orderItems[index].amount}) x XOF ${orderItems[index].price}',
+                                    '(${orderItems[index].amount}) x ${orderItems[index].price} FCFA',
                                     style: const TextStyle(
                                       fontSize: 12,
                                     ),
@@ -130,7 +130,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 child: Container(
                                   alignment: Alignment.centerRight,
                                   child: Text(
-                                    'XOF ${orderItems[index].amount * orderItems[index].price}',
+                                    '${orderItems[index].amount * orderItems[index].price} FCFA',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 13,
@@ -193,7 +193,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             child: Container(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                'XOF ${orderDetailsState.order!.getOrderTotalFromListOrderLineItems}',
+                                '${orderDetailsState.order!.getOrderTotalFromListOrderLineItems} FCFA',
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontFamily: 'Poppins-Regular',
@@ -225,7 +225,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             child: Container(
                               alignment: Alignment.centerRight,
                               child: const Text(
-                                'XOF 00',
+                                '00 FCFA',
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontFamily: 'Poppins-Regular',
@@ -257,7 +257,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             child: Container(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                'XOF ${orderDetailsState.order!.getOrderTotalFromListOrderLineItems}',
+                                '${orderDetailsState.order!.getOrderTotalFromListOrderLineItems} FCFA',
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontFamily: 'Poppins-Regular',

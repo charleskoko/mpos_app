@@ -82,6 +82,7 @@ class OrderRepository {
       );
       return left(1);
     } catch (exception) {
+      print(exception);
       return right(exception.toString());
     }
   }

@@ -12,7 +12,9 @@ import '../core/domaine/product.dart';
 import '../shared/cubit/fetch_product/fetch_products_cubit.dart';
 
 class ProductsOverviewPage extends StatefulWidget {
-  const ProductsOverviewPage({Key? key}) : super(key: key);
+  const ProductsOverviewPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ProductsOverviewPage> createState() => _ProductsOverviewPageState();
@@ -143,7 +145,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                                           ),
                                           const SizedBox(height: 13),
                                           Text(
-                                            'XOF ${products[index].purchasePrice}',
+                                            '${products[index].purchasePrice} FCFA',
                                             style: const TextStyle(
                                               fontFamily: 'Poppins-Light',
                                               fontSize: 17,
@@ -231,7 +233,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                       child: Container(
                         padding: const EdgeInsets.only(left: 20),
                         child: Text(
-                          'XOF $sum',
+                          '$sum FCFA',
                           style: const TextStyle(
                             fontFamily: 'Poppins-Bold',
                             color: Colors.white,

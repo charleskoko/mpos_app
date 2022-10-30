@@ -20,10 +20,10 @@ class BoxInputField extends StatelessWidget {
     this.labelText,
     this.icon,
     this.showPassword,
+    this.autofocus,
     this.hintText,
     this.validator,
   })  : isPasswordTextField = false,
-        autofocus = false,
         textInputType = TextInputType.text;
 
   BoxInputField.password({

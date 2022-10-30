@@ -12,7 +12,7 @@ class StoreOrderCubit extends Cubit<StoreOrderState> {
 
   Future<void> store(
     List<SelectedOrderItem> orderItems, {
-    bool isNotProcessedOrder = false,
+    required bool isNotProcessedOrder,
     NotProcessedOrder? notProcessedOrder,
   }) async {
     emit(StoreOrderLoading());

@@ -46,11 +46,11 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFFF5F5F5),
+        backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Colors.white,
           centerTitle: true,
           elevation: 0,
-          backgroundColor: const Color(0xFFF5F5F5),
           title: const Text(
             'Transactions',
             style: TextStyle(
@@ -164,7 +164,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                               child: (notProcessedOrders.isEmpty)
                                   ? const BoxMessage(
                                       message:
-                                          "Vous n'avez pas ticket sauvegardés",
+                                          "Vous n'avez pas de ticket sauvegardés",
                                     )
                                   : ListView.builder(
                                       itemCount: notProcessedOrders.length,
@@ -373,7 +373,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                                                             );
                                                           },
                                                           transitionDuration:
-                                                              Duration(
+                                                              const Duration(
                                                                   milliseconds:
                                                                       200),
                                                           barrierDismissible:
@@ -422,7 +422,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage>
                             return (fetchDoneOrdersState.fresh.entity.isEmpty)
                                 ? const BoxMessage(
                                     message:
-                                        "Vous n'avez pas de ventes enregistrées",
+                                        "Vous n'avez pas de ventes enregistrées pour aujourd'hui",
                                   )
                                 : Container(
                                     margin: const EdgeInsets.only(

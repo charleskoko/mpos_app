@@ -72,6 +72,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: MultiBlocListener(
             listeners: [
               BlocListener<AuthenticationCubit, AuthenticationState>(

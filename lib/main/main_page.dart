@@ -24,6 +24,7 @@ class _MainPage extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
         onTap: (selectedMenuItem) {
           context.goNamed('main', params: {'tab': '$selectedMenuItem'});

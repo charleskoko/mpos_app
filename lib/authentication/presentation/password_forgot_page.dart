@@ -24,6 +24,14 @@ class _PasswordForgotPageState extends State<PasswordForgotPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: const BackButton(
+          color: kPrimaryColor,
+        ),
+      ),
       body: BlocListener<GenerateResetPasswordCodeCubit,
           GenerateResetPasswordCodeState>(
         listener: (context, generateResetPasswordCodeState) {
@@ -57,31 +65,6 @@ class _PasswordForgotPageState extends State<PasswordForgotPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(top: 20),
-                        height: 41,
-                        width: 41,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFFEAEAEA),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(11),
-                        ),
-                        child: const Icon(
-                          Ionicons.chevron_back,
-                          color: kPrimaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
                   const SizedBox(
                     width: 242,
                     height: 242,
@@ -100,7 +83,7 @@ class _PasswordForgotPageState extends State<PasswordForgotPage> {
                   Container(
                     alignment: Alignment.center,
                     child: const Text(
-                      "Saisissez votre adresse électronique associée à votre compte. Nous vous enverrons un OTP pour réinitialiser votre mot de passe.",
+                      "Saisissez l'adresse électronique associée à votre compte. Nous vous enverrons un OTP pour réinitialiser votre mot de passe.",
                       style: TextStyle(
                         fontSize: 14,
                         fontFamily: 'Poppins-Regular',

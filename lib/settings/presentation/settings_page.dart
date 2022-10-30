@@ -24,11 +24,11 @@ class _SettingsPage extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        backgroundColor: const Color(0xFFF5F5F5),
+        backgroundColor: Colors.white,
         title: const Text(
           'Paramètres',
           style: TextStyle(

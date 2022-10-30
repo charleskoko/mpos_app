@@ -22,6 +22,7 @@ class ErrorMessages {
       "password_string": "Veuillez entré un mot de passe valide",
       "password_min": "Le mot de passe doit comporter minimum 8 carateres",
       "password_confirmed": "Les mots de passe ne correspondent pas",
+      "password.reset": "Le code a été envoyé avec succes",
       "invalid_credentials":
           "Le mot de passe ne correspond pas au compte utilisateur ou le compte n'existe pas. Veuillez vérifier le nom d'utilisateur et le mot de passe et réessayer."
     });

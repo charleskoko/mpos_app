@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage>
                           controller: emailTextFieldController,
                           labelText: 'Adresse email',
                           validator: (email) {
-                            return isEmailValid(email)
+                            return isEmailValid(email.replaceAll(' ', ''))
                                 ? null
                                 : 'Veuillez entrer une adresse email valide';
                           },
@@ -127,7 +127,7 @@ class _LoginPageState extends State<LoginPage>
                           controller: passwordTextFieldController,
                           labelText: 'Mot de passe',
                           validator: (password) {
-                            return isPasswordValid(password)
+                            return isPasswordValid(password.replaceAll(' ', ''))
                                 ? null
                                 : 'Veuillez entrer un mot de passe valide';
                           },

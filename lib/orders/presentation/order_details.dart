@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mpos_app/orders/core/domain/order_line_item.dart';
 
@@ -40,6 +41,38 @@ class _OrderDetailsState extends State<OrderDetails> {
               orderDetailsState.order!.orderLineItems;
           return ListView(
             children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 0.5, color: Colors.grey.shade500),
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.grey.shade300,
+                ),
+                height: 60,
+                margin: const EdgeInsets.only(
+                  left: 30,
+                  right: 30,
+                ),
+                child: TextButton(
+                    child: const Text(
+                      'Nouveau reçu',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Poppins-Regular',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    onPressed: () {
+                      context.pushNamed('receiptOptions', params: {
+                        'tab': '1',
+                        'orderId': orderDetailsState.order!.id!,
+                        'sum':
+                            '${orderDetailsState.order!.getOrderTotalFromListOrderLineItems}',
+                        'cash':
+                            '${orderDetailsState.order!.getOrderTotalFromListOrderLineItems}',
+                        'origin': 'transactionPage'
+                      });
+                    }),
+              ),
               Container(
                 margin: const EdgeInsets.only(
                   top: 29,

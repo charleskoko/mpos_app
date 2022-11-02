@@ -119,11 +119,12 @@ class MposRouter {
             ),
             GoRoute(
               name: 'receiptOptions',
-              path: 'receiptOptions/:orderId/:sum/:cash',
+              path: 'receiptOptions/:orderId/:sum/:cash/:origin',
               pageBuilder: (context, state) {
                 return MaterialPage(
                   key: state.pageKey,
                   child: ReceiptOptionPage(
+                      origin: state.params['origin']!,
                       orderId: state.params['orderId']!,
                       sum: state.params['sum']!,
                       cash: state.params['cash']!),

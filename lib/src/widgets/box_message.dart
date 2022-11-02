@@ -12,9 +12,15 @@ class BoxMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: BoxText.body(
+      child: Text(
         '$message',
-        color: Colors.grey.shade500,
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.grey.shade500,
+          fontFamily: 'Poppins-Regular',
+          fontWeight: FontWeight.w700,
+        ),
+        textAlign: TextAlign.center,
       ),
     );
   }

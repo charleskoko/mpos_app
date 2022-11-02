@@ -78,7 +78,8 @@ class _CashPaymentPageState extends State<CashPaymentPage>
                 'tab': '2',
                 'orderId': storeOrderCubit.order.id ?? '',
                 'sum': '${widget.sum}',
-                'cash': paymentTextFieldController.text
+                'cash': paymentTextFieldController.text,
+                'origin': 'paiementPage'
               },
             );
             if (orderType == 'true') {

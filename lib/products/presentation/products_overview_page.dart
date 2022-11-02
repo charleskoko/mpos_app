@@ -62,10 +62,6 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                 BlocListener<StoreOrderCubit, StoreOrderState>(
                   listener: (context, storeOrderState) {
                     if (storeOrderState is StoreOrderLoaded) {
-                      // context.pushNamed('receiptOptions', params: {
-                      //   'tab': '2',
-                      //   'orderId': storeOrderState.order.id!
-                      // });
                       context
                           .read<SelectedOrderItemCubit>()
                           .cancelCurrentSelection(isOrderCanceled: false);

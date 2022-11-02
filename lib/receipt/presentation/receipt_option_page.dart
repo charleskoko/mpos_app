@@ -7,8 +7,13 @@ class ReceiptOptionPage extends StatefulWidget {
   final String orderId;
   final String sum;
   final String cash;
+  final String origin;
   const ReceiptOptionPage(
-      {Key? key, required this.orderId, required this.sum, required this.cash})
+      {Key? key,
+      required this.orderId,
+      required this.sum,
+      required this.cash,
+      required this.origin})
       : super(key: key);
 
   @override
@@ -54,9 +59,11 @@ class _ReceiptOptionPageState extends State<ReceiptOptionPage> {
               alignment: Alignment.centerLeft,
               height: 60,
               child: TextButton(
-                child: const Text(
-                  'Nouvelle vente',
-                  style: TextStyle(
+                child: Text(
+                  (widget.origin == 'paiementPage')
+                      ? 'Nouvelle vente'
+                      : 'Terminé',
+                  style: const TextStyle(
                     fontFamily: 'Poppins-Bold',
                     fontSize: 16,
                     color: kPrimaryColor,

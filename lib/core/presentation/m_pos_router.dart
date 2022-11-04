@@ -10,6 +10,7 @@ import '../../orders/presentation/order_details.dart';
 import '../../orders/presentation/order_verification_page.dart';
 import '../../orders/presentation/save_new_ticket.dart';
 import '../../orders/presentation/save_order_status.dart';
+import '../../orders/presentation/transactions_page.dart';
 import '../../payment/presentation/cash_payment_page.dart';
 import '../../payment/presentation/payment_options.dart';
 import '../../receipt/presentation/receipt_option_page.dart';
@@ -74,6 +75,16 @@ class MposRouter {
             );
           },
           routes: [
+            GoRoute(
+              name: 'transactions',
+              path: 'transactions',
+              pageBuilder: (context, state) {
+                return MaterialPage(
+                  key: state.pageKey,
+                  child: const TransactionsPage(),
+                );
+              },
+            ),
             GoRoute(
               name: 'orderDetails',
               path: 'orderDetails/:total',

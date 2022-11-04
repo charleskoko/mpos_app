@@ -98,247 +98,227 @@ class ManageItemsPageState extends State<ManageItemsPage> {
                     return ListView.builder(
                       itemCount: fetchProductState.fresh.entity.length,
                       itemBuilder: (context, index) {
-                        return (products[index].isDeleted == false)
-                            ? Container(
-                                margin: const EdgeInsets.only(top: 15),
-                                height: 87,
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.shade300,
-                                      blurRadius: 2,
-                                      spreadRadius: 2,
-                                      offset:
-                                          const Offset(1, 2), // Shadow position
-                                    ),
-                                  ],
+                        FIXME:
+                        'a regler avant mise en production';
+                        //return (products[index].isDeleted == false)
+                        // ?
+                        return Container(
+                          margin: const EdgeInsets.only(top: 15),
+                          height: 87,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.shade300,
+                                blurRadius: 2,
+                                spreadRadius: 2,
+                                offset: const Offset(1, 2), // Shadow position
+                              ),
+                            ],
+                          ),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 20,
+                                top: 36,
+                                child: Text(
+                                  products[index].label!,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'Poppins-bold',
+                                    color: Color(0xff121212),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      left: 20,
-                                      top: 36,
-                                      child: Text(
-                                        products[index].label!,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontFamily: 'Poppins-bold',
-                                          color: Color(0xff121212),
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
+                              ),
+                              Positioned(
+                                left: 20,
+                                top: 56,
+                                child: Text(
+                                  '${products[index].purchasePrice!} FCFA',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'Poppins-light',
+                                    color: Color(0xff121212),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                right: 64,
+                                top: 24,
+                                child: InkWell(
+                                  onTap: () {
+                                    context
+                                        .read<ShowProductCubit>()
+                                        .showProduct(products[index]);
+                                    context.goNamed('updateProduct',
+                                        params: {'tab': '3'});
+                                  },
+                                  child: Container(
+                                    height: 42,
+                                    width: 42,
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Color(0x4A2622624A)),
+                                    child: const ImageIcon(
+                                      AssetImage('assets/images/trash-2.png'),
+                                      color: kPrimaryColor,
                                     ),
-                                    Positioned(
-                                      left: 20,
-                                      top: 56,
-                                      child: Text(
-                                        '${products[index].purchasePrice!} FCFA',
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontFamily: 'Poppins-light',
-                                          color: Color(0xff121212),
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      right: 64,
-                                      top: 24,
-                                      child: InkWell(
-                                        onTap: () {
-                                          context
-                                              .read<ShowProductCubit>()
-                                              .showProduct(products[index]);
-                                          context.goNamed('updateProduct',
-                                              params: {'tab': '3'});
-                                        },
-                                        child: Container(
-                                          height: 42,
-                                          width: 42,
-                                          decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Color(0x4A2622624A)),
-                                          child: const ImageIcon(
-                                            AssetImage(
-                                                'assets/images/trash-2.png'),
-                                            color: kPrimaryColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      right: 15,
-                                      top: 24,
-                                      child: InkWell(
-                                        onTap: () {
-                                          showGeneralDialog(
-                                              barrierColor:
-                                                  Colors.black.withOpacity(0.5),
-                                              transitionBuilder:
-                                                  (context, a1, a2, widget) {
-                                                return Transform.scale(
-                                                  scale: a1.value,
-                                                  child: Opacity(
-                                                    opacity: a1.value,
-                                                    child: AlertDialog(
-                                                      contentPadding:
-                                                          EdgeInsets.zero,
-                                                      shape: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      15.0)),
-                                                      content: Container(
-                                                        width: 325,
-                                                        height: 313,
-                                                        child: Stack(
-                                                          children: [
-                                                            Positioned(
-                                                                top: 5,
-                                                                left: 5,
-                                                                child:
-                                                                    IconButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                        },
-                                                                        icon:
-                                                                            const Icon(
-                                                                          Ionicons
-                                                                              .close,
-                                                                          size:
-                                                                              30,
-                                                                        ))),
-                                                            Container(
-                                                              margin:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      top: 35),
-                                                              width:
-                                                                  MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width,
-                                                              child: const Icon(
-                                                                Ionicons
-                                                                    .trash_outline,
-                                                                color: Color(
-                                                                  0xFFEC5D5D,
-                                                                ),
-                                                                size: 60,
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              margin:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left: 10,
-                                                                      right:
-                                                                          10),
-                                                              width:
-                                                                  MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width,
-                                                              child:
-                                                                  const Center(
-                                                                child: Text(
-                                                                  'Êtes-vous sûr de vouloir supprimer cet article de la liste de vos articles?',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color:
-                                                                        kPrimaryColor,
-                                                                    fontFamily:
-                                                                        'Poppins-bold',
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Positioned(
-                                                              bottom: 33,
-                                                              left: 49,
-                                                              child:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  context
-                                                                      .read<
-                                                                          DeleteProductCubit>()
-                                                                      .deleteProduct(
-                                                                          products[
-                                                                              index]);
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  width: 227,
-                                                                  height: 54,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color:
-                                                                        kPrimaryColor,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            15),
-                                                                  ),
-                                                                  child:
-                                                                      const Center(
-                                                                    child: Text(
-                                                                      'Confirmer',
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontFamily:
-                                                                            'Poppins-bold',
-                                                                        fontSize:
-                                                                            18,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            )
-                                                          ],
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                right: 15,
+                                top: 24,
+                                child: InkWell(
+                                  onTap: () {
+                                    showGeneralDialog(
+                                        barrierColor:
+                                            Colors.black.withOpacity(0.5),
+                                        transitionBuilder:
+                                            (context, a1, a2, widget) {
+                                          return Transform.scale(
+                                            scale: a1.value,
+                                            child: Opacity(
+                                              opacity: a1.value,
+                                              child: AlertDialog(
+                                                contentPadding: EdgeInsets.zero,
+                                                shape: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.0)),
+                                                content: Container(
+                                                  width: 325,
+                                                  height: 313,
+                                                  child: Stack(
+                                                    children: [
+                                                      Positioned(
+                                                          top: 5,
+                                                          left: 5,
+                                                          child: IconButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              icon: const Icon(
+                                                                Ionicons.close,
+                                                                size: 30,
+                                                              ))),
+                                                      Container(
+                                                        margin: const EdgeInsets
+                                                            .only(top: 35),
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        child: const Icon(
+                                                          Ionicons
+                                                              .trash_outline,
+                                                          color: Color(
+                                                            0xFFEC5D5D,
+                                                          ),
+                                                          size: 60,
                                                         ),
                                                       ),
-                                                    ),
+                                                      Container(
+                                                        margin: const EdgeInsets
+                                                                .only(
+                                                            left: 10,
+                                                            right: 10),
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        child: const Center(
+                                                          child: Text(
+                                                            'Êtes-vous sûr de vouloir supprimer cet article de la liste de vos articles?',
+                                                            style: TextStyle(
+                                                              color:
+                                                                  kPrimaryColor,
+                                                              fontFamily:
+                                                                  'Poppins-bold',
+                                                              fontSize: 18,
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Positioned(
+                                                        bottom: 33,
+                                                        left: 49,
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            context
+                                                                .read<
+                                                                    DeleteProductCubit>()
+                                                                .deleteProduct(
+                                                                    products[
+                                                                        index]);
+                                                          },
+                                                          child: Container(
+                                                            width: 227,
+                                                            height: 54,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  kPrimaryColor,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          15),
+                                                            ),
+                                                            child: const Center(
+                                                              child: Text(
+                                                                'Confirmer',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontFamily:
+                                                                      'Poppins-bold',
+                                                                  fontSize: 18,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
                                                   ),
-                                                );
-                                              },
-                                              transitionDuration:
-                                                  Duration(milliseconds: 200),
-                                              barrierDismissible: true,
-                                              barrierLabel: '',
-                                              context: context,
-                                              pageBuilder: (context, animation1,
-                                                  animation2) {
-                                                return Container();
-                                              });
+                                                ),
+                                              ),
+                                            ),
+                                          );
                                         },
-                                        child: Container(
-                                          height: 42,
-                                          width: 42,
-                                          decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Color(0x59EC5D5D)),
-                                          child: const Icon(
-                                              Ionicons.trash_outline,
-                                              color: Colors.red),
-                                        ),
-                                      ),
-                                    )
-                                  ],
+                                        transitionDuration:
+                                            Duration(milliseconds: 200),
+                                        barrierDismissible: true,
+                                        barrierLabel: '',
+                                        context: context,
+                                        pageBuilder:
+                                            (context, animation1, animation2) {
+                                          return Container();
+                                        });
+                                  },
+                                  child: Container(
+                                    height: 42,
+                                    width: 42,
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Color(0x59EC5D5D)),
+                                    child: const Icon(Ionicons.trash_outline,
+                                        color: Colors.red),
+                                  ),
                                 ),
                               )
-                            : Container();
+                            ],
+                          ),
+                        );
+                        //: Container();
                       },
                     );
                   }

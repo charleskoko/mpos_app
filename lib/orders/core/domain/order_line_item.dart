@@ -7,12 +7,13 @@ class OrderLineItem {
   double amount = 0;
   double? total;
 
-  OrderLineItem(
-      {this.id,
-      this.product,
-      required this.price,
-      required this.amount,
-      this.total});
+  OrderLineItem({
+    this.id,
+    this.product,
+    required this.price,
+    required this.amount,
+    this.total,
+  });
 
   OrderLineItem.fromJson(Map<String, dynamic> jsonObject) {
     id = jsonObject["id"].toString();

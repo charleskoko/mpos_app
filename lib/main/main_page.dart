@@ -56,9 +56,9 @@ class _MainPage extends State<MainPage> {
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.only(top: 19, bottom: 12.11),
-              child: Icon(Ionicons.repeat_outline, size: 30),
+              child: Icon(Ionicons.ticket_outline, size: 30),
             ),
-            label: 'Transactions',
+            label: 'Tickets ouvert',
           ),
           // BottomNavigationBarItem(
           //   icon: Padding(
@@ -77,7 +77,7 @@ class _MainPage extends State<MainPage> {
       body: [
         const ProductsOverviewPage(),
         const OrdersOverviewPage(),
-        const DashboardPage(),
+        // const DashboardPage(),
         const SettingsPage(),
       ].elementAt(widget.tab),
     );

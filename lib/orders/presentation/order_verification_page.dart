@@ -65,7 +65,7 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
               ),
               onPressed: () {
                 context.read<SelectedOrderItemCubit>().cancelCurrentSelection();
-                context.goNamed('main', params: {'tab': '2'});
+                context.pop();
               },
             ),
           ),

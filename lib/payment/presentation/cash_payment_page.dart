@@ -71,7 +71,6 @@ class _CashPaymentPageState extends State<CashPaymentPage>
       body: BlocListener<StoreOrderCubit, StoreOrderState>(
         listener: (context, storeOrderCubit) {
           if (storeOrderCubit is StoreOrderLoaded) {
-            print(widget.sum);
             context.goNamed(
               'receiptOptions',
               params: {

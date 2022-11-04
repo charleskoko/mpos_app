@@ -77,6 +77,6 @@ class TimeFormater {
     if (isbeforeYesterday) {
       return "avant-hier, ${date.day} ${months[date.month - 1]}";
     }
-    return '${days[date.day]} ${date.day} ${months[date.month - 1]}';
+    return '${days[date.weekday - 1]} ${date.day} ${months[date.month - 1]}';
   }
 }

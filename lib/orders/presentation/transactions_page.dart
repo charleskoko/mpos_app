@@ -132,7 +132,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                                         top: 20,
                                         right: 10,
                                         child: Text(
-                                          '${DateFormat('dd-mm-yyyy').format(element.createdAt!)} à ${DateFormat('HH:mm').format(element.createdAt!)}',
+                                          '${DateFormat('dd-MM-yyyy').format(element.createdAt!)} à ${DateFormat('HH:mm').format(element.createdAt!)}',
                                           style: const TextStyle(
                                             fontFamily: 'Poppins-Regular',
                                             fontSize: 12,

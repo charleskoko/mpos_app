@@ -98,10 +98,6 @@ class ManageItemsPageState extends State<ManageItemsPage> {
                     return ListView.builder(
                       itemCount: fetchProductState.fresh.entity.length,
                       itemBuilder: (context, index) {
-                        FIXME:
-                        'a regler avant mise en production';
-                        //return (products[index].isDeleted == false)
-                        // ?
                         return Container(
                           margin: const EdgeInsets.only(top: 15),
                           height: 87,

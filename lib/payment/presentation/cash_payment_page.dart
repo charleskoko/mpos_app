@@ -74,7 +74,7 @@ class _CashPaymentPageState extends State<CashPaymentPage>
             context.goNamed(
               'receiptOptions',
               params: {
-                'tab': '2',
+                'tab': '0',
                 'orderId': storeOrderCubit.order.id ?? '',
                 'sum': '${widget.sum}',
                 'cash': paymentTextFieldController.text,

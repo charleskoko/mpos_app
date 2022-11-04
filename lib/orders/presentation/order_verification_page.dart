@@ -134,85 +134,87 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Expanded(
-                                  child: GestureDetector(
-                                      onTap: () {
-                                        if (!selectedOrderItemState
-                                            .isNotProcessedOrder) {
-                                          context.pushNamed('saveNewTicket',
-                                              params: {'tab': '2'});
-                                        } else {
-                                          context
-                                              .read<
-                                                  UpdateNotProcessedOrderCubit>()
-                                              .updateNotProcessedOrder(
-                                                  selectedOrderItemState
-                                                      .notProcessedOrder!);
-                                        }
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const Text(
-                                            'Enregister',
-                                            style: TextStyle(
-                                              fontFamily: 'Poppins-bold',
-                                              color: Colors.white,
-                                              fontSize: 25,
-                                            ),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      if (!selectedOrderItemState
+                                          .isNotProcessedOrder) {
+                                        context.pushNamed('saveNewTicket',
+                                            params: {'tab': '2'});
+                                      } else {
+                                        context
+                                            .read<
+                                                UpdateNotProcessedOrderCubit>()
+                                            .updateNotProcessedOrder(
+                                                selectedOrderItemState
+                                                    .notProcessedOrder!);
+                                      }
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Text(
+                                          'Enregister',
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins-bold',
+                                            color: Colors.white,
+                                            fontSize: 25,
                                           ),
-                                          Text(
-                                            '${orderItems.length} article(s)',
-                                            style: const TextStyle(
-                                              fontFamily: 'Poppins-light',
-                                              color: Colors.white,
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                        ),
+                                        Text(
+                                          '${orderItems.length} article(s)',
+                                          style: const TextStyle(
+                                            fontFamily: 'Poppins-light',
+                                            color: Colors.white,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                        ],
-                                      )),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                                 Container(
                                   width: 2,
                                   color: Colors.white,
                                 ),
                                 Expanded(
-                                  child: GestureDetector(
-                                      onTap: () {
-                                        context.pushNamed('paymentOption',
-                                            params: {
-                                              'tab': '2',
-                                              'total': '$sum',
-                                              'isNotProcessedOrder':
-                                                  selectedOrderItemState
-                                                      .isNotProcessedOrder
-                                                      .toString()
-                                            });
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const Text(
-                                            'Encaisser',
-                                            style: TextStyle(
-                                              fontFamily: 'Poppins-bold',
-                                              color: Colors.white,
-                                              fontSize: 25,
-                                            ),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      context
+                                          .pushNamed('paymentOption', params: {
+                                        'tab': '2',
+                                        'total': '$sum',
+                                        'isNotProcessedOrder':
+                                            selectedOrderItemState
+                                                .isNotProcessedOrder
+                                                .toString()
+                                      });
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Text(
+                                          'Encaisser',
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins-bold',
+                                            color: Colors.white,
+                                            fontSize: 25,
                                           ),
-                                          Text(
-                                            '$sum FCFA',
-                                            style: const TextStyle(
-                                              fontFamily: 'Poppins-light',
-                                              color: Colors.white,
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                        ),
+                                        Text(
+                                          '$sum FCFA',
+                                          style: const TextStyle(
+                                            fontFamily: 'Poppins-light',
+                                            color: Colors.white,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                        ],
-                                      )),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),

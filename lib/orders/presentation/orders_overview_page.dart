@@ -116,6 +116,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage> {
                                   bottom: 10,
                                   top: 2,
                                 ),
+                                padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   boxShadow: [
@@ -130,50 +131,42 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 width: MediaQuery.of(context).size.width,
-                                height: 90,
-                                child: Stack(
+                                height: 70,
+                                child: Row(
                                   children: [
-                                    Positioned(
-                                      top: 20,
-                                      left: 10,
-                                      child: Text(
-                                        '${notProcessedOrders[index].label}',
-                                        style: const TextStyle(
-                                          fontFamily: 'Poppins-Regular',
-                                          color: kPrimaryColor,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w900,
+                                    Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          '${notProcessedOrders[index].label}',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontFamily: 'Poppins-Regular',
+                                            color: kPrimaryColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w900,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    Positioned(
-                                      top: 20,
-                                      right: 10,
-                                      child: Text(
-                                        '${DateFormat('dd-mm-yyyy').format(notProcessedOrders[index].createdAt!)} à ${DateFormat('HH:mm').format(notProcessedOrders[index].createdAt!)}',
-                                        style: const TextStyle(
-                                          fontFamily: 'Poppins-Regular',
-                                          fontSize: 12,
+                                    Expanded(
+                                      child: Container(
+                                        alignment: Alignment.centerRight,
+                                        child: Text(
+                                          '${DateFormat('dd-MM-yyyy').format(notProcessedOrders[index].createdAt!)} à ${DateFormat('HH:mm').format(notProcessedOrders[index].createdAt!)}',
+                                          style: const TextStyle(
+                                            fontFamily: 'Poppins-Regular',
+                                            fontSize: 12,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    Positioned(
-                                      top: 65,
-                                      left: 10,
-                                      child: Text(
-                                        "${notProcessedOrders[index].selectedOrderItem!.length} article(s) ",
-                                        style: const TextStyle(
-                                          fontFamily: 'Poppins-Regular',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 59,
-                                      right: 10,
-                                      child: GestureDetector(
-                                        onTap: () {
+                                    Container(
+                                      width: 30,
+                                      child: IconButton(
+                                        icon: Icon(Ionicons.close_circle),
+                                        onPressed: () {
                                           showGeneralDialog(
                                               barrierColor:
                                                   Colors.black.withOpacity(0.5),
@@ -323,16 +316,8 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage> {
                                                 return Container();
                                               });
                                         },
-                                        child: const SizedBox(
-                                          height: 20,
-                                          width: 20,
-                                          child: Center(
-                                            child: Icon(
-                                                Ionicons.close_circle_outline),
-                                          ),
-                                        ),
                                       ),
-                                    ),
+                                    )
                                   ],
                                 ),
                               ),

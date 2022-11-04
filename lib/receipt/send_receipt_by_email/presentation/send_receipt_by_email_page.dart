@@ -76,7 +76,7 @@ class _SendReceiptByEmailPageState extends State<SendReceiptByEmailPage>
                           title: 'Nouvelle vente',
                           onTap: () {
                             context.read<SendReceiptCubit>().initialize();
-                            context.goNamed('main', params: {'tab': '2'});
+                            context.goNamed('main', params: {'tab': '0'});
                           }),
                     )
                   ],

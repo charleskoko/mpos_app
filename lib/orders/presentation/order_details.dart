@@ -117,7 +117,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                '${orderLineItem.product?.label}',
+                                '${orderLineItem.productLabel}',
                                 style: const TextStyle(
                                   fontFamily: 'Poppins-Regular',
                                   fontWeight: FontWeight.bold,

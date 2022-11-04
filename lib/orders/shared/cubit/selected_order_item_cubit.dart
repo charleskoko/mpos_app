@@ -12,7 +12,8 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
   Future<void> selectOrderItem(Product product, String productLabel) async {
     List<SelectedOrderItem>? currentOrderItemsSelected =
         state.selectedOrderItem ?? [];
-    if (currentOrderItemsSelected.isEmpty) {
+    if (currentOrderItemsSelected.isEmpty ||
+        product.label == 'Montant personnalisé') {
       currentOrderItemsSelected.add(SelectedOrderItem(
         product,
         productLabel,

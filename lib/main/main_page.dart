@@ -49,23 +49,23 @@ class _MainPage extends State<MainPage> {
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.only(top: 19, bottom: 12.11),
-              child: Icon(Ionicons.pie_chart_outline, size: 30),
+              child: Icon(Ionicons.grid_outline, size: 30),
             ),
-            label: 'Dashboard',
+            label: 'Caisse',
           ),
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.only(top: 19, bottom: 12.11),
-              child: Icon(Ionicons.reader_outline, size: 30),
+              child: Icon(Ionicons.ticket_outline, size: 30),
             ),
-            label: 'Transactions',
+            label: 'Tickets ouvert',
           ),
-          BottomNavigationBarItem(
-            icon: Padding(
-                padding: EdgeInsets.only(top: 19, bottom: 12.11),
-                child: Icon(Ionicons.receipt_outline, size: 30)),
-            label: 'Caisse',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Padding(
+          //       padding: EdgeInsets.only(top: 19, bottom: 12.11),
+          //       child: Icon(Ionicons.receipt_outline, size: 30)),
+          //   label: 'Rapport',
+          // ),
           BottomNavigationBarItem(
             icon: Padding(
                 padding: EdgeInsets.only(top: 19, bottom: 12.11),
@@ -75,9 +75,9 @@ class _MainPage extends State<MainPage> {
         ],
       ),
       body: [
-        const DashboardPage(),
-        const OrdersOverviewPage(),
         const ProductsOverviewPage(),
+        const OrdersOverviewPage(),
+        // const DashboardPage(),
         const SettingsPage(),
       ].elementAt(widget.tab),
     );

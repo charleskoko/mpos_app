@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:mpos_app/core/shared/extension.dart';
 
 class TimeFormater {
   String dashboardDate(DateTime date) {
@@ -58,5 +59,24 @@ class TimeFormater {
     int? year = date?.year;
 
     return '$month $day, $year à ${DateFormat('HH:mm').format(date!)}';
+  }
+
+  String formatTransactionDate(String string) {
+    DateTime date = DateTime.parse(string.replaceAll(' ', '-'));
+    bool isToday = date.isSameDate(DateTime.now());
+    bool isYesterday =
+        date.isSameDate(DateTime.now().subtract(const Duration(days: 1)));
+    bool isbeforeYesterday =
+        date.isSameDate(DateTime.now().subtract(const Duration(days: 2)));
+    if (isToday) {
+      return "aujourd'hui, ${date.day} ${months[date.month - 1]}";
+    }
+    if (isYesterday) {
+      return "hier, ${date.day} ${months[date.month - 1]}";
+    }
+    if (isbeforeYesterday) {
+      return "avant-hier, ${date.day} ${months[date.month - 1]}";
+    }
+    return '${days[date.weekday - 1]} ${date.day} ${months[date.month - 1]}';
   }
 }

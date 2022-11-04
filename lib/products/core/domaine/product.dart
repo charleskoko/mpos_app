@@ -19,7 +19,7 @@ class Product {
     salePrice = double.parse(jsonObject?["sale_price"].toString() ?? '0');
     purchasePrice =
         double.parse(jsonObject?["purchase_price"].toString() ?? '0');
-    isDeleted = jsonObject?["is_deleted"];
+    //isDeleted = jsonObject?["is_deleted"];
   }
 
   Map<String, dynamic> toJson() => {

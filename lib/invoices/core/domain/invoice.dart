@@ -1,8 +1,3 @@
-import 'dart:convert';
-
-import '../../../orders/core/domain/order.dart';
-import '../../../orders/core/domain/order_line_item.dart';
-
 class Invoice {
   String? id;
   String? number;

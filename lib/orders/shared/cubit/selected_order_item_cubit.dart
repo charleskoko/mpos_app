@@ -9,12 +9,14 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
   SelectedOrderItemCubit()
       : super(const SelectedOrderItemState.orderNotCanceled());
 
-  Future<void> selectOrderItem(Product product) async {
+  Future<void> selectOrderItem(Product product, String productLabel) async {
     List<SelectedOrderItem>? currentOrderItemsSelected =
         state.selectedOrderItem ?? [];
-    if (currentOrderItemsSelected.isEmpty) {
+    if (currentOrderItemsSelected.isEmpty ||
+        product.label == 'Montant personnalisé') {
       currentOrderItemsSelected.add(SelectedOrderItem(
         product,
+        productLabel,
         1,
         product.salePrice,
       ));
@@ -25,8 +27,8 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
       return;
     }
     if (currentOrderItemsSelected.isNotEmpty) {
-      currentOrderItemsSelected =
-          _addOrderItemToNotEmptyList(currentOrderItemsSelected, product);
+      currentOrderItemsSelected = _addOrderItemToNotEmptyList(
+          currentOrderItemsSelected, product, productLabel);
       emit(
         SelectedOrderItemState.orderNotCanceled(
           selectedOrderItem: currentOrderItemsSelected,
@@ -77,7 +79,9 @@ class SelectedOrderItemCubit extends Cubit<SelectedOrderItemState> {
 }
 
 List<SelectedOrderItem>? _addOrderItemToNotEmptyList(
-    List<SelectedOrderItem> currentOrderItemsSelected, Product product) {
+    List<SelectedOrderItem> currentOrderItemsSelected,
+    Product product,
+    String productLabel) {
   try {
     SelectedOrderItem? currentProductAdded = currentOrderItemsSelected
         .where((orderItem) => orderItem.product?.id == product.id)
@@ -94,6 +98,7 @@ List<SelectedOrderItem>? _addOrderItemToNotEmptyList(
   } on Error catch (e) {
     currentOrderItemsSelected.add(SelectedOrderItem(
       product,
+      productLabel,
       1,
       product.salePrice,
     ));

@@ -42,6 +42,9 @@ class _SendReceiptByEmailPageState extends State<SendReceiptByEmailPage>
               isEmailSended = true;
             });
           }
+          if (sendReceiptState is SendReceiptFaillure) {
+            print(sendReceiptState.authenticationError.getMessage);
+          }
         },
         child: (isEmailSended)
             ? SizedBox(
@@ -73,7 +76,7 @@ class _SendReceiptByEmailPageState extends State<SendReceiptByEmailPage>
                           title: 'Nouvelle vente',
                           onTap: () {
                             context.read<SendReceiptCubit>().initialize();
-                            context.goNamed('main', params: {'tab': '2'});
+                            context.goNamed('main', params: {'tab': '0'});
                           }),
                     )
                   ],

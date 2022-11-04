@@ -71,11 +71,10 @@ class _CashPaymentPageState extends State<CashPaymentPage>
       body: BlocListener<StoreOrderCubit, StoreOrderState>(
         listener: (context, storeOrderCubit) {
           if (storeOrderCubit is StoreOrderLoaded) {
-            print(widget.sum);
             context.goNamed(
               'receiptOptions',
               params: {
-                'tab': '2',
+                'tab': '0',
                 'orderId': storeOrderCubit.order.id ?? '',
                 'sum': '${widget.sum}',
                 'cash': paymentTextFieldController.text,

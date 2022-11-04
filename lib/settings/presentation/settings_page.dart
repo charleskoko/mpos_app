@@ -96,7 +96,51 @@ class _SettingsPage extends State<SettingsPage> {
               // ),
               GestureDetector(
                 onTap: () {
-                  context.goNamed('manageItems', params: {'tab': '3'});
+                  context.pushNamed('transactions', params: {'tab': '2'});
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 15),
+                  width: MediaQuery.of(context).size.width,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade300,
+                        blurRadius: 2,
+                        spreadRadius: 2,
+                        offset: const Offset(1, 2), // Shadow position
+                      ),
+                    ],
+                  ),
+                  child: Row(children: [
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.only(left: 16),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          'Transactions',
+                          style: TextStyle(
+                            fontFamily: 'Poppins-Regular',
+                            color: Color(0xFF010118),
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.only(right: 14),
+                      width: 50,
+                      child: const Icon(Ionicons.chevron_forward_outline),
+                    )
+                  ]),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  context.goNamed('manageItems', params: {'tab': '2'});
                 },
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 15),

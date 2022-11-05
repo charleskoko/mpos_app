@@ -6,7 +6,7 @@ import '../../../orders/core/domain/selected_order_item.dart';
 
 class NotProcessedOrderLocalservice {
   final SembastDatabase _sembastDatabase;
-  static const String order_store_name = 'notProcessedOrder';
+  static const String order_store_name = 'tickets';
   final _store = intMapStoreFactory.store(order_store_name);
   NotProcessedOrderLocalservice(this._sembastDatabase);
 
@@ -17,7 +17,7 @@ class NotProcessedOrderLocalservice {
       id: Uuid().v1(),
       label: label,
       selectedOrderItem: orderLineItems,
-      createdAt: DateTime.now(),
+      createdAt: DateTime.now().toLocal(),
     );
     await _store.add(
       _sembastDatabase.instance,

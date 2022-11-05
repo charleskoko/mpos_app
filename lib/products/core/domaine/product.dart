@@ -3,14 +3,12 @@ class Product {
   String? label;
   double? salePrice;
   double? purchasePrice;
-  bool? isDeleted;
 
   Product({
     this.id,
     this.label,
     this.salePrice,
     this.purchasePrice,
-    this.isDeleted,
   });
 
   Product.fromJson(Map<String, dynamic>? jsonObject) {
@@ -19,7 +17,6 @@ class Product {
     salePrice = double.parse(jsonObject?["sale_price"].toString() ?? '0');
     purchasePrice =
         double.parse(jsonObject?["purchase_price"].toString() ?? '0');
-    //isDeleted = jsonObject?["is_deleted"];
   }
 
   Map<String, dynamic> toJson() => {
@@ -27,6 +24,5 @@ class Product {
         'label': label,
         'sale_price': salePrice.toString(),
         'purchase_price': purchasePrice.toString(),
-        'is_deleted': isDeleted,
       };
 }

@@ -10,20 +10,24 @@ class FetchNotProcessedOrderCubit extends Cubit<FetchNotProcessedOrderState> {
       : super(FetchNotProcessedOrderInitial());
 
   Future<void> index({String? id}) async {
-    emit(FetchNotProcessedOrderLoading());
-    final List<NotProcessedOrder> notProcessedOrderOrFailure =
-        await _ordeRepository.fetchNotProcessedOrder();
-    notProcessedOrderOrFailure
-        .sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
-    if (id?.isEmpty ?? true) {
+    try {
       emit(FetchNotProcessedOrderLoading());
+      final List<NotProcessedOrder> notProcessedOrderOrFailure =
+          await _ordeRepository.fetchNotProcessedOrder();
+      notProcessedOrderOrFailure
+          .sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
+      if (id?.isEmpty ?? true) {
+        emit(FetchNotProcessedOrderLoading());
+        emit(FetchNotProcessedOrderLoaded(notProcessedOrderOrFailure));
+        return;
+      }
+      emit(FetchNotProcessedOrderLoading());
+      notProcessedOrderOrFailure.removeWhere((element) => element.id == id);
+      emit(FetchNotProcessedOrderLoaded(const []));
       emit(FetchNotProcessedOrderLoaded(notProcessedOrderOrFailure));
       return;
+    } on FormatException catch (exception) {
+      emit(FetchNotProcessedOrderError('error'));
     }
-    emit(FetchNotProcessedOrderLoading());
-    notProcessedOrderOrFailure.removeWhere((element) => element.id == id);
-    emit(FetchNotProcessedOrderLoaded(const []));
-    emit(FetchNotProcessedOrderLoaded(notProcessedOrderOrFailure));
-    return;
   }
 }

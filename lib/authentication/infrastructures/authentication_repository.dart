@@ -85,7 +85,6 @@ class AuthenticationRepository {
         return right(AuthenticationError('noConnection'));
       }
     } on RestApiException catch (exception) {
-      print(exception);
       return right(
         AuthenticationError(exception.message ?? 'noErrorMessage'),
       );

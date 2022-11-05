@@ -13,6 +13,7 @@ class SelectedOrderItem {
     productLabel = jsonObject['product_label'];
     amount = jsonObject['amount'];
     price = jsonObject['price'];
+    ;
   }
 
   set setAmount(double amount) {

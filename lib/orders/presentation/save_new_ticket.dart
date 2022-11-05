@@ -76,8 +76,9 @@ class _SaveNewTicketPageState extends State<SaveNewTicketPage>
                           var state =
                               context.read<SelectedOrderItemCubit>().state;
                           context.read<StoreNotProcessedOrderCubit>().store(
-                              label: ticketLabelFieldController.text,
-                              orderItems: state.selectedOrderItem!);
+                                label: ticketLabelFieldController.text,
+                                orderItems: state.selectedOrderItem!,
+                              );
                         }
                       }),
                   const SizedBox(

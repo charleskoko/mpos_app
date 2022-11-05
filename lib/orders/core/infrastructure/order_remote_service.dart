@@ -41,7 +41,6 @@ class OrderRemoteService {
 
   Future<RemoteResponse> storeNewOrder(Map<String, dynamic> request) async {
     final storeProductUri = Environment.getUri(unencodedPath: '/api/v1/orders');
-    print(jsonEncode(request));
     try {
       final response =
           await _dio.postUri(storeProductUri, data: jsonEncode(request));
@@ -56,7 +55,6 @@ class OrderRemoteService {
         return NoConnection();
       }
       if (error.response?.statusCode != null) {
-        print(error.response);
         if (error.response?.statusCode == 404) {
           throw RestApiException(404, 'Veuillez réessayer s\'il vous plait');
         }

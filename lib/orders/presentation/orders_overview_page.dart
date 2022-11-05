@@ -74,6 +74,11 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage> {
                 );
                 context.read<FetchNotProcessedOrderCubit>().index();
               }
+            }),
+            BlocListener<FetchNotProcessedOrderCubit,
+                    FetchNotProcessedOrderState>(
+                listener: (context, fetchNotProcessedOrderState) {
+              if (fetchNotProcessedOrderState is FetchNotProcessedOrderError) {}
             })
           ],
           child: BlocBuilder<FetchNotProcessedOrderCubit,
@@ -109,6 +114,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage> {
                                       notProcessedOrder:
                                           notProcessedOrders[index],
                                     );
+
                                 context.goNamed('main', params: {'tab': '0'});
                               },
                               child: Container(

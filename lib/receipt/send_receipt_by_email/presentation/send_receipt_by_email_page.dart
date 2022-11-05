@@ -42,9 +42,7 @@ class _SendReceiptByEmailPageState extends State<SendReceiptByEmailPage>
               isEmailSended = true;
             });
           }
-          if (sendReceiptState is SendReceiptFaillure) {
-            print(sendReceiptState.authenticationError.getMessage);
-          }
+          if (sendReceiptState is SendReceiptFaillure) {}
         },
         child: (isEmailSended)
             ? SizedBox(

@@ -52,7 +52,7 @@ class _ReceiptOptionPageState extends State<ReceiptOptionPage> {
             topLeft: Radius.circular(10),
           ),
         ),
-        child: Column(
+        child: ListView(
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 16),

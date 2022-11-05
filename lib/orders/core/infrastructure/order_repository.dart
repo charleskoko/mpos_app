@@ -82,7 +82,6 @@ class OrderRepository {
       );
       return left(1);
     } catch (exception) {
-      print(exception);
       return right(exception.toString());
     }
   }
@@ -90,7 +89,6 @@ class OrderRepository {
   Future<List<NotProcessedOrder>> fetchNotProcessedOrder() async {
     final orderLineItems =
         await _notProcessedOrderLocalservice.getAllOrderSortedByLabel();
-
     return (orderLineItems);
   }
 

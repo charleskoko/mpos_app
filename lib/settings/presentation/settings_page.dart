@@ -317,7 +317,7 @@ class _SettingsPage extends State<SettingsPage> {
               Container(
                 child: const Center(
                   child: Text(
-                    'Version 2.0.0 - beta',
+                    'Version 3.0.0 - beta',
                     style: TextStyle(
                       fontFamily: 'Poppins-Regular',
                       fontSize: 13,

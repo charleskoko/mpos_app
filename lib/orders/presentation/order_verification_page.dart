@@ -463,7 +463,7 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
                                                                 ),
                                                                 Positioned(
                                                                   bottom: 33,
-                                                                  left: 49,
+                                                                  left: 30,
                                                                   child:
                                                                       GestureDetector(
                                                                     onTap: () {
@@ -480,6 +480,8 @@ class _OrderVerificationPageState extends State<OrderVerificationPage>
                                                                             notProcessedOrder:
                                                                                 selectedOrderItemState.notProcessedOrder,
                                                                           );
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     },
                                                                     child:
                                                                         Container(

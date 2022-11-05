@@ -53,7 +53,6 @@ class _TransactionsPageState extends State<TransactionsPage> {
             }
             if (fetchDoneOrdersState is FetchDoneOrdersLoaded) {
               List<OrderProduct> orders = fetchDoneOrdersState.fresh.entity;
-              orders.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
               return (fetchDoneOrdersState.fresh.entity.isEmpty)
                   ? const BoxMessage(
                       message: "Vous n'avez aucune ventes enregistrées",
@@ -65,6 +64,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                       ),
                       child: GroupedListView<dynamic, dynamic>(
                           elements: orders,
+                          order: GroupedListOrder.DESC,
                           groupBy: (element) => DateFormat('yyyy MM dd')
                               .format(element.createdAt!),
                           groupSeparatorBuilder: (value) => Container(

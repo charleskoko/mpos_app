@@ -24,23 +24,38 @@ class DashboardInfoTransformator {
     for (OrderProduct order in orders) {
       for (OrderLineItem orderLineItem in order.orderLineItems!) {
         List<DashboardProductList> verificationList = dashboardProducts
-            .where(
-                (element) => element.product!.id == orderLineItem.product!.id)
+            .where((element) =>
+                element.productLabel!.toLowerCase() ==
+                orderLineItem.productLabel!.toLowerCase())
             .toList();
         if (verificationList.length == 0) {
           DashboardProductList newDashboardProduct = DashboardProductList(
+            price: orderLineItem.price,
             product: orderLineItem.product,
+            productLabel: orderLineItem.productLabel,
             numberOfOrder: orderLineItem.amount,
             revenue: 300.0,
+            total: orderLineItem.price * orderLineItem.amount,
           );
+
           dashboardProducts.add(newDashboardProduct);
         }
         if (verificationList.length != 0) {
           DashboardProductList currentProductList = verificationList[0];
-          currentProductList.numberOfOrder =
-              currentProductList.numberOfOrder! + orderLineItem.amount;
+          verificationList[0].numberOfOrder =
+              verificationList[0].numberOfOrder! + orderLineItem.amount;
+          if (currentProductList.product?.id == null) {
+            verificationList[0].total =
+                verificationList[0].total! + orderLineItem.price;
+          }
+          if (currentProductList.product?.id != null) {
+            verificationList[0].total =
+                verificationList[0].numberOfOrder! * currentProductList.price!;
+          }
           int indexCurrentProductList = dashboardProducts.indexWhere(
-              (element) => element.product!.id == orderLineItem.product!.id);
+              (element) =>
+                  element.productLabel!.toLowerCase() ==
+                  orderLineItem.productLabel!.toLowerCase());
           dashboardProducts[indexCurrentProductList] = currentProductList;
         }
       }
@@ -51,18 +66,27 @@ class DashboardInfoTransformator {
 
 class DashboardProductList {
   Product? product;
+  String? productLabel;
+  double? price;
   double? numberOfOrder;
+  double? total;
   double? revenue;
 
   DashboardProductList({
+    required this.price,
     required this.product,
+    required this.productLabel,
     required this.numberOfOrder,
+    required this.total,
     required this.revenue,
   });
 
   DashboardProductList.fromJson(Map<String, dynamic> jsonObject) {
     product = Product.fromJson(jsonObject["product"]);
     numberOfOrder = jsonObject["number_of_order"];
+    price = jsonObject["price"];
     revenue = jsonObject["revenue"];
+    productLabel = jsonObject["product_label"];
+    total = jsonObject["total"];
   }
 }

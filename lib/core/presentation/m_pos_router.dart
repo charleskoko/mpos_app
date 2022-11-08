@@ -4,6 +4,7 @@ import '../../authentication/presentation/login_page.dart';
 import '../../authentication/presentation/password_forgot_page.dart';
 import '../../authentication/presentation/password_reset_page.dart';
 import '../../authentication/presentation/register_page.dart';
+import '../../dashboard/presentation/dashboard_page.dart';
 import '../../main/main_page.dart';
 import '../../not_processed_order/presentation/show_not_processed_order_page.dart';
 import '../../orders/presentation/order_details.dart';
@@ -82,6 +83,16 @@ class MposRouter {
                 return MaterialPage(
                   key: state.pageKey,
                   child: const TransactionsPage(),
+                );
+              },
+            ),
+            GoRoute(
+              name: 'reports',
+              path: 'reports',
+              pageBuilder: (context, state) {
+                return MaterialPage(
+                  key: state.pageKey,
+                  child: const DashboardPage(),
                 );
               },
             ),

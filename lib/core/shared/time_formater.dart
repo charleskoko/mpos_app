@@ -79,4 +79,12 @@ class TimeFormater {
     }
     return '${days[date.weekday - 1]} ${date.day} ${months[date.month - 1]}';
   }
+
+  String formatDateString(String date) {
+    String year = date.substring(6, date.length);
+    String month = date.substring(3, 5);
+    String day = date.substring(0, 2);
+
+    return '$year-$month-$day';
+  }
 }

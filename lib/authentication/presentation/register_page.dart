@@ -57,6 +57,12 @@ class _RegisterPageState extends State<RegisterPage>
         unFocusKeyboard(context);
       },
       child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          leading: const BackButton(color: kPrimaryColor),
+          elevation: 0,
+          backgroundColor: Colors.white,
+        ),
         body: BlocListener<AuthenticationCubit, AuthenticationState>(
           listener: (context, authenticationState) {
             if (authenticationState is AuthenticationValidated) {
@@ -85,30 +91,6 @@ class _RegisterPageState extends State<RegisterPage>
                   children: [
                     Stack(
                       children: [
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 20),
-                              height: 41,
-                              width: 41,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Color(0xFFEAEAEA),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(11),
-                              ),
-                              child: const Icon(
-                                Ionicons.chevron_back,
-                                color: kPrimaryColor,
-                              ),
-                            ),
-                          ),
-                        ),
                         const Center(
                           child: SizedBox(
                             width: 214,

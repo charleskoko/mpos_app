@@ -30,9 +30,8 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
         elevation: 0,
         backgroundColor: Colors.white,
       ),
-      body: Column(
+      body: Wrap(
         children: [
-          const SizedBox(height: 130),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Center(
@@ -59,7 +58,6 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
               ),
             ),
           ),
-          Expanded(child: Container()),
           GestureDetector(
               onTap: () {
                 context.pushNamed('cashPayment', params: {
@@ -69,7 +67,7 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
                 });
               },
               child: Container(
-                margin: const EdgeInsets.only(bottom: 250, left: 21, right: 21),
+                margin: const EdgeInsets.only(bottom: 250, left: 21, right: 21, top:50,),
                 width: MediaQuery.of(context).size.width,
                 height: 64,
                 decoration: BoxDecoration(

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-
 import '../../core/shared/time_formater.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_loading.dart';
@@ -53,6 +52,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
             }
             if (fetchDoneOrdersState is FetchDoneOrdersLoaded) {
               List<OrderProduct> orders = fetchDoneOrdersState.fresh.entity;
+              orders.sort((a,b) => a.createdAt!.compareTo(b.createdAt!));
               return (fetchDoneOrdersState.fresh.entity.isEmpty)
                   ? const BoxMessage(
                       message: "Vous n'avez aucune ventes enregistrées",

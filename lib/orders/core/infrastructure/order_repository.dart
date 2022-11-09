@@ -15,6 +15,34 @@ class OrderRepository {
   OrderRepository(
       this._orderRemoteService, this._notProcessedOrderLocalservice);
 
+  Future<Either<Fresh<List<OrderProduct>>, OrderError>> dashboardInfo(
+      {required String selectedDate, required String period}) async {
+    final dashboardRequestresponse = await _orderRemoteService.dashboardInfo(
+        selectedDate: selectedDate, period: period);
+    try {
+      if (dashboardRequestresponse is ConnectionResponse) {
+        List<OrderProduct> orderProductList = dashboardRequestresponse.response;
+        return left(Fresh.yes(orderProductList));
+      } else if (dashboardRequestresponse is NotAuthorized) {
+        return right(
+          OrderError(
+            'notAuthorized',
+          ),
+        );
+      } else {
+        return right(
+          OrderError(
+            'noConnection',
+          ),
+        );
+      }
+    } on RestApiException catch (exception) {
+      return right(
+        OrderError(exception.message ?? 'noErrorMessage'),
+      );
+    }
+  }
+
   Future<Either<Fresh<List<OrderProduct>>, OrderError>> indexOrderProducts(
       {String? selectedDate}) async {
     final indexOrderProductRequestResponse =

@@ -13,7 +13,6 @@ import '../../core/shared/time_formater.dart';
 import '../../invoices/shared/fetch_invoice_cubit.dart';
 import '../../src/shared/app_colors.dart';
 import '../../src/widgets/box_loading.dart';
-import '../../src/widgets/box_message.dart';
 import '../shared/cubit/dashboard_cubit.dart';
 import '../shared/dashboard_info_transformator.dart';
 
@@ -34,7 +33,11 @@ class _DashboardPageState extends State<DashboardPage> {
   void initState() {
     _timeString = _formatDateTime(DateTime.now());
     Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
-    context.read<DashboardCubit>().dashboardData();
+    context.read<DashboardCubit>().dashboardData(
+          selectedDate: TimeFormater().formatDateForBackend(
+              DateTime.now().day, DateTime.now().month, DateTime.now().year),
+          period: duration,
+        );
     context.read<CalendarCubit>().getMonth(
           DateTime.now().month,
           DateTime.now().year,
@@ -194,8 +197,9 @@ class _DashboardPageState extends State<DashboardPage> {
                                               context
                                                   .read<DashboardCubit>()
                                                   .dashboardData(
-                                                      selectedDate:
-                                                          _selectedDate);
+                                                    selectedDate: _selectedDate,
+                                                    period: duration,
+                                                  );
                                             },
                                             child: const Text(
                                               'OK',
@@ -509,6 +513,10 @@ class _DashboardPageState extends State<DashboardPage> {
                           setState(() {
                             duration = '1j';
                           });
+                          context.read<DashboardCubit>().dashboardData(
+                                selectedDate: _selectedDate,
+                                period: duration,
+                              );
                         },
                         child: Container(
                           padding: const EdgeInsets.all(10),
@@ -542,6 +550,10 @@ class _DashboardPageState extends State<DashboardPage> {
                           setState(() {
                             duration = '1s';
                           });
+                          context.read<DashboardCubit>().dashboardData(
+                                selectedDate: _selectedDate,
+                                period: duration,
+                              );
                         },
                         child: Container(
                           padding: const EdgeInsets.all(10),
@@ -575,6 +587,10 @@ class _DashboardPageState extends State<DashboardPage> {
                           setState(() {
                             duration = '1m';
                           });
+                          context.read<DashboardCubit>().dashboardData(
+                                selectedDate: _selectedDate,
+                                period: duration,
+                              );
                         },
                         child: Container(
                           padding: const EdgeInsets.all(10),
@@ -608,6 +624,10 @@ class _DashboardPageState extends State<DashboardPage> {
                             setState(() {
                               duration = '3m';
                             });
+                            context.read<DashboardCubit>().dashboardData(
+                                  selectedDate: _selectedDate,
+                                  period: duration,
+                                );
                           },
                           child: Container(
                             padding: const EdgeInsets.all(10),
@@ -640,6 +660,10 @@ class _DashboardPageState extends State<DashboardPage> {
                             setState(() {
                               duration = '1a';
                             });
+                            context.read<DashboardCubit>().dashboardData(
+                                  selectedDate: _selectedDate,
+                                  period: duration,
+                                );
                           },
                           child: Container(
                             padding: const EdgeInsets.all(10),

@@ -11,10 +11,42 @@ class OrderRemoteService {
   final Dio _dio;
   OrderRemoteService(this._dio);
 
+  Future<RemoteResponse> dashboardInfo(
+      {required String selectedDate, required String period}) async {
+    Uri dashboardInfoUri = Environment.getUri(
+      unencodedPath: 'api/v1/orders/dashboard-info',
+      queryParameters: {'date': selectedDate, 'period': period},
+    );
+    print(dashboardInfoUri);
+    try {
+      final response = await _dio.getUri(dashboardInfoUri);
+      if (response.statusCode == 200) {
+        final List<dynamic> orderJson = response.data['data'][0];
+        List<OrderProduct> invoiceList =
+            orderJson.map((json) => OrderProduct.fromJson(json)).toList();
+        return ConnectionResponse<List<OrderProduct>>(invoiceList);
+      }
+      throw RestApiException(response.statusCode, response.statusMessage);
+    } on DioError catch (error) {
+      if (error.isNoConnectionError) {
+        return NoConnection();
+      }
+      if (error.response?.statusCode != null) {
+        if (error.response?.statusCode == 404) {
+          throw RestApiException(404, 'Veuillez réessayer s\'il vous plait');
+        }
+        throw RestApiException(
+            error.response?.statusCode, error.response?.data['message']);
+      }
+      rethrow;
+    }
+  }
+
   Future<RemoteResponse> indexOrder({String? selectedDate}) async {
     Uri orderIndexUri = Environment.getUri(
         unencodedPath: 'api/v1/orders',
         queryParameters: {'date': selectedDate});
+    print(orderIndexUri);
     try {
       final response = await _dio.getUri(orderIndexUri);
       if (response.statusCode == 200) {

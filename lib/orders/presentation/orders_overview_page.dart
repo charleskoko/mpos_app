@@ -38,7 +38,7 @@ class _OrdersOverviewPageState extends State<OrdersOverviewPage> {
           centerTitle: true,
           elevation: 0,
           title: const Text(
-            'Tickets ouvert',
+            'Tickets sauvegardés',
             style: TextStyle(
               fontSize: 24,
               fontFamily: 'Poppins-Regular',

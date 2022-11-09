@@ -17,7 +17,6 @@ class OrderRemoteService {
       unencodedPath: 'api/v1/orders/dashboard-info',
       queryParameters: {'date': selectedDate, 'period': period},
     );
-    print(dashboardInfoUri);
     try {
       final response = await _dio.getUri(dashboardInfoUri);
       if (response.statusCode == 200) {
@@ -46,7 +45,6 @@ class OrderRemoteService {
     Uri orderIndexUri = Environment.getUri(
         unencodedPath: 'api/v1/orders',
         queryParameters: {'date': selectedDate});
-    print(orderIndexUri);
     try {
       final response = await _dio.getUri(orderIndexUri);
       if (response.statusCode == 200) {

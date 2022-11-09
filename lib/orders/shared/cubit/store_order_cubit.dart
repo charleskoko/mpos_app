@@ -15,23 +15,30 @@ class StoreOrderCubit extends Cubit<StoreOrderState> {
     required bool isNotProcessedOrder,
     NotProcessedOrder? notProcessedOrder,
   }) async {
-    emit(StoreOrderLoading());
-    Map<String, dynamic> rangedOrderData =
-        OrderProduct.rangeOrderData(orderItems);
-    final storedOrderOrFailure =
-        await _ordeRepository.storeOrderProduct(orderData: rangedOrderData);
-    storedOrderOrFailure.fold((orderProduct) {
+    try {
+      emit(StoreOrderLoading());
+      Map<String, dynamic> rangedOrderData =
+          OrderProduct.rangeOrderData(orderItems);
+      final storedOrderOrFailure =
+          await _ordeRepository.storeOrderProduct(orderData: rangedOrderData);
+      storedOrderOrFailure.fold((orderProduct) {
+        emit(
+          StoreOrderLoaded(
+            orderProduct,
+            isNotProcessedOrder: isNotProcessedOrder,
+            notProcessedOrder: notProcessedOrder,
+          ),
+        );
+      }, (orderError) {
+        emit(
+          StoreOrderError(orderError.message),
+        );
+      });
+    } catch (e) {
       emit(
-        StoreOrderLoaded(
-          orderProduct,
-          isNotProcessedOrder: isNotProcessedOrder,
-          notProcessedOrder: notProcessedOrder,
-        ),
+        StoreOrderError(
+            'Nous ne parvenons pas à enregistrer cette commande. Veuillez réessayer à nouveau.'),
       );
-    }, (orderError) {
-      emit(
-        StoreOrderError(orderError.message),
-      );
-    });
+    }
   }
 }

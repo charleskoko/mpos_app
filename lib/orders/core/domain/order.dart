@@ -18,7 +18,10 @@ class OrderProduct {
     createdAt = DateTime.parse(jsonObject["created_at"]).toLocal();
     orderLineItems =
         OrderLineItem.orderLineItemList(jsonObject['order_line_items']);
-    invoice = Invoice.fromJson(jsonObject['invoice']);
+
+    invoice = (jsonObject['invoice'] == null)
+        ? null
+        : Invoice.fromJson(jsonObject['invoice']);
   }
 
   Map<String, dynamic> toJson() => {

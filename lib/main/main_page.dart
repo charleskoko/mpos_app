@@ -58,7 +58,7 @@ class _MainPage extends State<MainPage> {
               padding: EdgeInsets.only(top: 19, bottom: 12.11),
               child: Icon(Ionicons.ticket_outline, size: 30),
             ),
-            label: 'Tickets ouvert',
+            label: 'Tickets sauvegardés',
           ),
           // BottomNavigationBarItem(
           //   icon: Padding(

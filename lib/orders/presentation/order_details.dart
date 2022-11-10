@@ -47,7 +47,30 @@ class _OrderDetailsState extends State<OrderDetails> {
                   borderRadius: BorderRadius.circular(12),
                   color: Colors.grey.shade300,
                 ),
-                height: 60,
+                height: 50,
+                margin: const EdgeInsets.only(
+                  left: 30,
+                  right: 30,
+                ),
+                child: TextButton(
+                    child: const Text(
+                      'Émettre remboursement',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'Poppins-light',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    onPressed: () {}),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 0.5, color: Colors.grey.shade500),
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.grey.shade300,
+                ),
+                height: 50,
                 margin: const EdgeInsets.only(
                   left: 30,
                   right: 30,
@@ -56,8 +79,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                     child: const Text(
                       'Nouveau reçu',
                       style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Poppins-Regular',
+                        fontSize: 14,
+                        fontFamily: 'Poppins-light',
                         fontWeight: FontWeight.w600,
                       ),
                     ),

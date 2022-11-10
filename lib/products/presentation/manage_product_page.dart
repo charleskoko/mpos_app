@@ -84,7 +84,7 @@ class ManageItemsPageState extends State<ManageItemsPage> {
                   isBusy: false,
                   title: 'Ajouter un article',
                   onTap: () {
-                    context.goNamed('addProduct', params: {'tab': '3'});
+                    context.goNamed('addProduct', params: {'tab': '2'});
                   }),
               Expanded(
                   child: BlocBuilder<FetchProductsCubit, FetchProductsState>(
@@ -151,7 +151,7 @@ class ManageItemsPageState extends State<ManageItemsPage> {
                                         .read<ShowProductCubit>()
                                         .showProduct(products[index]);
                                     context.goNamed('updateProduct',
-                                        params: {'tab': '3'});
+                                        params: {'tab': '2'});
                                   },
                                   child: Container(
                                     height: 42,

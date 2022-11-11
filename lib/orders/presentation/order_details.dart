@@ -227,7 +227,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                     if (valueTodouble == null) {
                                                       return 'Entrez un montant valide';
                                                     }
-                                                    if (valueTodouble! >
+                                                    if (valueTodouble >
                                                         orderDetailsState.order!
                                                             .getOrderTotalFromListOrderLineItems) {
                                                       return 'Entrez un montant inferieur au montant de la commande';

@@ -26,6 +26,8 @@ import '../../products/shared/cubit/store_product/store_product_cubit.dart';
 import '../../products/shared/cubit/update_product/update_product_cubit.dart';
 import '../../receipt/send_receipt_by_email/infrastructure/send_receipt_by_email_repository_impl.dart';
 import '../../receipt/send_receipt_by_email/infrastructure/send_receipt_cubit.dart';
+import '../../refund/core/infrastructure/refund_repository.dart';
+import '../../refund/shared/cubit/refund_store_cubit.dart';
 
 class BlocsProvider {
   static List init() {
@@ -126,6 +128,9 @@ class BlocsProvider {
       BlocProvider<SendReceiptCubit>(
         create: (context) =>
             SendReceiptCubit(context.read<SendReceiptByEmailRepositoryImpl>()),
+      ),
+      BlocProvider<RefundStoreCubit>(
+        create: (context) => RefundStoreCubit(context.read<RefundRepository>()),
       ),
     ];
   }

@@ -1,11 +1,13 @@
 import 'package:mpos_app/invoices/core/domain/invoice.dart';
 import 'package:mpos_app/orders/core/domain/order_line_item.dart';
 import 'package:mpos_app/orders/core/domain/selected_order_item.dart';
+import '../../../refund/core/domain/refund.dart';
 
 class OrderProduct {
   String? id;
   String? number;
   List<OrderLineItem>? orderLineItems;
+  List<Refund>? refunds;
   DateTime? createdAt;
 
   Invoice? invoice;
@@ -18,7 +20,7 @@ class OrderProduct {
     createdAt = DateTime.parse(jsonObject["created_at"]).toLocal();
     orderLineItems =
         OrderLineItem.orderLineItemList(jsonObject['order_line_items']);
-
+    refunds = Refund.refunds(jsonObject['refunds']);
     invoice = (jsonObject['invoice'] == null)
         ? null
         : Invoice.fromJson(jsonObject['invoice']);
@@ -28,6 +30,7 @@ class OrderProduct {
         'id': id,
         'number': number,
         'order_line_items': orderLineItems?.map((e) => e.toJson()).toList(),
+        'refunds': refunds?.map((e) => e.toJson()).toList(),
         'created_at': createdAt.toString(),
         'invoice': invoice?.toJson(),
       };

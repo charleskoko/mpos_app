@@ -2,6 +2,7 @@ import 'package:mpos_app/orders/core/domain/order.dart';
 
 import '../../orders/core/domain/order_line_item.dart';
 import '../../products/core/domaine/product.dart';
+import '../../refund/core/domain/refund.dart';
 
 class DashboardInfoTransformator {
   static double getIncomeOfTheDay(List<OrderProduct> orders) {
@@ -16,6 +17,28 @@ class DashboardInfoTransformator {
       income += orderTotal;
     }
     return income;
+  }
+
+  static double getRefundOfThePeriod(List<OrderProduct> orders) {
+    double refundOfThePeriod = 0;
+    for (OrderProduct order in orders) {
+      List<Refund>? refunds = order.refunds!;
+      double orderRefundTotal = 0;
+      for (var item in refunds) {
+        orderRefundTotal += item.amountRefunded!;
+      }
+      refundOfThePeriod += orderRefundTotal;
+    }
+    return refundOfThePeriod;
+  }
+
+  static int getNumberOfRefund(List<OrderProduct> orders) {
+    int numberOfRefund = 0;
+    for (OrderProduct order in orders) {
+      List<Refund>? refunds = order.refunds!;
+      numberOfRefund += order.refunds!.length;
+    }
+    return numberOfRefund;
   }
 
   static List<DashboardProductList>? getProductListDashboard(

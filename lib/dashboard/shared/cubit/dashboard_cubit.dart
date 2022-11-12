@@ -19,22 +19,30 @@ class DashboardCubit extends Cubit<DashboardState> {
       );
       dashboardData.fold(
         (fresh) {
-          int numberOfSalesOfTheDay = fresh.entity.length;
-          double incomeOftheday =
+          int numberOfSalesOfThePeriod = fresh.entity.length;
+          int numberOfRefundOfThePeriod =
+              DashboardInfoTransformator.getNumberOfRefund(fresh.entity);
+          double incomeOfthePeriod =
               DashboardInfoTransformator.getIncomeOfTheDay(fresh.entity);
+          double refundOfthePeriod =
+              DashboardInfoTransformator.getRefundOfThePeriod(fresh.entity);
           List<DashboardProductList>? productsList =
               DashboardInfoTransformator.getProductListDashboard(fresh.entity);
           emit(DashboardInfoLoaded(
-            incomeOftheday: incomeOftheday,
-            numberOfSalesOfTheDay: numberOfSalesOfTheDay,
+            numberOfRefundOfThePeriod: numberOfRefundOfThePeriod,
+            incomeOftThePeriod: incomeOfthePeriod,
+            numberOfSalesOfThePeriod: numberOfSalesOfThePeriod,
+            refundOfThePeriod: refundOfthePeriod,
             products: productsList,
           ));
         },
         (invoiceError) {
           emit(
             DashboardInfoLoaded(
-              incomeOftheday: 0,
-              numberOfSalesOfTheDay: 0,
+              numberOfRefundOfThePeriod: 0,
+              incomeOftThePeriod: 0,
+              numberOfSalesOfThePeriod: 0,
+              refundOfThePeriod: 0,
               products: [],
               errorMessage: invoiceError.message,
             ),
@@ -44,8 +52,10 @@ class DashboardCubit extends Cubit<DashboardState> {
     } on RestApiException catch (exception) {
       emit(
         DashboardInfoLoaded(
-          incomeOftheday: 0,
-          numberOfSalesOfTheDay: 0,
+          numberOfRefundOfThePeriod: 0,
+          incomeOftThePeriod: 0,
+          numberOfSalesOfThePeriod: 0,
+          refundOfThePeriod: 0,
           products: [],
           errorMessage: exception.message,
         ),

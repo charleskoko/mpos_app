@@ -4,6 +4,7 @@ import 'package:mpos_app/core/infrastructures/sembast_database.dart';
 import 'package:mpos_app/custom_calendar/infrastructures/calendar_repository_impl.dart';
 import 'package:mpos_app/not_processed_order/core/infrastructure/not_processed_order_local_service.dart';
 import 'package:mpos_app/orders/core/infrastructure/order_remote_service.dart';
+import 'package:mpos_app/refund/core/infrastructure/refund_remote_service.dart';
 import '../../authentication/infrastructures/authentication_local_service.dart';
 import '../../authentication/infrastructures/authentication_remote_service.dart';
 import '../../authentication/infrastructures/authentication_repository.dart';
@@ -17,6 +18,7 @@ import '../../products/core/infrastructure/product_remote_service.dart';
 import '../../products/core/infrastructure/product_repository.dart';
 import '../../receipt/send_receipt_by_email/infrastructure/send_receipt_by_email_remote_service.dart';
 import '../../receipt/send_receipt_by_email/infrastructure/send_receipt_by_email_repository_impl.dart';
+import '../../refund/core/infrastructure/refund_repository.dart';
 
 class RepositoriesProvider {
   static List init({
@@ -31,6 +33,7 @@ class RepositoriesProvider {
     required NotProcessedOrderLocalservice notProcessedOrderLocalservice,
     required CalendarService calendarService,
     required SendReceiptByEmailRemoteService sendReceiptByEmailService,
+    required RefundRemoteService refundRemoteService,
   }) {
     return [
       RepositoryProvider<SembastDatabase>(
@@ -68,6 +71,11 @@ class RepositoriesProvider {
       RepositoryProvider<SendReceiptByEmailRepositoryImpl>(
         create: (context) => SendReceiptByEmailRepositoryImpl(
           sendReceiptByEmailService,
+        ),
+      ),
+      RepositoryProvider<RefundRepository>(
+        create: (context) => RefundRepository(
+          refundRemoteService,
         ),
       ),
     ];

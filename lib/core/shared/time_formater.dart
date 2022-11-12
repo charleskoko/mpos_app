@@ -2,11 +2,12 @@ import 'package:intl/intl.dart';
 import 'package:mpos_app/core/shared/extension.dart';
 
 class TimeFormater {
-  String dashboardDate(DateTime date) {
+  String dashboardDate(DateTime date, {bool? withTime}) {
     String month = months[date.month - 1];
     int year = date.year;
 
-    return '${date.day} ${months[date.month - 1].substring(0, 3)} ${date.year} ';
+    return '${date.day} ${months[date.month - 1].substring(0, 3)} ${date.year}' +
+        ((withTime ?? false) ? ' ${DateFormat('HH:mm').format(date)}' : '');
   }
 
   String dashboardDay(DateTime date) {
